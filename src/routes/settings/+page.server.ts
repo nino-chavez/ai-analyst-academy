@@ -1,6 +1,7 @@
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import type { UserProfileUpdate } from '$lib/types/database';
+import { insertUserProfile, updateUserProfile } from '$lib/db';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const { session, user } = await locals.safeGetSession();
@@ -77,9 +78,7 @@ export const actions: Actions = {
 
 		if (existingProfile) {
 			// Update existing profile
-			const { error } = await (locals.supabase.from('user_profiles') as any)
-				.update(updateData)
-				.eq('id', user.id);
+			const { error } = await updateUserProfile(locals.supabase, user.id, updateData);
 
 			if (error) {
 				console.error('Error updating profile:', error);
@@ -87,11 +86,10 @@ export const actions: Actions = {
 			}
 		} else {
 			// Create new profile
-			const { error } = await (locals.supabase.from('user_profiles') as any)
-				.insert({
-					id: user.id,
-					...updateData
-				});
+			const { error } = await insertUserProfile(locals.supabase, {
+				id: user.id,
+				...updateData
+			});
 
 			if (error) {
 				console.error('Error creating profile:', error);
@@ -130,6 +128,37 @@ export const actions: Actions = {
 		return {
 			success: true,
 			message: 'A confirmation email has been sent to your new address'
+		};
+	},
+
+	deleteAccount: async ({ locals }) => {
+		const { session, user } = await locals.safeGetSession();
+
+		if (!session || !user) {
+			return fail(401, { error: 'Unauthorized' });
+		}
+
+		// Delete user profile first
+		const { error: profileError } = await locals.supabase
+			.from('user_profiles')
+			.delete()
+			.eq('id', user.id);
+
+		if (profileError) {
+			console.error('Error deleting profile:', profileError);
+			// Continue anyway - profile might not exist
+		}
+
+		// Sign out the user (this invalidates their session)
+		await locals.supabase.auth.signOut();
+
+		// Note: Full user deletion from auth.users requires admin API
+		// For now, we delete their data and sign them out
+		// The user record remains but is effectively orphaned
+
+		return {
+			success: true,
+			deleted: true
 		};
 	}
 };

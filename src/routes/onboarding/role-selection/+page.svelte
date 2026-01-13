@@ -16,9 +16,10 @@
 	let selectedRole = $state<string | null>(initialPersona);
 	let isSubmitting = $state(false);
 
+	// IDs must match database CHECK constraint: career_pivoter, student, team_lead, explorer
 	const personas = [
 		{
-			id: 'career-pivoter',
+			id: 'career_pivoter',
 			title: 'Career Pivoter',
 			subtitle: 'Transitioning into AI',
 			description:
@@ -29,7 +30,7 @@
 			color: 'phase-1'
 		},
 		{
-			id: 'business-student',
+			id: 'student',
 			title: 'Business Student',
 			subtitle: 'Academic foundation',
 			description:
@@ -40,7 +41,7 @@
 			color: 'phase-2'
 		},
 		{
-			id: 'team-lead',
+			id: 'team_lead',
 			title: 'Team Lead',
 			subtitle: 'Leading AI adoption',
 			description:
@@ -51,7 +52,7 @@
 			color: 'phase-4'
 		},
 		{
-			id: 'curious-explorer',
+			id: 'explorer',
 			title: 'Curious Explorer',
 			subtitle: 'Learning by doing',
 			description:

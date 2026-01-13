@@ -49,11 +49,12 @@
 		}
 	];
 
+	// Keys must match database CHECK constraint: career_pivoter, student, team_lead, explorer
 	const personaLabels: Record<string, string> = {
-		'career-pivoter': 'Career Pivoter',
-		'business-student': 'Business Student',
-		'team-lead': 'Team Lead',
-		'curious-explorer': 'Curious Explorer'
+		career_pivoter: 'Career Pivoter',
+		student: 'Business Student',
+		team_lead: 'Team Lead',
+		explorer: 'Curious Explorer'
 	};
 </script>
 

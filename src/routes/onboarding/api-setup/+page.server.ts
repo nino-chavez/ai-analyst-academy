@@ -1,5 +1,6 @@
 import { redirect, fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
+import { updateUserProfile } from '$lib/db';
 
 interface ProfileData {
 	persona_type: string | null;
@@ -60,12 +61,10 @@ export const actions: Actions = {
 		}
 
 		// Mark onboarding as complete
-		const { error } = await (locals.supabase.from('user_profiles') as any)
-			.update({
-				onboarding_completed: true,
-				updated_at: new Date().toISOString()
-			})
-			.eq('id', user.id);
+		const { error } = await updateUserProfile(locals.supabase, user.id, {
+			onboarding_completed: true,
+			updated_at: new Date().toISOString()
+		});
 
 		if (error) {
 			console.error('Error completing onboarding:', error);
@@ -83,12 +82,10 @@ export const actions: Actions = {
 		}
 
 		// Mark onboarding as complete (even without API keys)
-		await (locals.supabase.from('user_profiles') as any)
-			.update({
-				onboarding_completed: true,
-				updated_at: new Date().toISOString()
-			})
-			.eq('id', user.id);
+		await updateUserProfile(locals.supabase, user.id, {
+			onboarding_completed: true,
+			updated_at: new Date().toISOString()
+		});
 
 		throw redirect(303, '/learn');
 	}

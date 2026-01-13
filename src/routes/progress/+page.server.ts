@@ -1,5 +1,6 @@
 import type { PageServerLoad, Actions } from './$types';
 import type { ModuleProgress, LabProgress, UserProfile, ReviewQueueItem } from '$lib/types/database';
+import { updateReviewQueueItem, insertReviewQueueItem } from '$lib/db';
 
 interface PhaseProgress {
 	id: number;
@@ -146,7 +147,7 @@ function getRecentActivity(
 function calculateAchievements(
 	moduleProgress: ModuleProgress[],
 	labProgress: LabProgress[],
-	profile: UserProfile | null
+	profile: Pick<UserProfile, 'streak_current'> | null
 ): Achievement[] {
 	const completedModules = moduleProgress.filter(mp => mp.completed_at !== null);
 	const completedLabs = labProgress.filter(lp => lp.completed_at !== null);
@@ -287,27 +288,39 @@ export const load: PageServerLoad = async ({ locals }) => {
 		};
 	}
 
-	// Fetch user profile
-	const { data: profile } = await locals.supabase
-		.from('user_profiles')
-		.select('*')
-		.eq('id', user.id)
-		.single() as { data: UserProfile | null };
+	// Fetch all data in parallel to avoid waterfall queries
+	const [profileResult, moduleProgressResult, labProgressResult, reviewQueueResult] = await Promise.all([
+		// User profile - only select needed fields
+		locals.supabase
+			.from('user_profiles')
+			.select('id, streak_current, streak_longest')
+			.eq('id', user.id)
+			.single(),
 
-	// Fetch module progress
-	const { data: moduleProgress } = await locals.supabase
-		.from('module_progress')
-		.select('*')
-		.eq('user_id', user.id);
+		// Module progress
+		locals.supabase
+			.from('module_progress')
+			.select('module_id, phase_id, started_at, completed_at, sections_viewed')
+			.eq('user_id', user.id),
 
-	// Fetch lab progress
-	const { data: labProgress } = await locals.supabase
-		.from('lab_progress')
-		.select('*')
-		.eq('user_id', user.id);
+		// Lab progress
+		locals.supabase
+			.from('lab_progress')
+			.select('lab_id, phase_id, started_at, completed_at')
+			.eq('user_id', user.id),
 
-	const moduleProgressData = (moduleProgress ?? []) as ModuleProgress[];
-	const labProgressData = (labProgress ?? []) as LabProgress[];
+		// Review queue - fetch here instead of later to parallelize
+		locals.supabase
+			.from('review_queue')
+			.select('id, concept_id, module_id, next_review_at, review_count')
+			.eq('user_id', user.id)
+			.order('next_review_at', { ascending: true })
+			.limit(20)
+	]);
+
+	const profile = profileResult.data as Pick<UserProfile, 'id' | 'streak_current' | 'streak_longest'> | null;
+	const moduleProgressData = (moduleProgressResult.data ?? []) as ModuleProgress[];
+	const labProgressData = (labProgressResult.data ?? []) as LabProgress[];
 
 	// Calculate phase progress
 	const phaseProgressData = PHASES.map(phase => calculatePhaseProgress(moduleProgressData, phase.id));
@@ -333,15 +346,9 @@ export const load: PageServerLoad = async ({ locals }) => {
 	const minutes = estimatedMinutes % 60;
 	const totalTimeSpent = `${hours}h ${minutes}m`;
 
-	// Fetch review queue items
-	const { data: reviewQueueData } = await locals.supabase
-		.from('review_queue')
-		.select('*')
-		.eq('user_id', user.id)
-		.order('next_review_at', { ascending: true })
-		.limit(20);
-
+	// Process review queue from parallel fetch
 	const now = new Date();
+	const reviewQueueData = reviewQueueResult.data as Pick<ReviewQueueItem, 'id' | 'concept_id' | 'module_id' | 'next_review_at' | 'review_count'>[] | null;
 	const reviewQueue: ReviewItem[] = ((reviewQueueData ?? []) as ReviewQueueItem[]).map(item => {
 		const nextReview = new Date(item.next_review_at);
 		return {
@@ -413,18 +420,14 @@ export const actions: Actions = {
 		nextReviewAt.setDate(nextReviewAt.getDate() + newInterval);
 
 		// Update the review item
-		const { error } = await (locals.supabase
-			.from('review_queue') as any)
-			.update({
-				ease_factor: newEase,
-				interval_days: newInterval,
-				last_reviewed_at: new Date().toISOString(),
-				next_review_at: nextReviewAt.toISOString(),
-				review_count: (currentItem.review_count ?? 0) + 1,
-				updated_at: new Date().toISOString()
-			})
-			.eq('id', reviewId)
-			.eq('user_id', user.id);
+		const { error } = await updateReviewQueueItem(locals.supabase, reviewId, {
+			ease_factor: newEase,
+			interval_days: newInterval,
+			last_reviewed_at: new Date().toISOString(),
+			next_review_at: nextReviewAt.toISOString(),
+			review_count: (currentItem.review_count ?? 0) + 1,
+			updated_at: new Date().toISOString()
+		});
 
 		if (error) {
 			return { success: false, error: error.message };
@@ -464,17 +467,15 @@ export const actions: Actions = {
 		const nextReviewAt = new Date();
 		nextReviewAt.setDate(nextReviewAt.getDate() + 1);
 
-		const { error } = await (locals.supabase
-			.from('review_queue') as any)
-			.insert({
-				user_id: user.id,
-				concept_id: conceptId,
-				module_id: moduleId,
-				next_review_at: nextReviewAt.toISOString(),
-				ease_factor: SM2_INITIAL_EASE,
-				interval_days: 1,
-				review_count: 0
-			});
+		const { error } = await insertReviewQueueItem(locals.supabase, {
+			user_id: user.id,
+			concept_id: conceptId,
+			module_id: moduleId,
+			next_review_at: nextReviewAt.toISOString(),
+			ease_factor: SM2_INITIAL_EASE,
+			interval_days: 1,
+			review_count: 0
+		});
 
 		if (error) {
 			return { success: false, error: error.message };

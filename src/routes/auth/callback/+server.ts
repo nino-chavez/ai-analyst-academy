@@ -1,6 +1,8 @@
 import { redirect } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import type { UserProfileInsert } from '$lib/types/database';
+import { getSafeRedirect } from '$lib/utils/redirect';
+import { insertUserProfile } from '$lib/db';
 
 interface ProfileCheck {
 	id: string;
@@ -9,7 +11,8 @@ interface ProfileCheck {
 
 export const GET: RequestHandler = async ({ url, locals }) => {
 	const code = url.searchParams.get('code');
-	const next = url.searchParams.get('next') ?? '/learn';
+	// Validate the redirect URL to prevent open redirect attacks
+	const next = getSafeRedirect(url.searchParams.get('next'));
 
 	if (code) {
 		const { error } = await locals.supabase.auth.exchangeCodeForSession(code);
@@ -34,8 +37,7 @@ export const GET: RequestHandler = async ({ url, locals }) => {
 						avatar_url: user.user_metadata?.avatar_url || null,
 						onboarding_completed: false
 					};
-					// Type assertion needed due to Supabase SSR typing quirk
-					await (locals.supabase.from('user_profiles') as any).insert(newProfile);
+					await insertUserProfile(locals.supabase, newProfile);
 					// New user - redirect to onboarding
 					redirect(303, '/onboarding');
 				}

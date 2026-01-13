@@ -3,6 +3,7 @@ import { loadCurriculum, getModuleNavigation } from '$content/loader';
 import { error, fail } from '@sveltejs/kit';
 import type { ModuleProgress, ModuleProgressInsert, ModuleProgressUpdate } from '$lib/types/database';
 import { updateUserStreak } from '$lib/utils/streak';
+import { getModuleProgress, insertModuleProgress, updateModuleProgress } from '$lib/db';
 
 interface SavedProgress {
 	sectionsViewed: string[];
@@ -103,12 +104,7 @@ export const actions: Actions = {
 		const checklistItems = JSON.parse(formData.get('checklistItems') as string || '{}') as Record<string, Record<string, boolean>>;
 
 		// Check if progress record exists
-		const { data: existing } = await (locals.supabase
-			.from('module_progress') as any)
-			.select('id')
-			.eq('user_id', user.id)
-			.eq('module_id', moduleId)
-			.single() as { data: { id: string } | null };
+		const { data: existing } = await getModuleProgress(locals.supabase, user.id, moduleId);
 
 		if (existing) {
 			// Update existing record
@@ -120,10 +116,12 @@ export const actions: Actions = {
 				updated_at: new Date().toISOString()
 			};
 
-			// Type assertion needed due to Supabase SSR typing quirk
-			const { error: updateError } = await (locals.supabase.from('module_progress') as any)
-				.update(updateData)
-				.eq('id', existing.id);
+			const { error: updateError } = await updateModuleProgress(
+				locals.supabase,
+				user.id,
+				moduleId,
+				updateData
+			);
 
 			if (updateError) {
 				return fail(500, { error: 'Failed to save progress' });
@@ -141,9 +139,7 @@ export const actions: Actions = {
 				started_at: new Date().toISOString()
 			};
 
-			// Type assertion needed due to Supabase SSR typing quirk
-			const { error: insertError } = await (locals.supabase.from('module_progress') as any)
-				.insert(insertData);
+			const { error: insertError } = await insertModuleProgress(locals.supabase, insertData);
 
 			if (insertError) {
 				return fail(500, { error: 'Failed to save progress' });

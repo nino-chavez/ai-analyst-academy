@@ -1,5 +1,7 @@
 import { redirect, fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
+import { RoleSelectionSchema } from '$lib/validation/schemas';
+import { insertUserProfile, updateUserProfile } from '$lib/db';
 
 interface ProfileData {
 	persona_type: string | null;
@@ -39,13 +41,15 @@ export const actions: Actions = {
 		}
 
 		const formData = await request.formData();
-		const personaType = formData.get('personaType') as string;
+		const rawPersonaType = formData.get('personaType');
 
-		// Validate persona type
-		const validPersonas = ['career-pivoter', 'business-student', 'team-lead', 'curious-explorer'];
-		if (!personaType || !validPersonas.includes(personaType)) {
+		// Validate persona type using Zod schema
+		const parseResult = RoleSelectionSchema.safeParse({ personaType: rawPersonaType });
+		if (!parseResult.success) {
 			return fail(400, { error: 'Please select a valid role' });
 		}
+
+		const { personaType } = parseResult.data;
 
 		// Check if profile exists
 		const { data: existingProfile } = await locals.supabase
@@ -56,12 +60,10 @@ export const actions: Actions = {
 
 		if (existingProfile) {
 			// Update existing profile
-			const { error } = await (locals.supabase.from('user_profiles') as any)
-				.update({
-					persona_type: personaType,
-					updated_at: new Date().toISOString()
-				})
-				.eq('id', user.id);
+			const { error } = await updateUserProfile(locals.supabase, user.id, {
+				persona_type: personaType,
+				updated_at: new Date().toISOString()
+			});
 
 			if (error) {
 				console.error('Error updating persona:', error);
@@ -69,7 +71,7 @@ export const actions: Actions = {
 			}
 		} else {
 			// Create new profile
-			const { error } = await (locals.supabase.from('user_profiles') as any).insert({
+			const { error } = await insertUserProfile(locals.supabase, {
 				id: user.id,
 				persona_type: personaType,
 				created_at: new Date().toISOString(),

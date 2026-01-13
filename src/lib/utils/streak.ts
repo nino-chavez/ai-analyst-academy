@@ -3,8 +3,11 @@
  * Calculates and updates user streaks based on daily activity
  */
 
+import { getUserProfile, updateUserProfile } from '$lib/db';
+
+// Use the same flexible type from db layer
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type SupabaseClientAny = any;
+type SupabaseClient = { from: (table: string) => any };
 
 interface StreakResult {
 	currentStreak: number;
@@ -88,15 +91,15 @@ export function calculateStreak(
  * Update user's streak and last_active_at in database
  */
 export async function updateUserStreak(
-	supabase: SupabaseClientAny,
+	supabase: SupabaseClient,
 	userId: string
 ): Promise<StreakResult | null> {
 	// Get current profile data
-	const { data: profile } = await (supabase
-		.from('user_profiles') as any)
-		.select('last_active_at, streak_current, streak_longest')
-		.eq('id', userId)
-		.single();
+	const { data: profile } = await getUserProfile(
+		supabase,
+		userId,
+		'last_active_at, streak_current, streak_longest'
+	);
 
 	if (!profile) {
 		return null;
@@ -110,22 +113,18 @@ export async function updateUserStreak(
 
 	// Only update if it's a new day
 	if (result.isNewDay) {
-		await (supabase.from('user_profiles') as any)
-			.update({
-				last_active_at: new Date().toISOString(),
-				streak_current: result.currentStreak,
-				streak_longest: result.longestStreak,
-				updated_at: new Date().toISOString()
-			})
-			.eq('id', userId);
+		await updateUserProfile(supabase, userId, {
+			last_active_at: new Date().toISOString(),
+			streak_current: result.currentStreak,
+			streak_longest: result.longestStreak,
+			updated_at: new Date().toISOString()
+		});
 	} else {
 		// Just update last_active_at timestamp
-		await (supabase.from('user_profiles') as any)
-			.update({
-				last_active_at: new Date().toISOString(),
-				updated_at: new Date().toISOString()
-			})
-			.eq('id', userId);
+		await updateUserProfile(supabase, userId, {
+			last_active_at: new Date().toISOString(),
+			updated_at: new Date().toISOString()
+		});
 	}
 
 	return result;

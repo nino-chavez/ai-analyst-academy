@@ -3,6 +3,7 @@ import { loadCurriculum, loadLab } from '$content/loader';
 import { error, fail } from '@sveltejs/kit';
 import type { LabProgress, LabProgressInsert, LabProgressUpdate } from '$lib/types/database';
 import { updateUserStreak } from '$lib/utils/streak';
+import { getLabProgress, insertLabProgress, updateLabProgress } from '$lib/db';
 
 interface SavedLabProgress {
 	status: string | null;
@@ -96,12 +97,7 @@ export const actions: Actions = {
 		const isCompleted = formData.get('isCompleted') === 'true';
 
 		// Check if progress record exists
-		const { data: existing } = await (locals.supabase
-			.from('lab_progress') as any)
-			.select('id')
-			.eq('user_id', user.id)
-			.eq('lab_id', labId)
-			.single() as { data: { id: string } | null };
+		const { data: existing } = await getLabProgress(locals.supabase, user.id, labId);
 
 		const workData = { sectionsViewed };
 		const status = isCompleted ? 'completed' : 'in_progress';
@@ -115,10 +111,12 @@ export const actions: Actions = {
 				completed_at: isCompleted ? new Date().toISOString() : null
 			};
 
-			// Type assertion needed due to Supabase SSR typing quirk
-			const { error: updateError } = await (locals.supabase.from('lab_progress') as any)
-				.update(updateData)
-				.eq('id', existing.id);
+			const { error: updateError } = await updateLabProgress(
+				locals.supabase,
+				user.id,
+				labId,
+				updateData
+			);
 
 			if (updateError) {
 				return fail(500, { error: 'Failed to save progress' });
@@ -135,9 +133,7 @@ export const actions: Actions = {
 				completed_at: isCompleted ? new Date().toISOString() : null
 			};
 
-			// Type assertion needed due to Supabase SSR typing quirk
-			const { error: insertError } = await (locals.supabase.from('lab_progress') as any)
-				.insert(insertData);
+			const { error: insertError } = await insertLabProgress(locals.supabase, insertData);
 
 			if (insertError) {
 				return fail(500, { error: 'Failed to save progress' });

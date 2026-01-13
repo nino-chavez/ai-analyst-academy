@@ -267,7 +267,9 @@
 
 	.search-icon {
 		position: absolute;
-		left: var(--space-3);
+		left: 12px;
+		top: 50%;
+		transform: translateY(-50%);
 		color: var(--color-text-tertiary);
 		pointer-events: none;
 	}
@@ -275,7 +277,7 @@
 	.search-input {
 		width: 100%;
 		height: 36px;
-		padding: 0 var(--space-10) 0 var(--space-9);
+		padding: 0 40px 0 36px;
 		font-size: var(--text-sm);
 		color: var(--color-text-primary);
 		background-color: var(--color-bg-secondary);
@@ -300,7 +302,9 @@
 
 	.search-spinner {
 		position: absolute;
-		right: var(--space-9);
+		right: 36px;
+		top: 50%;
+		transform: translateY(-50%);
 		width: 14px;
 		height: 14px;
 		border: 2px solid var(--color-border-secondary);
@@ -317,7 +321,9 @@
 
 	.search-clear {
 		position: absolute;
-		right: var(--space-9);
+		right: 36px;
+		top: 50%;
+		transform: translateY(-50%);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -338,7 +344,9 @@
 
 	.search-shortcut {
 		position: absolute;
-		right: var(--space-3);
+		right: 10px;
+		top: 50%;
+		transform: translateY(-50%);
 		padding: 2px 6px;
 		font-size: var(--text-xs);
 		font-family: var(--font-mono);

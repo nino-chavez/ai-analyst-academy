@@ -6,6 +6,7 @@ import type {
 	CapstoneProject
 } from '$lib/types/database';
 import { TABLES } from '$lib/supabase';
+import { insertPhaseDeliverable, updatePhaseDeliverable, deletePhaseDeliverable } from '$lib/db';
 
 // Lab metadata for display
 const LAB_METADATA: Record<string, { title: string; phase: number }> = {
@@ -142,8 +143,7 @@ export const actions: Actions = {
 			return fail(400, { error: 'Valid phase is required', field: 'phaseId' });
 		}
 
-		// Type assertion needed due to Supabase SSR typing quirk
-		const { error } = await (locals.supabase.from('phase_deliverables') as any).insert({
+		const { error } = await insertPhaseDeliverable(locals.supabase, {
 			user_id: user.id,
 			title,
 			description: description || null,
@@ -192,11 +192,7 @@ export const actions: Actions = {
 			updateData.submitted_at = new Date().toISOString();
 		}
 
-		// Type assertion needed due to Supabase SSR typing quirk
-		const { error } = await (locals.supabase.from('phase_deliverables') as any)
-			.update(updateData)
-			.eq('id', id)
-			.eq('user_id', user.id);
+		const { error } = await updatePhaseDeliverable(locals.supabase, id, updateData);
 
 		if (error) {
 			console.error('Error updating deliverable:', error);
@@ -220,11 +216,7 @@ export const actions: Actions = {
 			return fail(400, { error: 'Deliverable ID is required' });
 		}
 
-		// Type assertion needed due to Supabase SSR typing quirk
-		const { error } = await (locals.supabase.from('phase_deliverables') as any)
-			.delete()
-			.eq('id', id)
-			.eq('user_id', user.id);
+		const { error } = await deletePhaseDeliverable(locals.supabase, id);
 
 		if (error) {
 			console.error('Error deleting deliverable:', error);

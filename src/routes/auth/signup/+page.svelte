@@ -29,7 +29,7 @@
 		isLoading = true;
 		error = null;
 
-		const { error: authError } = await supabase.auth.signUp({
+		const { data, error: authError } = await supabase.auth.signUp({
 			email,
 			password,
 			options: {
@@ -43,6 +43,14 @@
 			return;
 		}
 
+		// If session exists, user is already confirmed (email confirmation disabled)
+		// Redirect to onboarding
+		if (data.session) {
+			window.location.href = '/onboarding';
+			return;
+		}
+
+		// Otherwise, show email confirmation message
 		success = true;
 		isLoading = false;
 	}

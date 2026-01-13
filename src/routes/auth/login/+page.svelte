@@ -9,10 +9,28 @@
 	let isLoading = $state(false);
 	let error = $state<string | null>(null);
 
-	// Get redirect URL from query params
+	// Allowed redirect paths to prevent open redirect attacks
+	const ALLOWED_PATHS = ['/learn', '/progress', '/settings', '/portfolio', '/sandbox', '/onboarding', '/syllabus'];
+	const DEFAULT_REDIRECT = '/learn';
+
+	// Get and validate redirect URL from query params
 	const getRedirectUrl = () => {
 		const next = $page.url.searchParams.get('next');
-		return next ? decodeURIComponent(next) : '/learn';
+		if (!next) return DEFAULT_REDIRECT;
+
+		try {
+			const decoded = decodeURIComponent(next);
+			// Must be a relative path starting with /
+			if (!decoded.startsWith('/') || decoded.startsWith('//')) return DEFAULT_REDIRECT;
+			// Check against allowed paths
+			const pathOnly = decoded.split('?')[0].split('#')[0];
+			const isAllowed = ALLOWED_PATHS.some(
+				p => pathOnly === p || pathOnly.startsWith(`${p}/`)
+			);
+			return isAllowed ? decoded : DEFAULT_REDIRECT;
+		} catch {
+			return DEFAULT_REDIRECT;
+		}
 	};
 
 	// Check for error in URL params
@@ -50,7 +68,8 @@
 		isLoading = true;
 		error = null;
 
-		const next = $page.url.searchParams.get('next') || '/learn';
+		// Use validated redirect URL to prevent open redirect
+		const next = getRedirectUrl();
 		const { error: authError } = await supabase.auth.signInWithOAuth({
 			provider,
 			options: {

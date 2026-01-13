@@ -1,17 +1,52 @@
 import { json, error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import type { UserApiKey } from '$lib/types/database';
+import { decrypt, isNewEncryptionFormat, migrateOldKey } from '$lib/utils/crypto';
+import { ChatRequestSchema } from '$lib/validation/schemas';
+import { checkRateLimit, createRateLimitKey, RateLimits } from '$lib/utils/rate-limiter';
+import { updateUserApiKey } from '$lib/db';
 
-// Decrypt the stored API key
-function decryptKey(encrypted: string, userId: string): string | null {
-	try {
-		const decoded = Buffer.from(encrypted, 'base64').toString('utf-8');
-		const [storedUserId, key] = decoded.split(':');
-		if (storedUserId !== userId) return null;
-		return key;
-	} catch {
-		return null;
+/**
+ * Decrypts an API key, handling both old and new encryption formats.
+ * Automatically migrates old Base64 keys to the new AES-256-GCM format.
+ */
+function decryptKeyWithMigration(
+	encrypted: string,
+	userId: string,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	supabase: any,
+	provider: string
+): string | null {
+	// Check if this is the new encryption format
+	if (isNewEncryptionFormat(encrypted)) {
+		try {
+			return decrypt(encrypted, userId);
+		} catch (err) {
+			console.error('Failed to decrypt key with new format:', err);
+			return null;
+		}
 	}
+
+	// Try to migrate old format
+	const migrated = migrateOldKey(encrypted, userId);
+	if (migrated) {
+		// Update the key to the new format in the background (fire and forget)
+		supabase
+			.from('user_api_keys')
+			.update({
+				encrypted_key: migrated.newEncryptedKey,
+				updated_at: new Date().toISOString()
+			})
+			.eq('user_id', userId)
+			.eq('provider', provider)
+			.then(() => {
+				console.log(`Migrated ${provider} API key to new encryption format for user ${userId}`);
+			});
+
+		return migrated.plainKey;
+	}
+
+	return null;
 }
 
 // System prompts for different personas
@@ -153,14 +188,35 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		throw error(401, 'Unauthorized');
 	}
 
-	const { messages, persona, provider = 'openai' } = await request.json();
+	// Rate limiting: 60 requests per minute per user
+	const rateLimitKey = createRateLimitKey(user.id, 'chat');
+	const rateLimit = checkRateLimit(rateLimitKey, RateLimits.chat);
 
-	if (!messages || !Array.isArray(messages)) {
-		throw error(400, 'Messages array is required');
+	if (!rateLimit.allowed) {
+		throw error(429, `Rate limit exceeded. Try again in ${Math.ceil(rateLimit.resetMs / 1000)} seconds.`);
 	}
 
-	if (!persona || !personaPrompts[persona]) {
-		throw error(400, 'Valid persona is required');
+	// Parse and validate request body with Zod
+	let requestBody: unknown;
+	try {
+		requestBody = await request.json();
+	} catch {
+		throw error(400, 'Invalid JSON in request body');
+	}
+
+	const parseResult = ChatRequestSchema.safeParse(requestBody);
+	if (!parseResult.success) {
+		const errorMessages = parseResult.error.issues
+			.map((issue) => `${issue.path.join('.')}: ${issue.message}`)
+			.join('; ');
+		throw error(400, `Validation failed: ${errorMessages}`);
+	}
+
+	const { messages, persona, provider } = parseResult.data;
+
+	// Validate persona exists in our prompts
+	if (!personaPrompts[persona]) {
+		throw error(400, 'Invalid persona specified');
 	}
 
 	// Fetch the user's API key for the selected provider
@@ -175,8 +231,8 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		throw error(400, `No valid ${provider} API key configured. Please add one in Settings.`);
 	}
 
-	// Decrypt the API key
-	const apiKey = decryptKey(apiKeyData.encrypted_key, user.id);
+	// Decrypt the API key (handles both old and new formats, with automatic migration)
+	const apiKey = decryptKeyWithMigration(apiKeyData.encrypted_key, user.id, locals.supabase, provider);
 	if (!apiKey) {
 		throw error(500, 'Failed to decrypt API key');
 	}
@@ -212,10 +268,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		// Mark the key as invalid if it's an auth error
 		const errorMessage = err instanceof Error ? err.message : 'Unknown error';
 		if (errorMessage.includes('401') || errorMessage.includes('invalid') || errorMessage.includes('Incorrect API key')) {
-			await (locals.supabase.from('user_api_keys') as any)
-				.update({ is_valid: false })
-				.eq('user_id', user.id)
-				.eq('provider', provider);
+			await updateUserApiKey(locals.supabase, user.id, provider, { is_valid: false });
 		}
 
 		throw error(500, `AI request failed: ${errorMessage}`);

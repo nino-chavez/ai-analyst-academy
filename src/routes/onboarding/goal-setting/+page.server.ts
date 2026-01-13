@@ -1,5 +1,7 @@
 import { redirect, fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
+import { GoalSettingSchema } from '$lib/validation/schemas';
+import { updateUserProfile } from '$lib/db';
 
 interface ProfileData {
 	persona_type: string | null;
@@ -46,20 +48,21 @@ export const actions: Actions = {
 		}
 
 		const formData = await request.formData();
-		const dailyGoal = parseInt(formData.get('dailyGoal') as string) || 30;
+		const rawDailyGoal = formData.get('dailyGoal');
 
-		// Validate goal
-		if (dailyGoal < 15 || dailyGoal > 120) {
-			return fail(400, { error: 'Daily goal must be between 15 and 120 minutes' });
+		// Validate goal using Zod schema (only accepts 15, 30, 60, 90)
+		const parseResult = GoalSettingSchema.safeParse({ dailyGoal: rawDailyGoal });
+		if (!parseResult.success) {
+			return fail(400, { error: 'Please select a valid daily goal' });
 		}
 
+		const { dailyGoal } = parseResult.data;
+
 		// Update profile
-		const { error } = await (locals.supabase.from('user_profiles') as any)
-			.update({
-				daily_goal_minutes: dailyGoal,
-				updated_at: new Date().toISOString()
-			})
-			.eq('id', user.id);
+		const { error } = await updateUserProfile(locals.supabase, user.id, {
+			daily_goal_minutes: dailyGoal,
+			updated_at: new Date().toISOString()
+		});
 
 		if (error) {
 			console.error('Error updating goal:', error);
@@ -77,12 +80,10 @@ export const actions: Actions = {
 		}
 
 		// Set default goal and continue
-		await (locals.supabase.from('user_profiles') as any)
-			.update({
-				daily_goal_minutes: 30,
-				updated_at: new Date().toISOString()
-			})
-			.eq('id', user.id);
+		await updateUserProfile(locals.supabase, user.id, {
+			daily_goal_minutes: 30,
+			updated_at: new Date().toISOString()
+		});
 
 		throw redirect(303, '/onboarding/api-setup');
 	}

@@ -1,14 +1,15 @@
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import type { UserApiKey } from '$lib/types/database';
+import { encrypt } from '$lib/utils/crypto';
+import { insertUserApiKey, updateUserApiKey, deleteUserApiKey } from '$lib/db';
 
-// Simple XOR encryption for API keys (in production, use a proper encryption library)
-// This is a placeholder - in production you'd use something like Web Crypto API or a proper encryption service
+/**
+ * Encrypts an API key using AES-256-GCM.
+ * Uses the user ID as additional authenticated data (AAD) to bind the key to the user.
+ */
 function encryptKey(key: string, userId: string): string {
-	// Base64 encode with user ID as a simple obfuscation
-	// In production: use AES-256-GCM or similar
-	const combined = `${userId}:${key}`;
-	return Buffer.from(combined).toString('base64');
+	return encrypt(key, userId);
 }
 
 function getKeyHint(key: string): string {
@@ -116,14 +117,12 @@ export const actions: Actions = {
 
 		if (existingKey) {
 			// Update existing key
-			const { error } = await (locals.supabase.from('user_api_keys') as any)
-				.update({
-					encrypted_key: encryptedKey,
-					key_hint: keyHint,
-					is_valid: true,
-					updated_at: new Date().toISOString()
-				})
-				.eq('id', existingKey.id);
+			const { error } = await updateUserApiKey(locals.supabase, user.id, provider, {
+				encrypted_key: encryptedKey,
+				key_hint: keyHint,
+				is_valid: true,
+				updated_at: new Date().toISOString()
+			});
 
 			if (error) {
 				console.error('Error updating API key:', error);
@@ -131,14 +130,13 @@ export const actions: Actions = {
 			}
 		} else {
 			// Insert new key
-			const { error } = await (locals.supabase.from('user_api_keys') as any)
-				.insert({
-					user_id: user.id,
-					provider,
-					encrypted_key: encryptedKey,
-					key_hint: keyHint,
-					is_valid: true
-				});
+			const { error } = await insertUserApiKey(locals.supabase, {
+				user_id: user.id,
+				provider,
+				encrypted_key: encryptedKey,
+				key_hint: keyHint,
+				is_valid: true
+			});
 
 			if (error) {
 				console.error('Error saving API key:', error);
@@ -164,10 +162,7 @@ export const actions: Actions = {
 			return fail(400, { error: 'Invalid provider' });
 		}
 
-		const { error } = await (locals.supabase.from('user_api_keys') as any)
-			.delete()
-			.eq('user_id', user.id)
-			.eq('provider', provider);
+		const { error } = await deleteUserApiKey(locals.supabase, user.id, provider);
 
 		if (error) {
 			console.error('Error removing API key:', error);

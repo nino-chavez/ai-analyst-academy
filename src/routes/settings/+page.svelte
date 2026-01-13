@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { browser } from '$app/environment';
+	import { goto } from '$app/navigation';
 	import { untrack } from 'svelte';
 	import type { PageData, ActionData } from './$types';
 
@@ -13,6 +14,8 @@
 	let darkMode = $state(false);
 	let isSubmitting = $state(false);
 	let successMessage = $state<string | null>(null);
+	let showDeleteConfirm = $state(false);
+	let isDeleting = $state(false);
 
 	// Initialize form fields from server data
 	$effect(() => {
@@ -234,7 +237,7 @@
 					</svg>
 					Export My Data
 				</button>
-				<button class="btn btn-danger">
+				<button class="btn btn-danger" onclick={() => showDeleteConfirm = true}>
 					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
 						<path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
 					</svg>
@@ -244,6 +247,47 @@
 		</section>
 	</div>
 </div>
+
+<!-- Delete Account Confirmation Modal -->
+{#if showDeleteConfirm}
+	<div class="modal-overlay" onclick={() => showDeleteConfirm = false} role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
+		<div class="modal" onclick={(e) => e.stopPropagation()}>
+			<h2 class="modal-title" id="delete-modal-title">Delete your account?</h2>
+			<p class="modal-description">
+				This action is permanent and cannot be undone. All your progress, settings, and data will be permanently deleted.
+			</p>
+			<div class="modal-actions">
+				<button class="btn btn-secondary" onclick={() => showDeleteConfirm = false} disabled={isDeleting}>
+					Cancel
+				</button>
+				<form
+					method="POST"
+					action="?/deleteAccount"
+					use:enhance={() => {
+						isDeleting = true;
+						return async ({ result }) => {
+							if (result.type === 'success') {
+								goto('/');
+							} else {
+								isDeleting = false;
+								showDeleteConfirm = false;
+							}
+						};
+					}}
+				>
+					<button type="submit" class="btn btn-danger" disabled={isDeleting}>
+						{#if isDeleting}
+							<span class="spinner"></span>
+							Deleting...
+						{:else}
+							Yes, Delete My Account
+						{/if}
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+{/if}
 
 <style>
 	.settings-page {
@@ -589,5 +633,46 @@
 		to {
 			transform: rotate(360deg);
 		}
+	}
+
+	/* Modal */
+	.modal-overlay {
+		position: fixed;
+		inset: 0;
+		background-color: rgba(0, 0, 0, 0.5);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 100;
+		padding: var(--space-4);
+	}
+
+	.modal {
+		background-color: var(--color-bg-primary);
+		border-radius: var(--radius-xl);
+		padding: var(--space-6);
+		max-width: 420px;
+		width: 100%;
+		box-shadow: var(--shadow-xl);
+	}
+
+	.modal-title {
+		font-size: var(--text-xl);
+		font-weight: var(--font-semibold);
+		color: var(--color-text-primary);
+		margin: 0 0 var(--space-3) 0;
+	}
+
+	.modal-description {
+		font-size: var(--text-sm);
+		color: var(--color-text-secondary);
+		margin: 0 0 var(--space-6) 0;
+		line-height: 1.6;
+	}
+
+	.modal-actions {
+		display: flex;
+		justify-content: flex-end;
+		gap: var(--space-3);
 	}
 </style>

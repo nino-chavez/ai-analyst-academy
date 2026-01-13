@@ -1,0 +1,276 @@
+/**
+ * Typed Database Access Layer
+ *
+ * This module provides type-safe wrappers around Supabase operations.
+ * The `as any` casts are necessary because Supabase's generated types
+ * return `never` for Insert/Update operations when RLS policies can't
+ * be statically analyzed (common with user-based policies).
+ *
+ * By centralizing these casts here, we:
+ * 1. Keep route handlers clean and readable
+ * 2. Ensure consistent error handling
+ * 3. Document the workaround in one place
+ * 4. Make it easy to fix when Supabase improves type generation
+ */
+
+import type {
+	UserProfileInsert,
+	UserProfileUpdate,
+	ModuleProgressInsert,
+	ModuleProgressUpdate,
+	LabProgressInsert,
+	LabProgressUpdate,
+	PhaseDeliverableInsert,
+	PhaseDeliverableUpdate,
+	UserApiKeyInsert,
+	UserApiKeyUpdate
+} from '$lib/types/database';
+
+// Use a flexible type that accepts any Supabase client with the expected methods
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type SupabaseClient = { from: (table: string) => any };
+
+// =============================================================================
+// User Profiles
+// =============================================================================
+
+export async function insertUserProfile(
+	supabase: SupabaseClient,
+	profile: UserProfileInsert
+) {
+	return (supabase.from('user_profiles') as any).insert(profile);
+}
+
+export async function updateUserProfile(
+	supabase: SupabaseClient,
+	userId: string,
+	updates: UserProfileUpdate
+) {
+	return (supabase.from('user_profiles') as any)
+		.update(updates)
+		.eq('id', userId);
+}
+
+export async function getUserProfile(
+	supabase: SupabaseClient,
+	userId: string,
+	columns: string = '*'
+) {
+	return supabase
+		.from('user_profiles')
+		.select(columns)
+		.eq('id', userId)
+		.single();
+}
+
+// =============================================================================
+// Module Progress
+// =============================================================================
+
+export async function insertModuleProgress(
+	supabase: SupabaseClient,
+	progress: ModuleProgressInsert
+) {
+	return (supabase.from('module_progress') as any).insert(progress);
+}
+
+export async function updateModuleProgress(
+	supabase: SupabaseClient,
+	userId: string,
+	moduleId: string,
+	updates: ModuleProgressUpdate
+) {
+	return (supabase.from('module_progress') as any)
+		.update(updates)
+		.eq('user_id', userId)
+		.eq('module_id', moduleId);
+}
+
+export async function getModuleProgress(
+	supabase: SupabaseClient,
+	userId: string,
+	moduleId: string
+) {
+	return supabase
+		.from('module_progress')
+		.select('*')
+		.eq('user_id', userId)
+		.eq('module_id', moduleId)
+		.single();
+}
+
+export async function upsertModuleProgress(
+	supabase: SupabaseClient,
+	progress: ModuleProgressInsert
+) {
+	return (supabase.from('module_progress') as any).upsert(progress, {
+		onConflict: 'user_id,module_id'
+	});
+}
+
+// =============================================================================
+// Lab Progress
+// =============================================================================
+
+export async function insertLabProgress(
+	supabase: SupabaseClient,
+	progress: LabProgressInsert
+) {
+	return (supabase.from('lab_progress') as any).insert(progress);
+}
+
+export async function updateLabProgress(
+	supabase: SupabaseClient,
+	userId: string,
+	labId: string,
+	updates: LabProgressUpdate
+) {
+	return (supabase.from('lab_progress') as any)
+		.update(updates)
+		.eq('user_id', userId)
+		.eq('lab_id', labId);
+}
+
+export async function getLabProgress(
+	supabase: SupabaseClient,
+	userId: string,
+	labId: string
+) {
+	return supabase
+		.from('lab_progress')
+		.select('*')
+		.eq('user_id', userId)
+		.eq('lab_id', labId)
+		.single();
+}
+
+export async function upsertLabProgress(
+	supabase: SupabaseClient,
+	progress: LabProgressInsert
+) {
+	return (supabase.from('lab_progress') as any).upsert(progress, {
+		onConflict: 'user_id,lab_id'
+	});
+}
+
+// =============================================================================
+// Phase Deliverables
+// =============================================================================
+
+export async function insertPhaseDeliverable(
+	supabase: SupabaseClient,
+	deliverable: PhaseDeliverableInsert
+) {
+	return (supabase.from('phase_deliverables') as any).insert(deliverable);
+}
+
+export async function updatePhaseDeliverable(
+	supabase: SupabaseClient,
+	id: string,
+	updates: PhaseDeliverableUpdate
+) {
+	return (supabase.from('phase_deliverables') as any)
+		.update(updates)
+		.eq('id', id);
+}
+
+export async function deletePhaseDeliverable(
+	supabase: SupabaseClient,
+	id: string
+) {
+	return (supabase.from('phase_deliverables') as any)
+		.delete()
+		.eq('id', id);
+}
+
+// =============================================================================
+// User API Keys
+// =============================================================================
+
+export async function insertUserApiKey(
+	supabase: SupabaseClient,
+	apiKey: UserApiKeyInsert
+) {
+	return (supabase.from('user_api_keys') as any).insert(apiKey);
+}
+
+export async function updateUserApiKey(
+	supabase: SupabaseClient,
+	userId: string,
+	provider: string,
+	updates: UserApiKeyUpdate
+) {
+	return (supabase.from('user_api_keys') as any)
+		.update(updates)
+		.eq('user_id', userId)
+		.eq('provider', provider);
+}
+
+export async function deleteUserApiKey(
+	supabase: SupabaseClient,
+	userId: string,
+	provider: string
+) {
+	return (supabase.from('user_api_keys') as any)
+		.delete()
+		.eq('user_id', userId)
+		.eq('provider', provider);
+}
+
+export async function getUserApiKey(
+	supabase: SupabaseClient,
+	userId: string,
+	provider: string
+) {
+	return supabase
+		.from('user_api_keys')
+		.select('*')
+		.eq('user_id', userId)
+		.eq('provider', provider)
+		.single();
+}
+
+// =============================================================================
+// Review Queue
+// =============================================================================
+
+export async function insertReviewQueueItem(
+	supabase: SupabaseClient,
+	item: {
+		user_id: string;
+		concept_id: string;
+		module_id: string;
+		next_review_at: string;
+		ease_factor?: number;
+		interval_days?: number;
+		review_count?: number;
+	}
+) {
+	return (supabase.from('review_queue') as any).insert(item);
+}
+
+export async function updateReviewQueueItem(
+	supabase: SupabaseClient,
+	id: string,
+	updates: {
+		next_review_at?: string;
+		last_reviewed_at?: string;
+		ease_factor?: number;
+		interval_days?: number;
+		review_count?: number;
+		updated_at?: string;
+	}
+) {
+	return (supabase.from('review_queue') as any)
+		.update(updates)
+		.eq('id', id);
+}
+
+export async function deleteReviewQueueItem(
+	supabase: SupabaseClient,
+	id: string
+) {
+	return (supabase.from('review_queue') as any)
+		.delete()
+		.eq('id', id);
+}
