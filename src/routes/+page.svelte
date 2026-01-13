@@ -240,6 +240,22 @@
 			</a>
 		</div>
 	</section>
+
+	<!-- Footer -->
+	<footer class="landing-footer">
+		<div class="footer-content">
+			<div class="footer-brand">
+				<span class="footer-logo">AI Analyst Academy</span>
+				<p class="footer-tagline">Design human-AI systems that transform business.</p>
+			</div>
+			<div class="footer-links">
+				<a href="/syllabus">Syllabus</a>
+				<a href="/legal/terms">Terms of Service</a>
+				<a href="/legal/privacy">Privacy Policy</a>
+			</div>
+			<p class="footer-copyright">&copy; {new Date().getFullYear()} AI Analyst Academy. All rights reserved.</p>
+		</div>
+	</footer>
 </div>
 
 <style>
@@ -609,6 +625,57 @@
 		font-size: var(--text-lg);
 		color: var(--color-text-secondary);
 		margin: 0 0 var(--space-6) 0;
+	}
+
+	/* Footer */
+	.landing-footer {
+		margin-top: var(--space-12);
+		padding: var(--space-8) 0;
+		border-top: var(--border-width) solid var(--color-border-secondary);
+	}
+
+	.footer-content {
+		text-align: center;
+	}
+
+	.footer-brand {
+		margin-bottom: var(--space-4);
+	}
+
+	.footer-logo {
+		font-size: var(--text-lg);
+		font-weight: var(--font-semibold);
+		color: var(--color-text-primary);
+	}
+
+	.footer-tagline {
+		font-size: var(--text-sm);
+		color: var(--color-text-tertiary);
+		margin: var(--space-1) 0 0 0;
+	}
+
+	.footer-links {
+		display: flex;
+		justify-content: center;
+		gap: var(--space-6);
+		margin-bottom: var(--space-4);
+	}
+
+	.footer-links a {
+		font-size: var(--text-sm);
+		color: var(--color-text-secondary);
+		text-decoration: none;
+		transition: color var(--duration-150) var(--ease-out);
+	}
+
+	.footer-links a:hover {
+		color: var(--color-primary-500);
+	}
+
+	.footer-copyright {
+		font-size: var(--text-xs);
+		color: var(--color-text-tertiary);
+		margin: 0;
 	}
 
 </style>
