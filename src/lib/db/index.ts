@@ -87,11 +87,12 @@ export async function updateModuleProgress(
 export async function getModuleProgress(
 	supabase: SupabaseClient,
 	userId: string,
-	moduleId: string
+	moduleId: string,
+	columns: string = 'id, user_id, module_id, phase_id, started_at, completed_at, sections_viewed, concepts_understood, exercises_completed'
 ) {
 	return supabase
 		.from('module_progress')
-		.select('*')
+		.select(columns)
 		.eq('user_id', userId)
 		.eq('module_id', moduleId)
 		.single();
@@ -132,11 +133,12 @@ export async function updateLabProgress(
 export async function getLabProgress(
 	supabase: SupabaseClient,
 	userId: string,
-	labId: string
+	labId: string,
+	columns: string = 'id, user_id, lab_id, phase_id, status, started_at, completed_at, score, feedback, deliverable_url'
 ) {
 	return supabase
 		.from('lab_progress')
-		.select('*')
+		.select(columns)
 		.eq('user_id', userId)
 		.eq('lab_id', labId)
 		.single();

@@ -38,22 +38,22 @@ export const load: PageServerLoad = async ({ locals }) => {
 		throw redirect(303, '/auth/login?next=/portfolio');
 	}
 
-	// Fetch all portfolio data in parallel
+	// Fetch all portfolio data in parallel - only select needed columns
 	const [deliverablesResult, labsResult, capstoneResult] = await Promise.all([
 		locals.supabase
 			.from(TABLES.PHASE_DELIVERABLES)
-			.select('*')
+			.select('id, phase_id, title, description, created_at, submitted_at, deliverable_url')
 			.eq('user_id', user.id)
 			.order('created_at', { ascending: false }),
 		locals.supabase
 			.from(TABLES.LAB_PROGRESS)
-			.select('*')
+			.select('id, lab_id, phase_id, status, feedback, created_at, deliverable_url')
 			.eq('user_id', user.id)
 			.in('status', ['completed', 'in_progress'])
 			.order('created_at', { ascending: false }),
 		locals.supabase
 			.from(TABLES.CAPSTONE_PROJECTS)
-			.select('*')
+			.select('id, title, description, status, created_at, deliverable_url')
 			.eq('user_id', user.id)
 			.order('created_at', { ascending: false })
 	]);

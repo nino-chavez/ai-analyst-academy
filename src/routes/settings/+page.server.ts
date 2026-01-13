@@ -13,10 +13,10 @@ export const load: PageServerLoad = async ({ locals }) => {
 		};
 	}
 
-	// Fetch user profile
+	// Fetch user profile - only select needed columns
 	const { data: profile, error } = await locals.supabase
 		.from('user_profiles')
-		.select('*')
+		.select('id, display_name, avatar_url, daily_goal_minutes, persona_type, skill_level, onboarding_completed')
 		.eq('id', user.id)
 		.single();
 
