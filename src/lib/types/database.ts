@@ -594,6 +594,5 @@ export type SandboxSessionUpdate = TablesUpdate<'sandbox_sessions'>
 export type SavedPromptUpdate = TablesUpdate<'saved_prompts'>
 export type ReviewQueueItemUpdate = TablesUpdate<'review_queue'>
 
-export type UserApiKey = Tables<'user_api_keys'>
-export type UserApiKeyInsert = TablesInsert<'user_api_keys'>
-export type UserApiKeyUpdate = TablesUpdate<'user_api_keys'>
+// Note: UserApiKey types removed - server-side API key storage has been eliminated
+// in favor of client-side BYOK (Bring Your Own Key) stored in localStorage only
