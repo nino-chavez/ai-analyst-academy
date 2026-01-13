@@ -10,6 +10,7 @@ modules:
   - "1.2-context-and-memory"
   - "1.3-providers-and-models"
   - "1.4-prompting-as-management"
+  - "1.5-problem-classification"
 labs:
   - "persona-stress-test"
   - "chain-of-thought-audit"

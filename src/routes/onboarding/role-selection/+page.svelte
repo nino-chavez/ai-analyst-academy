@@ -12,6 +12,7 @@
 
 	let { data, form }: Props = $props();
 
+	// svelte-ignore state_referenced_locally
 	const initialPersona = data.currentPersona;
 	let selectedRole = $state<string | null>(initialPersona);
 	let isSubmitting = $state(false);

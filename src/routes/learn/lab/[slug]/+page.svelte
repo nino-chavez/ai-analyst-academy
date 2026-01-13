@@ -41,7 +41,8 @@
 
 	let { data }: Props = $props();
 
-	// Initialize progress from saved data
+	// Initialize progress from saved data (intentionally captures initial value)
+	// svelte-ignore state_referenced_locally
 	const initialProgress = data.savedProgress;
 
 	// Track visible section based on scroll position

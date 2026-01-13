@@ -250,8 +250,9 @@
 
 <!-- Delete Account Confirmation Modal -->
 {#if showDeleteConfirm}
-	<div class="modal-overlay" onclick={() => showDeleteConfirm = false} role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
-		<div class="modal" onclick={(e) => e.stopPropagation()}>
+	<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+	<div class="modal-overlay" onclick={() => showDeleteConfirm = false} onkeydown={(e) => e.key === 'Escape' && (showDeleteConfirm = false)} role="dialog" aria-modal="true" aria-labelledby="delete-modal-title" tabindex="-1">
+		<div class="modal" onclick={(e) => e.stopPropagation()} onkeydown={(e) => e.stopPropagation()} role="document">
 			<h2 class="modal-title" id="delete-modal-title">Delete your account?</h2>
 			<p class="modal-description">
 				This action is permanent and cannot be undone. All your progress, settings, and data will be permanently deleted.

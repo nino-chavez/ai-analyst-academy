@@ -1,12 +1,12 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-13T03:47:44.415Z",
+  "generatedAt": "2026-01-13T20:22:56.837Z",
   "phases": [
     {
       "id": "phase-1",
       "order": 1,
       "title": "AI Literacy",
-      "moduleCount": 4,
+      "moduleCount": 5,
       "labCount": 2
     },
     {
@@ -14,7 +14,7 @@
       "order": 2,
       "title": "Workflow Engineering",
       "moduleCount": 4,
-      "labCount": 3
+      "labCount": 4
     },
     {
       "id": "phase-3",
@@ -31,7 +31,7 @@
       "labCount": 3
     }
   ],
-  "totalModules": 17,
-  "totalLabs": 11,
+  "totalModules": 18,
+  "totalLabs": 12,
   "totalEstimatedHours": 21
 }

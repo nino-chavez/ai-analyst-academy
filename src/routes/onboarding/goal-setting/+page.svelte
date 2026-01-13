@@ -13,6 +13,7 @@
 
 	let { data, form }: Props = $props();
 
+	// svelte-ignore state_referenced_locally
 	const initialGoal = data.currentGoal;
 	let selectedGoal = $state(initialGoal);
 	let isSubmitting = $state(false);

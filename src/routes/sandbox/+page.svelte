@@ -176,9 +176,10 @@
 	</header>
 
 	{#if showByokSetup}
+		<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 		<!-- BYOK Setup Modal -->
-		<div class="modal-backdrop" onclick={() => (showByokSetup = false)} role="presentation">
-			<div class="modal-content" onclick={(e) => e.stopPropagation()} role="dialog" aria-labelledby="byok-title">
+		<div class="modal-backdrop" onclick={() => (showByokSetup = false)} onkeydown={(e) => e.key === 'Escape' && (showByokSetup = false)} role="presentation">
+			<div class="modal-content" onclick={(e) => e.stopPropagation()} onkeydown={(e) => e.stopPropagation()} role="dialog" aria-labelledby="byok-title" tabindex="-1">
 				<h2 id="byok-title" class="modal-title">Use Your Own API Key</h2>
 				<p class="modal-description">
 					Power users can use their own API keys for more control. Keys are stored locally in your

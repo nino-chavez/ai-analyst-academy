@@ -12,6 +12,7 @@ modules:
   - "2.4-human-ai-handoffs"
 labs:
   - "workflow-mapping"
+  - "agent-evaluation"
   - "data-hygiene"
   - "quality-gate-design"
 deliverable:
