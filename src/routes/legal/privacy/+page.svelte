@@ -1,5 +1,5 @@
 <script lang="ts">
-	const lastUpdated = 'January 13, 2025';
+	const lastUpdated = 'January 13, 2026';
 </script>
 
 <svelte:head>
@@ -170,37 +170,105 @@
 					<li><strong>Portability:</strong> Receive your data in a portable format</li>
 					<li><strong>Objection:</strong> Object to certain processing of your data</li>
 				</ul>
+
+				<h3>How to Exercise Your Rights</h3>
 				<p>
-					To exercise these rights, please contact us using the information provided below.
+					To request access to, correction of, or deletion of your personal data, please email us at <a href="mailto:privacy@aianalyst.academy">privacy@aianalyst.academy</a> with the subject line "Data Request."
+				</p>
+				<p>Please include:</p>
+				<ul>
+					<li>Your name and email address associated with your account</li>
+					<li>A description of what you are requesting</li>
+					<li>Any relevant details to help us locate your data</li>
+				</ul>
+				<p>
+					We will respond to your request within 30 days. We may need to verify your identity before processing certain requests.
 				</p>
 			</section>
 
 			<section>
-				<h2>9. Children's Privacy</h2>
+				<h2>9. California Privacy Rights (CCPA)</h2>
 				<p>
-					AI Analyst Academy is not intended for children under 16 years of age. We do not knowingly collect personal information from children under 16. If you believe we have collected such information, please contact us immediately.
+					If you are a California resident, you have additional rights under the California Consumer Privacy Act (CCPA):
+				</p>
+				<ul>
+					<li><strong>Right to Know:</strong> You can request information about the categories and specific pieces of personal information we have collected about you</li>
+					<li><strong>Right to Delete:</strong> You can request deletion of your personal information</li>
+					<li><strong>Right to Non-Discrimination:</strong> We will not discriminate against you for exercising your privacy rights</li>
+				</ul>
+				<p>
+					<strong>We do not sell personal information.</strong> AI Analyst Academy does not sell, rent, or trade your personal information to third parties for monetary consideration.
 				</p>
 			</section>
 
 			<section>
-				<h2>10. International Data Transfers</h2>
+				<h2>10. European Privacy Rights (GDPR)</h2>
 				<p>
-					Your information may be transferred to and processed in countries other than your country of residence, including the United States. These countries may have different data protection laws. By using our Services, you consent to such transfers.
+					If you are in the European Economic Area (EEA), United Kingdom, or Switzerland, you have additional rights under the General Data Protection Regulation (GDPR):
+				</p>
+				<ul>
+					<li>Right to access your personal data</li>
+					<li>Right to rectification of inaccurate data</li>
+					<li>Right to erasure ("right to be forgotten")</li>
+					<li>Right to restrict processing</li>
+					<li>Right to data portability</li>
+					<li>Right to object to processing</li>
+					<li>Right to withdraw consent at any time</li>
+				</ul>
+
+				<h3>Legal Basis for Processing</h3>
+				<p>Our legal basis for processing your data is:</p>
+				<ul>
+					<li><strong>Consent:</strong> When you create an account and agree to this Privacy Policy</li>
+					<li><strong>Contract Performance:</strong> To provide the Services you requested (curriculum access, progress tracking)</li>
+					<li><strong>Legitimate Interests:</strong> To improve our Services, ensure security, and communicate with you about your account</li>
+				</ul>
+			</section>
+
+			<section>
+				<h2>11. Children's Privacy</h2>
+				<p>
+					<strong>AI Analyst Academy is not intended for children under 16 years of age.</strong> We do not knowingly collect personal information from children under 16. If you believe we have collected such information, please contact us immediately at <a href="mailto:privacy@aianalyst.academy">privacy@aianalyst.academy</a>.
+				</p>
+				<p>
+					If you are between 16 and 18 years old, you may use the Services with permission from a parent or guardian.
 				</p>
 			</section>
 
 			<section>
-				<h2>11. Changes to This Policy</h2>
+				<h2>12. International Data Transfers</h2>
 				<p>
-					We may update this Privacy Policy from time to time. We will notify you of material changes by posting the new policy on this page and updating the "Last Updated" date. We encourage you to review this policy periodically.
+					AI Analyst Academy is based in the United States. If you access the Services from outside the United States, your information may be transferred to, stored, and processed in the United States or other countries where our service providers operate.
+				</p>
+				<p>
+					These countries may have different data protection laws than your country of residence. By using our Services, you consent to the transfer of your information to these countries.
 				</p>
 			</section>
 
 			<section>
-				<h2>12. Contact Us</h2>
+				<h2>13. Changes to This Policy</h2>
 				<p>
-					If you have questions about this Privacy Policy or wish to exercise your data rights, please contact us through the information provided on our website.
+					We may update this Privacy Policy from time to time. We will notify you of material changes by:
 				</p>
+				<ul>
+					<li>Posting the updated policy on this page with a new "Last Updated" date</li>
+					<li>Sending an email notification to account holders for significant changes</li>
+				</ul>
+				<p>
+					Your continued use of the Services after changes take effect constitutes acceptance of the updated policy.
+				</p>
+			</section>
+
+			<section>
+				<h2>14. Contact Us</h2>
+				<p>
+					If you have questions about this Privacy Policy or our data practices, please contact us:
+				</p>
+				<ul>
+					<li><strong>Privacy Inquiries:</strong> <a href="mailto:privacy@aianalyst.academy">privacy@aianalyst.academy</a></li>
+					<li><strong>Data Requests:</strong> <a href="mailto:privacy@aianalyst.academy">privacy@aianalyst.academy</a> (subject: "Data Request")</li>
+					<li><strong>General Support:</strong> <a href="mailto:support@aianalyst.academy">support@aianalyst.academy</a></li>
+				</ul>
 			</section>
 		</div>
 
