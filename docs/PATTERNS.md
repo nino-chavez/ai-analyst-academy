@@ -1,6 +1,6 @@
 # Code Patterns Reference
 
-Comprehensive patterns and anti-patterns for AI Operator Academy development.
+Comprehensive patterns and anti-patterns for AI Analyst Academy development.
 
 ## Table of Contents
 

@@ -132,7 +132,7 @@
 </script>
 
 <svelte:head>
-	<title>AI Sandbox | AI Operator Academy</title>
+	<title>AI Sandbox | AI Analyst Academy</title>
 	<meta
 		name="description"
 		content="Practice AI prompting with your own API keys in a safe sandbox environment"

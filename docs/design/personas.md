@@ -1,8 +1,8 @@
-# AI Operator Academy — User Personas
+# AI Analyst Academy — User Personas
 
 ## Overview
 
-This document defines the four primary user personas for the AI Operator Academy. Each persona represents a distinct user segment with unique backgrounds, goals, pain points, and optimal learning paths through the curriculum.
+This document defines the four primary user personas for the AI Analyst Academy. Each persona represents a distinct user segment with unique backgrounds, goals, pain points, and optimal learning paths through the curriculum.
 
 ---
 

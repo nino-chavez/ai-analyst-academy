@@ -157,7 +157,7 @@
 </script>
 
 <svelte:head>
-	<title>Style Guide | AI Operator Academy</title>
+	<title>Style Guide | AI Analyst Academy</title>
 </svelte:head>
 
 <div class="style-guide">
@@ -165,7 +165,7 @@
 	<header class="header">
 		<div class="header-content">
 			<div class="header-title">
-				<h1>AI Operator Academy</h1>
+				<h1>AI Analyst Academy</h1>
 				<span class="badge">Style Guide</span>
 			</div>
 			<div class="header-actions">
@@ -413,7 +413,7 @@
 									<span class="type-size">{type.size}</span>
 								</div>
 								<p class="type-sample" style="font-size: var(--{type.name})">
-									AI Operator Academy
+									AI Analyst Academy
 								</p>
 							</div>
 						{/each}
@@ -908,7 +908,7 @@ const estimateTokens = (text) => Math.ceil(text.length / 4);</code></pre>
 
 	<!-- Footer -->
 	<footer class="footer">
-		<p>AI Operator Academy Design System v1.0</p>
+		<p>AI Analyst Academy Design System v1.0</p>
 		<p class="meta">Last updated: {new Date().toLocaleDateString()}</p>
 	</footer>
 </div>

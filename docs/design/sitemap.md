@@ -1,10 +1,10 @@
-# AI Operator Academy — Information Architecture & Sitemap
+# AI Analyst Academy — Information Architecture & Sitemap
 
 > **Implementation Status:** See [PROGRESS.md](../PROGRESS.md) for current development status.
 
 ## Overview
 
-This document defines the information architecture for the AI Operator Academy platform. It includes the complete sitemap, URL structure, content hierarchy, and navigation patterns optimized for learning and development.
+This document defines the information architecture for the AI Analyst Academy platform. It includes the complete sitemap, URL structure, content hierarchy, and navigation patterns optimized for learning and development.
 
 ---
 
@@ -491,7 +491,7 @@ Curriculum > Phase 1: AI Literacy > Module 1.2: Context and Memory > WHAT
 
 ```
 ┌───────────────────────────┐
-│  ☰  AI Operator Academy   │
+│  ☰  AI Analyst Academy   │
 ├───────────────────────────┤
 │                           │
 │  [Main Content Area]      │

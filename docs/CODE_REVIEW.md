@@ -1,6 +1,6 @@
 # Code Review Process
 
-> AI Operator Academy code review guidelines based on Google Engineering Practices, Microsoft Code Review Best Practices, and OWASP security standards.
+> AI Analyst Academy code review guidelines based on Google Engineering Practices, Microsoft Code Review Best Practices, and OWASP security standards.
 
 ## Table of Contents
 

@@ -1,4 +1,4 @@
-# AI Operator Academy — Implementation Progress
+# AI Analyst Academy — Implementation Progress
 
 > **Last Updated:** 2026-01-12
 > **Purpose:** Single source of truth for implementation status. Reference this document before starting any development work.
@@ -20,7 +20,7 @@
 
 ### Curriculum Assessment
 
-> **Verdict:** This is a specialized vocational training program for AI Operators, not a generic AI course.
+> **Verdict:** This is a specialized vocational training program for AI Analysts, not a generic AI course.
 
 The curriculum maps **100%** of the "Business Engineer/Operator" persona skills directly to labs. All curriculum gaps have been filled with the addition of three new labs (3b, 5b, 7b).
 

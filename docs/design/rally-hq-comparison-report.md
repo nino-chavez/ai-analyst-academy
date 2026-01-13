@@ -1,14 +1,14 @@
-# Design System Comparison: Rally HQ vs AI Operator Academy
+# Design System Comparison: Rally HQ vs AI Analyst Academy
 
 ## Executive Summary
 
-Rally HQ has a **production-grade, battle-tested design system** built for complex tournament management UI. AI Operator Academy has a solid foundation but can significantly benefit from adopting Rally HQ's more mature patterns. This report identifies key improvements to elevate the Academy's UI/UX, visual design, and overall polish.
+Rally HQ has a **production-grade, battle-tested design system** built for complex tournament management UI. AI Analyst Academy has a solid foundation but can significantly benefit from adopting Rally HQ's more mature patterns. This report identifies key improvements to elevate the Academy's UI/UX, visual design, and overall polish.
 
 ---
 
 ## Side-by-Side Comparison
 
-| Aspect | Rally HQ | AI Operator Academy | Gap |
+| Aspect | Rally HQ | AI Analyst Academy | Gap |
 |--------|----------|---------------------|-----|
 | **CSS Architecture** | Two-tier semantic tokens + color scales | Single-tier CSS variables | Medium |
 | **Dark Mode** | Centralized `@media` block, arena colors invert | Scattered `[data-theme]` selectors | High |
@@ -549,7 +549,7 @@ From Rally HQ's documentation:
 
 ## Conclusion
 
-Rally HQ's design system represents ~2,700 lines of production-tested CSS. AI Operator Academy can adopt the most impactful patterns in phases:
+Rally HQ's design system represents ~2,700 lines of production-tested CSS. AI Analyst Academy can adopt the most impactful patterns in phases:
 
 1. **Immediate**: Fluid typography, navy shadows, centralized dark mode
 2. **Short-term**: Button interactions, focus rings, animation utilities

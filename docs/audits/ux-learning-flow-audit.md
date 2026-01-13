@@ -318,4 +318,4 @@ Fourth tab labeled "GENERIC" with title "Up Next"
 - Ausubel, D. P. (1968). Educational Psychology: A Cognitive View — Advance organizers
 - Krug, S. (2014). Don't Make Me Think — Passive vs. active navigation
 - Mayer, R. E. (2009). Multimedia Learning — Cognitive load theory
-- AI Operator Academy Personas Document — Learning preferences by persona
+- AI Analyst Academy Personas Document — Learning preferences by persona

@@ -1,4 +1,4 @@
-# Svelte 5 Patterns for AI Operator Academy
+# Svelte 5 Patterns for AI Analyst Academy
 
 This document captures Svelte 5-specific patterns and pitfalls discovered during development. These patterns prevent common runtime errors and ensure consistent component usage.
 

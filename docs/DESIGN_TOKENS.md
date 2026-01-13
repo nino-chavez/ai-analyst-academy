@@ -1,6 +1,6 @@
 # Design Tokens Reference
 
-This document describes the two-tier design token system used in AI Operator Academy.
+This document describes the two-tier design token system used in AI Analyst Academy.
 
 ## Token Architecture
 

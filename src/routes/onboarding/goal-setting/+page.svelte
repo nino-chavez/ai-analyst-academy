@@ -58,7 +58,7 @@
 </script>
 
 <svelte:head>
-	<title>Set Your Goal | AI Operator Academy</title>
+	<title>Set Your Goal | AI Analyst Academy</title>
 	<meta name="description" content="Choose your daily learning commitment" />
 </svelte:head>
 

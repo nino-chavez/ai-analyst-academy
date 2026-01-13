@@ -61,7 +61,7 @@
 </script>
 
 <svelte:head>
-	<title>Phase {data.phaseNumber}: {data.phase.title} | AI Operator Academy</title>
+	<title>Phase {data.phaseNumber}: {data.phase.title} | AI Analyst Academy</title>
 	<meta name="description" content={data.phase.description} />
 </svelte:head>
 

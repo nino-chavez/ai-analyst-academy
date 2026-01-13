@@ -222,7 +222,7 @@
 </script>
 
 <svelte:head>
-	<title>{data.lab.title} | {data.isCapstone ? 'Capstone' : `Lab ${data.lab.labNumber}`} | AI Operator Academy</title>
+	<title>{data.lab.title} | {data.isCapstone ? 'Capstone' : `Lab ${data.lab.labNumber}`} | AI Analyst Academy</title>
 	<meta name="description" content={data.lab.objectives[0] || `Complete the ${data.lab.title} lab`} />
 </svelte:head>
 

@@ -106,7 +106,7 @@ Functions:
 
 OPERATIONAL ROLES
 AI Product Owners: [Where they sit]
-AI Operators: [Where they sit]
+AI Analysts: [Where they sit]
 End Users: [How they're supported]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```

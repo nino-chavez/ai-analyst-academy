@@ -66,8 +66,8 @@
 </script>
 
 <svelte:head>
-	<title>Sign Up | AI Operator Academy</title>
-	<meta name="description" content="Create your AI Operator Academy account" />
+	<title>Sign Up | AI Analyst Academy</title>
+	<meta name="description" content="Create your AI Analyst Academy account" />
 </svelte:head>
 
 <div class="auth-page">
@@ -84,10 +84,10 @@
 						fill="none"
 					/>
 				</svg>
-				<span>AI Operator Academy</span>
+				<span>AI Analyst Academy</span>
 			</a>
 			<h1 class="auth-title">Create your account</h1>
-			<p class="auth-subtitle">Start your journey to becoming an AI Operator</p>
+			<p class="auth-subtitle">Start your journey to becoming an AI Analyst</p>
 		</div>
 
 		{#if success}

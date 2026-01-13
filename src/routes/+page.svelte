@@ -5,10 +5,10 @@
 </script>
 
 <svelte:head>
-	<title>AI Operator Academy | Master AI Tools for Business</title>
+	<title>AI Analyst Academy | Design Human-AI Systems for Business</title>
 	<meta
 		name="description"
-		content="Learn to become an AI Operator - Master AI tools and workflows through hands-on training"
+		content="Learn to become an AI Analyst - Design human-AI systems and architect business automation through hands-on training"
 	/>
 </svelte:head>
 
@@ -24,11 +24,11 @@
 				<span class="badge-text">Self-Paced Learning</span>
 			</div>
 			<h1 class="hero-title">
-				Become an <span class="highlight">AI Operator</span>
+				Become an <span class="highlight">AI Analyst</span>
 			</h1>
 			<p class="hero-description">
-				Master the skills to leverage AI tools effectively in your work. Learn prompt engineering,
-				workflow automation, and strategic AI implementation through hands-on labs and real-world
+				Master the skills to design human-AI systems that transform business operations. Learn process decomposition,
+				agent orchestration, and strategic AI architecture through hands-on labs and real-world
 				projects.
 			</p>
 			<div class="hero-actions">
@@ -220,7 +220,7 @@
 	<!-- CTA Section -->
 	<section class="cta">
 		<div class="cta-content">
-			<h2 class="cta-title">Ready to become an AI Operator?</h2>
+			<h2 class="cta-title">Ready to become an AI Analyst?</h2>
 			<p class="cta-description">
 				Start your journey today. No prerequisites required - just curiosity and a willingness to
 				learn.

@@ -40,7 +40,7 @@ This is not hypothetical. It's happening now.
 
 **Agentic AI is not a search engine.** Search engines find documents that exist. Agentic AI synthesizes responses that *sound* like they came from documents—whether those documents exist or not.
 
-Your job as an AI Operator is to catch the lies before they leave your organization.
+Your job as an AI Analyst is to catch the lies before they leave your organization.
 
 ---
 

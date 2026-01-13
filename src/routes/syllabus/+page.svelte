@@ -95,15 +95,15 @@
 </script>
 
 <svelte:head>
-	<title>Syllabus | AI Operator Academy</title>
-	<meta name="description" content="Complete course syllabus for the AI Operator certification program" />
+	<title>Syllabus | AI Analyst Academy</title>
+	<meta name="description" content="Complete course syllabus for the AI Analyst certification program" />
 </svelte:head>
 
 <div class="syllabus-page">
 	<header class="page-header">
 		<h1 class="page-title">Course Syllabus</h1>
 		<p class="page-description">
-			Complete curriculum overview for the AI Operator certification program
+			Complete curriculum overview for the AI Analyst certification program
 		</p>
 	</header>
 
@@ -229,7 +229,7 @@
 	<!-- CTA -->
 	<section class="cta-section">
 		<h2 class="cta-title">Ready to Get Started?</h2>
-		<p class="cta-description">Begin your journey to becoming an AI Operator today.</p>
+		<p class="cta-description">Begin your journey to becoming an AI Analyst today.</p>
 		<a href="/learn" class="btn btn-primary">
 			Start Learning
 			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

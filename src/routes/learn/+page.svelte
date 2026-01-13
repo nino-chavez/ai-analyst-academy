@@ -50,7 +50,7 @@
 </script>
 
 <svelte:head>
-	<title>Learn | AI Operator Academy</title>
+	<title>Learn | AI Analyst Academy</title>
 	<meta
 		name="description"
 		content="Master AI tools and workflows through our structured curriculum"
@@ -60,9 +60,9 @@
 <div class="learn-page">
 	<!-- Hero Section -->
 	<header class="page-header">
-		<h1 class="page-title">AI Operator Curriculum</h1>
+		<h1 class="page-title">AI Analyst Curriculum</h1>
 		<p class="page-description">
-			Master the skills to become an AI Operator through {data.stats.totalModules} modules, {data.stats.totalLabs}
+			Master the skills to become an AI Analyst through {data.stats.totalModules} modules, {data.stats.totalLabs}
 			hands-on labs, and a capstone project.
 		</p>
 

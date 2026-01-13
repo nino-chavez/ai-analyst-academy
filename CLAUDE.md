@@ -1,4 +1,4 @@
-# AI Operator Academy - Development Guide
+# AI Analyst Academy - Development Guide
 
 ## Before You Start
 
@@ -29,7 +29,7 @@ Test these routes for console errors:
 
 ## Project Overview
 
-AI Operator Academy is a standalone interactive learning platform built with SvelteKit and Svelte 5. It delivers the AI Operator curriculum through 16 modules, 8 labs, and a capstone project.
+AI Analyst Academy is a standalone interactive learning platform built with SvelteKit and Svelte 5. It delivers the AI Analyst curriculum through 16 modules, 8 labs, and a capstone project.
 
 ### Tech Stack
 

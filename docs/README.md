@@ -1,6 +1,6 @@
-# AI Operator Academy Documentation
+# AI Analyst Academy Documentation
 
-Comprehensive documentation for the AI Operator Academy learning platform.
+Comprehensive documentation for the AI Analyst Academy learning platform.
 
 ## Quick Start
 

@@ -137,10 +137,10 @@
 		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
 		rel="stylesheet"
 	/>
-	<title>AI Operator Academy</title>
+	<title>AI Analyst Academy</title>
 	<meta
 		name="description"
-		content="Learn to become an AI Operator - Master AI tools and workflows for business"
+		content="Learn to become an AI Analyst - Design human-AI systems and architect business automation"
 	/>
 </svelte:head>
 

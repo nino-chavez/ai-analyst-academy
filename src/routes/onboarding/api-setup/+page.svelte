@@ -42,7 +42,7 @@
 </script>
 
 <svelte:head>
-	<title>AI Sandbox Setup | AI Operator Academy</title>
+	<title>AI Sandbox Setup | AI Analyst Academy</title>
 	<meta name="description" content="Configure your AI provider API keys for the sandbox" />
 </svelte:head>
 

@@ -1,6 +1,6 @@
 # Interactive Component Specifications
 
-> Design specifications for future interactive components that will differentiate AI Operator Academy's learning experience.
+> Design specifications for future interactive components that will differentiate AI Analyst Academy's learning experience.
 
 ## Overview
 

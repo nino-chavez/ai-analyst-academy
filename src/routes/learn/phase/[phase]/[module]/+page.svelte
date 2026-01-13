@@ -297,10 +297,10 @@
 </script>
 
 <svelte:head>
-	<title>{data.module.title} | Phase {data.phaseNumber} | AI Operator Academy</title>
+	<title>{data.module.title} | Phase {data.phaseNumber} | AI Analyst Academy</title>
 	<meta
 		name="description"
-		content="Learn {data.module.title} in the {data.phase.title} phase of AI Operator Academy"
+		content="Learn {data.module.title} in the {data.phase.title} phase of AI Analyst Academy"
 	/>
 </svelte:head>
 

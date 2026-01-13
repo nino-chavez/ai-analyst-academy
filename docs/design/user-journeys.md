@@ -1,8 +1,8 @@
-# AI Operator Academy — User Journey Maps
+# AI Analyst Academy — User Journey Maps
 
 ## Overview
 
-This document maps the key user journeys through the AI Operator Academy platform. Each journey is represented as a Mermaid diagram with annotations for touchpoints, decision points, and success metrics.
+This document maps the key user journeys through the AI Analyst Academy platform. Each journey is represented as a Mermaid diagram with annotations for touchpoints, decision points, and success metrics.
 
 ---
 

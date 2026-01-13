@@ -1,5 +1,5 @@
 /**
- * Content types for AI Operator Academy curriculum
+ * Content types for AI Analyst Academy curriculum
  */
 
 // =============================================================================

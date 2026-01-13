@@ -1,5 +1,5 @@
 /**
- * Content Build Pipeline for AI Operator Academy
+ * Content Build Pipeline for AI Analyst Academy
  *
  * This script processes markdown curriculum content and generates
  * JSON files for runtime consumption by the SvelteKit app.
@@ -433,7 +433,7 @@ function generateOutput(curriculum: Curriculum): void {
 // Main Execution
 // =============================================================================
 
-console.log('Building AI Operator Academy content...\n');
+console.log('Building AI Analyst Academy content...\n');
 
 try {
 	const curriculum = buildCurriculum();

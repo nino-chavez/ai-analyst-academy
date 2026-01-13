@@ -1,6 +1,6 @@
 # Learning UX Design Principles
 
-This document codifies the design principles for AI Operator Academy's learning experience. These principles are **mandatory** for all learning-related UI decisions.
+This document codifies the design principles for AI Analyst Academy's learning experience. These principles are **mandatory** for all learning-related UI decisions.
 
 ---
 

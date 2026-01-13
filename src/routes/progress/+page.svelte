@@ -33,14 +33,14 @@
 </script>
 
 <svelte:head>
-	<title>Progress | AI Operator Academy</title>
-	<meta name="description" content="Track your learning progress through the AI Operator curriculum" />
+	<title>Progress | AI Analyst Academy</title>
+	<meta name="description" content="Track your learning progress through the AI Analyst curriculum" />
 </svelte:head>
 
 <div class="progress-page">
 	<header class="page-header">
 		<h1 class="page-title">Your Progress</h1>
-		<p class="page-description">Track your journey to becoming an AI Operator</p>
+		<p class="page-description">Track your journey to becoming an AI Analyst</p>
 	</header>
 
 	<!-- Overview Stats -->

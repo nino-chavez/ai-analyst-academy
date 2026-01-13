@@ -55,7 +55,7 @@
 </script>
 
 <svelte:head>
-	<title>Settings | AI Operator Academy</title>
+	<title>Settings | AI Analyst Academy</title>
 	<meta name="description" content="Manage your account settings and preferences" />
 </svelte:head>
 

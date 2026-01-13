@@ -121,10 +121,10 @@
 </script>
 
 <svelte:head>
-	<title>Portfolio | AI Operator Academy</title>
+	<title>Portfolio | AI Analyst Academy</title>
 	<meta
 		name="description"
-		content="Your collection of work and deliverables from the AI Operator curriculum"
+		content="Your collection of work and deliverables from the AI Analyst curriculum"
 	/>
 </svelte:head>
 

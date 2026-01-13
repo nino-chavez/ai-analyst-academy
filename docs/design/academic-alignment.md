@@ -1,4 +1,4 @@
-# AI Operator Academy — Academic Alignment
+# AI Analyst Academy — Academic Alignment
 
 > **Verdict:** Highly appropriate for upper-division undergraduates (Junior/Senior) or MBA students.
 
@@ -105,7 +105,7 @@ Modern business school accreditation (AACSB, AMBA) increasingly requires:
 
 ## Mapping to Standard Business Courses
 
-| AI Operator Academy | Traditional Course Equivalent |
+| AI Analyst Academy | Traditional Course Equivalent |
 |---------------------|-------------------------------|
 | Phase 1: AI Literacy | Introduction to Business Technology |
 | Phase 2: Workflow Engineering | Operations Management |

@@ -1,5 +1,5 @@
 /**
- * Content loader for AI Operator Academy
+ * Content loader for AI Analyst Academy
  * Loads pre-built JSON content at runtime
  */
 

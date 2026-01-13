@@ -1,6 +1,6 @@
 # Component API Reference
 
-Complete API documentation for all reusable components in AI Operator Academy.
+Complete API documentation for all reusable components in AI Analyst Academy.
 
 ## Table of Contents
 

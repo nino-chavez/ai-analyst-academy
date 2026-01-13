@@ -69,7 +69,7 @@
 </script>
 
 <svelte:head>
-	<title>Choose Your Path | AI Operator Academy</title>
+	<title>Choose Your Path | AI Analyst Academy</title>
 	<meta name="description" content="Select your learning persona to get a personalized curriculum path" />
 </svelte:head>
 

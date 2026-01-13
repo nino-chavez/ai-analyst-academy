@@ -1,8 +1,8 @@
-# AI Operator Academy — Design Tokens & Visual System
+# AI Analyst Academy — Design Tokens & Visual System
 
 ## Overview
 
-This document defines the design tokens for the AI Operator Academy platform. These tokens form the foundation of the visual design system, ensuring consistency across all components and pages while optimizing for learning and accessibility.
+This document defines the design tokens for the AI Analyst Academy platform. These tokens form the foundation of the visual design system, ensuring consistency across all components and pages while optimizing for learning and accessibility.
 
 ---
 

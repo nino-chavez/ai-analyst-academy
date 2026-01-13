@@ -1,6 +1,6 @@
 # Learning Flow Architecture
 
-This document defines the architectural patterns for implementing learning UX in AI Operator Academy. These patterns ensure consistent, research-backed learning experiences across all routes.
+This document defines the architectural patterns for implementing learning UX in AI Analyst Academy. These patterns ensure consistent, research-backed learning experiences across all routes.
 
 ---
 

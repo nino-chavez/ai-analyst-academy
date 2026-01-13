@@ -12,11 +12,11 @@ prerequisites:
   - Labs 1-7
 ---
 
-# Capstone Project: AI Operator Certification
+# Capstone Project: AI Analyst Certification
 
 ## Project Overview
 
-Your capstone project demonstrates mastery of the complete AI Operator curriculum. You'll identify a real business challenge, design an AI solution, build a working prototype, and present a comprehensive business case.
+Your capstone project demonstrates mastery of the complete AI Analyst curriculum. You'll identify a real business challenge, design an AI solution, build a working prototype, and present a comprehensive business case.
 
 This project becomes the centerpiece of your professional portfolio—evidence of your AI operator capabilities.
 
