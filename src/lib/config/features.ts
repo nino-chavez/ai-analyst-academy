@@ -7,7 +7,7 @@ export const features = {
 	// OAuth provider support
 	auth: {
 		/** Enable Google OAuth login */
-		googleOAuth: false,
+		googleOAuth: true,
 		/** Enable GitHub OAuth login */
 		githubOAuth: false,
 		/** Enable email/password authentication */
