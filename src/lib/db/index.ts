@@ -21,9 +21,7 @@ import type {
 	LabProgressInsert,
 	LabProgressUpdate,
 	PhaseDeliverableInsert,
-	PhaseDeliverableUpdate,
-	UserApiKeyInsert,
-	UserApiKeyUpdate
+	PhaseDeliverableUpdate
 } from '$lib/types/database';
 
 // Use a flexible type that accepts any Supabase client with the expected methods
@@ -181,53 +179,6 @@ export async function deletePhaseDeliverable(
 	return (supabase.from('phase_deliverables') as any)
 		.delete()
 		.eq('id', id);
-}
-
-// =============================================================================
-// User API Keys
-// =============================================================================
-
-export async function insertUserApiKey(
-	supabase: SupabaseClient,
-	apiKey: UserApiKeyInsert
-) {
-	return (supabase.from('user_api_keys') as any).insert(apiKey);
-}
-
-export async function updateUserApiKey(
-	supabase: SupabaseClient,
-	userId: string,
-	provider: string,
-	updates: UserApiKeyUpdate
-) {
-	return (supabase.from('user_api_keys') as any)
-		.update(updates)
-		.eq('user_id', userId)
-		.eq('provider', provider);
-}
-
-export async function deleteUserApiKey(
-	supabase: SupabaseClient,
-	userId: string,
-	provider: string
-) {
-	return (supabase.from('user_api_keys') as any)
-		.delete()
-		.eq('user_id', userId)
-		.eq('provider', provider);
-}
-
-export async function getUserApiKey(
-	supabase: SupabaseClient,
-	userId: string,
-	provider: string
-) {
-	return supabase
-		.from('user_api_keys')
-		.select('*')
-		.eq('user_id', userId)
-		.eq('provider', provider)
-		.single();
 }
 
 // =============================================================================

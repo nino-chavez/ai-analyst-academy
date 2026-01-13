@@ -1,26 +1,31 @@
 <script lang="ts">
-	import type { PageData } from './$types';
+	import { browser } from '$app/environment';
+	import { validateByokKey, type ByokProvider } from '$lib/validation/schemas';
 
-	let { data }: { data: PageData } = $props();
+	// Provider mode: 'default' uses platform OpenRouter, 'byok' uses user's key
+	let providerMode = $state<'default' | 'byok'>('default');
+	let byokProvider = $state<ByokProvider>('openai');
+	let byokKey = $state('');
+	let byokKeyError = $state<string | null>(null);
+	let showByokSetup = $state(false);
 
-	let selectedProvider = $state<string>('');
 	let selectedPersona = $state<string | null>(null);
 	let messages = $state<Array<{ role: 'user' | 'assistant'; content: string }>>([]);
 	let inputValue = $state('');
 	let isLoading = $state(false);
 	let errorMessage = $state<string | null>(null);
-	let isDemoMode = $state(false);
 
-	// Initialize provider from configured keys
+	// Load BYOK settings from localStorage on mount
 	$effect(() => {
-		if (data.configuredProviders.length > 0 && !selectedProvider) {
-			// Prefer OpenAI, then Anthropic, then Google
-			const preferred = ['openai', 'anthropic', 'google'];
-			for (const p of preferred) {
-				if (data.configuredProviders.some(cp => cp.provider === p)) {
-					selectedProvider = p;
-					break;
-				}
+		if (browser) {
+			const savedMode = localStorage.getItem('sandbox_provider_mode');
+			const savedProvider = localStorage.getItem('sandbox_byok_provider');
+			const savedKey = localStorage.getItem('sandbox_byok_key');
+
+			if (savedMode === 'byok' && savedProvider && savedKey) {
+				providerMode = 'byok';
+				byokProvider = savedProvider as ByokProvider;
+				byokKey = savedKey;
 			}
 		}
 	});
@@ -53,6 +58,7 @@
 	];
 
 	const providerNames: Record<string, string> = {
+		openrouter: 'AI Assistant',
 		openai: 'OpenAI',
 		anthropic: 'Anthropic',
 		google: 'Google'
@@ -64,6 +70,39 @@
 		errorMessage = null;
 	}
 
+	function saveByokSettings() {
+		byokKeyError = null;
+
+		// Validate the key format
+		if (!validateByokKey(byokProvider, byokKey)) {
+			byokKeyError = `Invalid ${providerNames[byokProvider]} API key format`;
+			return;
+		}
+
+		// Save to localStorage
+		if (browser) {
+			localStorage.setItem('sandbox_provider_mode', 'byok');
+			localStorage.setItem('sandbox_byok_provider', byokProvider);
+			localStorage.setItem('sandbox_byok_key', byokKey);
+		}
+
+		providerMode = 'byok';
+		showByokSetup = false;
+	}
+
+	function clearByokSettings() {
+		if (browser) {
+			localStorage.removeItem('sandbox_provider_mode');
+			localStorage.removeItem('sandbox_byok_provider');
+			localStorage.removeItem('sandbox_byok_key');
+		}
+
+		providerMode = 'default';
+		byokKey = '';
+		byokProvider = 'openai';
+		showByokSetup = false;
+	}
+
 	async function handleSubmit() {
 		if (!inputValue.trim() || isLoading) return;
 
@@ -73,33 +112,26 @@
 		isLoading = true;
 		errorMessage = null;
 
-		if (isDemoMode) {
-			// Demo mode - simulated response
-			setTimeout(() => {
-				messages = [
-					...messages,
-					{
-						role: 'assistant',
-						content:
-							'This is a demo response. Connect your API key in Settings to enable real AI conversations with different personas.'
-					}
-				];
-				isLoading = false;
-			}, 1000);
-			return;
-		}
-
 		try {
+			// Build request body based on mode
+			const requestBody: Record<string, unknown> = {
+				messages: messages.map((m) => ({ role: m.role, content: m.content })),
+				persona: selectedPersona
+			};
+
+			if (providerMode === 'byok') {
+				requestBody.provider = byokProvider;
+				requestBody.byokKey = byokKey;
+			} else {
+				requestBody.provider = 'openrouter';
+			}
+
 			const response = await fetch('/api/chat', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({
-					messages: messages.map(m => ({ role: m.role, content: m.content })),
-					persona: selectedPersona,
-					provider: selectedProvider
-				})
+				body: JSON.stringify(requestBody)
 			});
 
 			if (!response.ok) {
@@ -107,8 +139,8 @@
 				throw new Error(errorData.message || `Error: ${response.status}`);
 			}
 
-			const data = await response.json();
-			messages = [...messages, { role: 'assistant', content: data.content }];
+			const responseData = await response.json();
+			messages = [...messages, { role: 'assistant', content: responseData.content }];
 		} catch (err) {
 			console.error('Chat error:', err);
 			errorMessage = err instanceof Error ? err.message : 'Failed to send message';
@@ -125,17 +157,13 @@
 			handleSubmit();
 		}
 	}
-
-	function enterDemoMode() {
-		isDemoMode = true;
-	}
 </script>
 
 <svelte:head>
 	<title>AI Sandbox | AI Analyst Academy</title>
 	<meta
 		name="description"
-		content="Practice AI prompting with your own API keys in a safe sandbox environment"
+		content="Practice AI prompting with different personas in a safe sandbox environment"
 	/>
 </svelte:head>
 
@@ -143,47 +171,67 @@
 	<header class="page-header">
 		<h1 class="page-title">AI Sandbox</h1>
 		<p class="page-description">
-			Practice prompting techniques with real AI models using your own API keys
+			Practice prompting techniques with AI using different personas
 		</p>
 	</header>
 
-	{#if !data.hasApiKeys && !isDemoMode}
-		<div class="setup-prompt">
-			<div class="setup-icon">
-				<svg
-					width="48"
-					height="48"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="1.5"
-				>
-					<path
-						d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"
-					/>
-				</svg>
+	{#if showByokSetup}
+		<!-- BYOK Setup Modal -->
+		<div class="modal-backdrop" onclick={() => (showByokSetup = false)} role="presentation">
+			<div class="modal-content" onclick={(e) => e.stopPropagation()} role="dialog" aria-labelledby="byok-title">
+				<h2 id="byok-title" class="modal-title">Use Your Own API Key</h2>
+				<p class="modal-description">
+					Power users can use their own API keys for more control. Keys are stored locally in your
+					browser and sent per-request (never stored on our servers).
+				</p>
+
+				<div class="byok-form">
+					<div class="form-group">
+						<label for="byok-provider" class="form-label">Provider</label>
+						<select id="byok-provider" class="form-select" bind:value={byokProvider}>
+							<option value="openai">OpenAI</option>
+							<option value="anthropic">Anthropic</option>
+							<option value="google">Google</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="byok-key" class="form-label">API Key</label>
+						<input
+							id="byok-key"
+							type="password"
+							class="form-input"
+							placeholder={byokProvider === 'openai'
+								? 'sk-...'
+								: byokProvider === 'anthropic'
+									? 'sk-ant-...'
+									: 'AIza...'}
+							bind:value={byokKey}
+						/>
+						{#if byokKeyError}
+							<p class="form-error">{byokKeyError}</p>
+						{/if}
+					</div>
+
+					<div class="modal-actions">
+						<button class="btn btn-secondary" onclick={() => (showByokSetup = false)}>
+							Cancel
+						</button>
+						<button class="btn btn-primary" onclick={saveByokSettings} disabled={!byokKey.trim()}>
+							Save & Use
+						</button>
+					</div>
+				</div>
+
+				<p class="modal-note">
+					Your API key is stored only in your browser's localStorage and sent directly to the
+					provider. We never see or store your key.
+				</p>
 			</div>
-			<h2 class="setup-title">Connect Your API Key</h2>
-			<p class="setup-description">
-				The sandbox uses your own API keys to interact with AI models. This teaches real-world AI
-				usage and keeps your data private.
-			</p>
-			<div class="setup-actions">
-				<a href="/settings/api-keys" class="btn btn-primary">
-					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M12 4v16m8-8H4" />
-					</svg>
-					Add API Key
-				</a>
-				<button class="btn btn-secondary" onclick={enterDemoMode}>
-					Try Demo Mode
-				</button>
-			</div>
-			<p class="setup-note">
-				Supports OpenAI, Anthropic, and Google Gemini. Keys are encrypted and stored securely.
-			</p>
 		</div>
-	{:else if !selectedPersona}
+	{/if}
+
+	{#if !selectedPersona}
 		<div class="persona-selection">
 			<h2 class="selection-title">Choose a Persona</h2>
 			<p class="selection-description">
@@ -191,23 +239,44 @@
 				cases.
 			</p>
 
-			{#if data.hasApiKeys && !isDemoMode}
-				<div class="provider-selector">
-					<label class="provider-label" for="provider-select">Using:</label>
-					<select id="provider-select" class="provider-select" bind:value={selectedProvider}>
-						{#each data.configuredProviders as cp (cp.provider)}
-							<option value={cp.provider}>
-								{providerNames[cp.provider]} ({cp.keyHint})
-							</option>
-						{/each}
-					</select>
-				</div>
-			{:else if isDemoMode}
-				<div class="demo-badge">
-					<span>Demo Mode</span>
-					<a href="/settings/api-keys" class="demo-upgrade">Add API key for real responses</a>
-				</div>
-			{/if}
+			<!-- Provider Mode Selector -->
+			<div class="mode-selector">
+				{#if providerMode === 'default'}
+					<div class="mode-badge default">
+						<svg
+							width="16"
+							height="16"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+						>
+							<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+						</svg>
+						<span>Using AI Assistant (GPT-4o-mini)</span>
+					</div>
+					<button class="mode-switch" onclick={() => (showByokSetup = true)}>
+						Use your own API key
+					</button>
+				{:else}
+					<div class="mode-badge byok">
+						<svg
+							width="16"
+							height="16"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+						>
+							<path
+								d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"
+							/>
+						</svg>
+						<span>Using {providerNames[byokProvider]} (your key)</span>
+					</div>
+					<button class="mode-switch" onclick={clearByokSettings}> Switch to default </button>
+				{/if}
+			</div>
 
 			<div class="personas-grid">
 				{#each personas as persona (persona.id)}
@@ -249,11 +318,9 @@
 				<div class="current-persona">
 					<span class="persona-label">Chatting with:</span>
 					<span class="persona-value">{personas.find((p) => p.id === selectedPersona)?.name}</span>
-					{#if !isDemoMode && selectedProvider}
-						<span class="provider-badge">{providerNames[selectedProvider]}</span>
-					{:else if isDemoMode}
-						<span class="provider-badge demo">Demo</span>
-					{/if}
+					<span class="provider-badge {providerMode}">
+						{providerMode === 'default' ? 'AI Assistant' : providerNames[byokProvider]}
+					</span>
 				</div>
 			</div>
 
@@ -282,14 +349,28 @@
 
 			{#if errorMessage}
 				<div class="error-banner">
-					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<svg
+						width="16"
+						height="16"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+					>
 						<circle cx="12" cy="12" r="10" />
 						<line x1="12" y1="8" x2="12" y2="12" />
 						<line x1="12" y1="16" x2="12.01" y2="16" />
 					</svg>
 					<span>{errorMessage}</span>
 					<button class="error-dismiss" onclick={() => (errorMessage = null)} aria-label="Dismiss">
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<svg
+							width="14"
+							height="14"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+						>
 							<line x1="18" y1="6" x2="6" y2="18" />
 							<line x1="6" y1="6" x2="18" y2="18" />
 						</svg>
@@ -297,7 +378,13 @@
 				</div>
 			{/if}
 
-			<form class="input-container" onsubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+			<form
+				class="input-container"
+				onsubmit={(e) => {
+					e.preventDefault();
+					handleSubmit();
+				}}
+			>
 				<textarea
 					class="message-input"
 					placeholder="Type your message..."
@@ -354,107 +441,141 @@
 		margin: 0;
 	}
 
-	/* Setup Prompt */
-	.setup-prompt {
-		max-width: 480px;
-		margin: 0 auto;
-		text-align: center;
-		padding: var(--space-8);
-		background-color: var(--color-bg-secondary);
-		border: var(--border-width) solid var(--color-border-primary);
-		border-radius: var(--radius-xl);
-	}
-
-	.setup-icon {
-		display: inline-flex;
+	/* Mode Selector */
+	.mode-selector {
+		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 80px;
-		height: 80px;
-		background-color: var(--color-primary-50);
-		border-radius: var(--radius-full);
-		color: var(--color-primary-600);
-		margin-bottom: var(--space-4);
+		gap: var(--space-3);
+		margin-bottom: var(--space-6);
+		flex-wrap: wrap;
 	}
 
-	.setup-title {
+	.mode-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2);
+		padding: var(--space-2) var(--space-3);
+		border-radius: var(--radius-lg);
+		font-size: var(--text-sm);
+		font-weight: var(--font-medium);
+	}
+
+	.mode-badge.default {
+		background-color: var(--color-primary-50);
+		color: var(--color-primary-700);
+	}
+
+	.mode-badge.byok {
+		background-color: var(--color-success-50);
+		color: var(--color-success-700);
+	}
+
+	.mode-switch {
+		padding: var(--space-2) var(--space-3);
+		background: none;
+		border: var(--border-width) solid var(--color-border-primary);
+		border-radius: var(--radius-md);
+		font-size: var(--text-sm);
+		color: var(--color-text-secondary);
+		cursor: pointer;
+		transition: all var(--duration-150) var(--ease-out);
+	}
+
+	.mode-switch:hover {
+		background-color: var(--color-bg-tertiary);
+		color: var(--color-text-primary);
+	}
+
+	/* Modal */
+	.modal-backdrop {
+		position: fixed;
+		inset: 0;
+		background-color: rgba(0, 0, 0, 0.5);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 100;
+		padding: var(--space-4);
+	}
+
+	.modal-content {
+		background-color: var(--color-bg-primary);
+		border-radius: var(--radius-xl);
+		padding: var(--space-6);
+		max-width: 480px;
+		width: 100%;
+		box-shadow: var(--shadow-xl);
+	}
+
+	.modal-title {
 		font-size: var(--text-xl);
 		font-weight: var(--font-semibold);
 		color: var(--color-text-primary);
 		margin: 0 0 var(--space-2) 0;
 	}
 
-	.setup-description {
-		font-size: var(--text-base);
+	.modal-description {
+		font-size: var(--text-sm);
 		color: var(--color-text-secondary);
 		margin: 0 0 var(--space-6) 0;
 		line-height: var(--leading-relaxed);
 	}
 
-	.setup-actions {
+	.modal-note {
+		font-size: var(--text-xs);
+		color: var(--color-text-tertiary);
+		margin: var(--space-4) 0 0 0;
+		text-align: center;
+	}
+
+	.modal-actions {
 		display: flex;
 		gap: var(--space-3);
-		justify-content: center;
-		margin-bottom: var(--space-4);
+		justify-content: flex-end;
+		margin-top: var(--space-4);
 	}
 
-	.setup-note {
-		font-size: var(--text-sm);
-		color: var(--color-text-tertiary);
-		margin: 0;
-	}
-
-	/* Provider Selector */
-	.provider-selector {
+	/* Form */
+	.byok-form {
 		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: var(--space-2);
-		margin-bottom: var(--space-6);
+		flex-direction: column;
+		gap: var(--space-4);
 	}
 
-	.provider-label {
-		font-size: var(--text-sm);
-		color: var(--color-text-secondary);
+	.form-group {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-1);
 	}
 
-	.provider-select {
-		padding: var(--space-2) var(--space-3);
-		background-color: var(--color-bg-primary);
-		border: var(--border-width) solid var(--color-border-primary);
-		border-radius: var(--radius-md);
+	.form-label {
 		font-size: var(--text-sm);
+		font-weight: var(--font-medium);
 		color: var(--color-text-primary);
 	}
 
-	.provider-select:focus {
+	.form-select,
+	.form-input {
+		padding: var(--space-3);
+		background-color: var(--color-bg-secondary);
+		border: var(--border-width) solid var(--color-border-primary);
+		border-radius: var(--radius-md);
+		font-size: var(--text-base);
+		color: var(--color-text-primary);
+	}
+
+	.form-select:focus,
+	.form-input:focus {
 		outline: none;
 		border-color: var(--color-primary-500);
+		box-shadow: 0 0 0 3px var(--color-primary-100);
 	}
 
-	/* Demo Badge */
-	.demo-badge {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: var(--space-3);
-		padding: var(--space-3);
-		background-color: var(--color-warning-50);
-		border: var(--border-width) solid var(--color-warning-200);
-		border-radius: var(--radius-lg);
-		margin-bottom: var(--space-6);
-	}
-
-	.demo-badge span {
+	.form-error {
 		font-size: var(--text-sm);
-		font-weight: var(--font-medium);
-		color: var(--color-warning-700);
-	}
-
-	.demo-upgrade {
-		font-size: var(--text-sm);
-		color: var(--color-primary-600);
-		text-decoration: underline;
+		color: var(--color-error-600);
+		margin: 0;
 	}
 
 	/* Persona Selection */
@@ -590,14 +711,17 @@
 		font-size: var(--text-xs);
 		font-weight: var(--font-medium);
 		padding: var(--space-1) var(--space-2);
-		background-color: var(--color-bg-tertiary);
 		border-radius: var(--radius-full);
-		color: var(--color-text-secondary);
 	}
 
-	.provider-badge.demo {
-		background-color: var(--color-warning-100);
-		color: var(--color-warning-700);
+	.provider-badge.default {
+		background-color: var(--color-primary-100);
+		color: var(--color-primary-700);
+	}
+
+	.provider-badge.byok {
+		background-color: var(--color-success-100);
+		color: var(--color-success-700);
 	}
 
 	.messages-container {
@@ -768,8 +892,14 @@
 		border: none;
 	}
 
-	.btn-primary:hover {
+	.btn-primary:hover:not(:disabled) {
 		background-color: var(--color-primary-700);
+	}
+
+	.btn-primary:disabled {
+		background-color: var(--color-bg-tertiary);
+		color: var(--color-text-tertiary);
+		cursor: not-allowed;
 	}
 
 	.btn-secondary {
@@ -784,7 +914,7 @@
 	}
 
 	@media (max-width: 640px) {
-		.setup-actions {
+		.mode-selector {
 			flex-direction: column;
 		}
 

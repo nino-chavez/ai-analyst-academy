@@ -8,11 +8,15 @@ interface ProfileData {
 	onboarding_completed: boolean | null;
 }
 
-interface ApiKeyData {
-	provider: string;
-	key_hint: string | null;
-}
-
+/**
+ * Onboarding API Setup page
+ *
+ * With the hybrid model, this page now just explains the AI features:
+ * - Default mode uses platform's OpenRouter API key (no user setup needed)
+ * - Power users can BYOK via localStorage (done in sandbox settings)
+ *
+ * No API key storage happens server-side.
+ */
 export const load: PageServerLoad = async ({ locals }) => {
 	const { session, user } = await locals.safeGetSession();
 
@@ -37,18 +41,8 @@ export const load: PageServerLoad = async ({ locals }) => {
 		throw redirect(303, '/onboarding/role-selection');
 	}
 
-	// Check for existing API keys
-	const { data: apiKeys } = await locals.supabase
-		.from('user_api_keys')
-		.select('provider, key_hint')
-		.eq('user_id', user.id);
-
-	const configuredProviders = (apiKeys as ApiKeyData[] | null)?.map((k) => k.provider) ?? [];
-
 	return {
-		personaType: profile.persona_type,
-		hasApiKeys: configuredProviders.length > 0,
-		configuredProviders
+		personaType: profile.persona_type
 	};
 };
 
@@ -70,22 +64,6 @@ export const actions: Actions = {
 			console.error('Error completing onboarding:', error);
 			return fail(500, { error: 'Failed to complete onboarding' });
 		}
-
-		throw redirect(303, '/learn');
-	},
-
-	skip: async ({ locals }) => {
-		const { session, user } = await locals.safeGetSession();
-
-		if (!session || !user) {
-			return fail(401, { error: 'Unauthorized' });
-		}
-
-		// Mark onboarding as complete (even without API keys)
-		await updateUserProfile(locals.supabase, user.id, {
-			onboarding_completed: true,
-			updated_at: new Date().toISOString()
-		});
 
 		throw redirect(303, '/learn');
 	}

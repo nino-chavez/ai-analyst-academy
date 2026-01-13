@@ -1,53 +1,8 @@
 import { json, error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import type { UserApiKey } from '$lib/types/database';
-import { decrypt, isNewEncryptionFormat, migrateOldKey } from '$lib/utils/crypto';
+import { OPEN_ROUTER_API_KEY } from '$env/static/private';
 import { ChatRequestSchema } from '$lib/validation/schemas';
 import { checkRateLimit, createRateLimitKey, RateLimits } from '$lib/utils/rate-limiter';
-import { updateUserApiKey } from '$lib/db';
-
-/**
- * Decrypts an API key, handling both old and new encryption formats.
- * Automatically migrates old Base64 keys to the new AES-256-GCM format.
- */
-function decryptKeyWithMigration(
-	encrypted: string,
-	userId: string,
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	supabase: any,
-	provider: string
-): string | null {
-	// Check if this is the new encryption format
-	if (isNewEncryptionFormat(encrypted)) {
-		try {
-			return decrypt(encrypted, userId);
-		} catch (err) {
-			console.error('Failed to decrypt key with new format:', err);
-			return null;
-		}
-	}
-
-	// Try to migrate old format
-	const migrated = migrateOldKey(encrypted, userId);
-	if (migrated) {
-		// Update the key to the new format in the background (fire and forget)
-		supabase
-			.from('user_api_keys')
-			.update({
-				encrypted_key: migrated.newEncryptedKey,
-				updated_at: new Date().toISOString()
-			})
-			.eq('user_id', userId)
-			.eq('provider', provider)
-			.then(() => {
-				console.log(`Migrated ${provider} API key to new encryption format for user ${userId}`);
-			});
-
-		return migrated.plainKey;
-	}
-
-	return null;
-}
 
 // System prompts for different personas
 const personaPrompts: Record<string, string> = {
@@ -83,7 +38,47 @@ interface ChatMessage {
 	content: string;
 }
 
-// OpenAI API call
+// Model configuration per provider
+const MODELS = {
+	openrouter: 'openai/gpt-4o-mini', // Cheap, fast model via OpenRouter
+	openai: 'gpt-4o-mini',
+	anthropic: 'claude-3-5-haiku-latest',
+	google: 'gemini-1.5-flash'
+};
+
+/**
+ * Call OpenRouter API (used for platform-provided AI access)
+ * Uses OpenAI-compatible API format
+ */
+async function callOpenRouter(apiKey: string, messages: ChatMessage[]): Promise<string> {
+	const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': `Bearer ${apiKey}`,
+			'HTTP-Referer': 'https://aioperatoracademy.com',
+			'X-Title': 'AI Operator Academy'
+		},
+		body: JSON.stringify({
+			model: MODELS.openrouter,
+			messages,
+			max_tokens: 1024,
+			temperature: 0.7
+		})
+	});
+
+	if (!response.ok) {
+		const errorData = await response.json().catch(() => ({}));
+		throw new Error(errorData.error?.message || `OpenRouter API error: ${response.status}`);
+	}
+
+	const data = await response.json();
+	return data.choices[0]?.message?.content || 'No response generated.';
+}
+
+/**
+ * Call OpenAI API directly (BYOK mode)
+ */
 async function callOpenAI(apiKey: string, messages: ChatMessage[]): Promise<string> {
 	const response = await fetch('https://api.openai.com/v1/chat/completions', {
 		method: 'POST',
@@ -92,7 +87,7 @@ async function callOpenAI(apiKey: string, messages: ChatMessage[]): Promise<stri
 			'Authorization': `Bearer ${apiKey}`
 		},
 		body: JSON.stringify({
-			model: 'gpt-4o-mini',
+			model: MODELS.openai,
 			messages,
 			max_tokens: 1024,
 			temperature: 0.7
@@ -108,7 +103,9 @@ async function callOpenAI(apiKey: string, messages: ChatMessage[]): Promise<stri
 	return data.choices[0]?.message?.content || 'No response generated.';
 }
 
-// Anthropic API call
+/**
+ * Call Anthropic API directly (BYOK mode)
+ */
 async function callAnthropic(apiKey: string, messages: ChatMessage[]): Promise<string> {
 	// Extract system message and convert to Anthropic format
 	const systemMessage = messages.find(m => m.role === 'system')?.content || '';
@@ -127,7 +124,7 @@ async function callAnthropic(apiKey: string, messages: ChatMessage[]): Promise<s
 			'anthropic-version': '2023-06-01'
 		},
 		body: JSON.stringify({
-			model: 'claude-3-5-haiku-latest',
+			model: MODELS.anthropic,
 			max_tokens: 1024,
 			system: systemMessage,
 			messages: chatMessages
@@ -143,7 +140,9 @@ async function callAnthropic(apiKey: string, messages: ChatMessage[]): Promise<s
 	return data.content[0]?.text || 'No response generated.';
 }
 
-// Google Gemini API call
+/**
+ * Call Google Gemini API directly (BYOK mode)
+ */
 async function callGoogle(apiKey: string, messages: ChatMessage[]): Promise<string> {
 	// Convert to Gemini format
 	const systemMessage = messages.find(m => m.role === 'system')?.content || '';
@@ -155,7 +154,7 @@ async function callGoogle(apiKey: string, messages: ChatMessage[]): Promise<stri
 		}));
 
 	const response = await fetch(
-		`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+		`https://generativelanguage.googleapis.com/v1beta/models/${MODELS.google}:generateContent?key=${apiKey}`,
 		{
 			method: 'POST',
 			headers: {
@@ -212,29 +211,11 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		throw error(400, `Validation failed: ${errorMessages}`);
 	}
 
-	const { messages, persona, provider } = parseResult.data;
+	const { messages, persona, provider, byokKey } = parseResult.data;
 
 	// Validate persona exists in our prompts
 	if (!personaPrompts[persona]) {
 		throw error(400, 'Invalid persona specified');
-	}
-
-	// Fetch the user's API key for the selected provider
-	const { data: apiKeyData } = await locals.supabase
-		.from('user_api_keys')
-		.select('encrypted_key, is_valid')
-		.eq('user_id', user.id)
-		.eq('provider', provider)
-		.single() as { data: Pick<UserApiKey, 'encrypted_key' | 'is_valid'> | null };
-
-	if (!apiKeyData || !apiKeyData.is_valid) {
-		throw error(400, `No valid ${provider} API key configured. Please add one in Settings.`);
-	}
-
-	// Decrypt the API key (handles both old and new formats, with automatic migration)
-	const apiKey = decryptKeyWithMigration(apiKeyData.encrypted_key, user.id, locals.supabase, provider);
-	if (!apiKey) {
-		throw error(500, 'Failed to decrypt API key');
 	}
 
 	// Build messages with system prompt
@@ -247,28 +228,42 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 	try {
 		let responseText: string;
 
-		switch (provider) {
-			case 'openai':
-				responseText = await callOpenAI(apiKey, fullMessages);
-				break;
-			case 'anthropic':
-				responseText = await callAnthropic(apiKey, fullMessages);
-				break;
-			case 'google':
-				responseText = await callGoogle(apiKey, fullMessages);
-				break;
-			default:
-				throw error(400, `Unsupported provider: ${provider}`);
+		if (provider === 'openrouter') {
+			// Default mode: Use platform's OpenRouter API key
+			if (!OPEN_ROUTER_API_KEY) {
+				throw error(503, 'AI service is not configured. Please contact support.');
+			}
+			responseText = await callOpenRouter(OPEN_ROUTER_API_KEY, fullMessages);
+		} else {
+			// BYOK mode: User provides their own key per-request
+			if (!byokKey) {
+				throw error(400, `API key required for ${provider}. Please provide your key or use the default AI service.`);
+			}
+
+			switch (provider) {
+				case 'openai':
+					responseText = await callOpenAI(byokKey, fullMessages);
+					break;
+				case 'anthropic':
+					responseText = await callAnthropic(byokKey, fullMessages);
+					break;
+				case 'google':
+					responseText = await callGoogle(byokKey, fullMessages);
+					break;
+				default:
+					throw error(400, `Unsupported provider: ${provider}`);
+			}
 		}
 
 		return json({ content: responseText });
 	} catch (err) {
 		console.error('AI API error:', err);
 
-		// Mark the key as invalid if it's an auth error
 		const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+
+		// Don't expose internal error details
 		if (errorMessage.includes('401') || errorMessage.includes('invalid') || errorMessage.includes('Incorrect API key')) {
-			await updateUserApiKey(locals.supabase, user.id, provider, { is_valid: false });
+			throw error(401, 'Invalid API key. Please check your key and try again.');
 		}
 
 		throw error(500, `AI request failed: ${errorMessage}`);

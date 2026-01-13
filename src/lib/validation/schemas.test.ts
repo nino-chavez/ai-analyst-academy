@@ -8,10 +8,12 @@ import {
 	PersonaTypeSchema,
 	ProgressStatusSchema,
 	ProviderSchema,
+	ByokProviderSchema,
 	ChatPersonaSchema,
 	ChatMessageSchema,
 	ChatRequestSchema,
-	SaveApiKeySchema,
+	ByokKeySchema,
+	validateByokKey,
 	UpdateProfileSchema,
 	ModuleProgressSchema,
 	GoalSettingSchema,
@@ -50,7 +52,8 @@ describe('Database Enum Schemas', () => {
 	});
 
 	describe('ProviderSchema', () => {
-		it('should accept valid providers', () => {
+		it('should accept valid providers including openrouter', () => {
+			expect(ProviderSchema.parse('openrouter')).toBe('openrouter');
 			expect(ProviderSchema.parse('openai')).toBe('openai');
 			expect(ProviderSchema.parse('anthropic')).toBe('anthropic');
 			expect(ProviderSchema.parse('google')).toBe('google');
@@ -59,6 +62,18 @@ describe('Database Enum Schemas', () => {
 		it('should reject invalid providers', () => {
 			expect(() => ProviderSchema.parse('azure')).toThrow();
 			expect(() => ProviderSchema.parse('OpenAI')).toThrow(); // case sensitive
+		});
+	});
+
+	describe('ByokProviderSchema', () => {
+		it('should accept BYOK providers (excludes openrouter)', () => {
+			expect(ByokProviderSchema.parse('openai')).toBe('openai');
+			expect(ByokProviderSchema.parse('anthropic')).toBe('anthropic');
+			expect(ByokProviderSchema.parse('google')).toBe('google');
+		});
+
+		it('should reject openrouter for BYOK', () => {
+			expect(() => ByokProviderSchema.parse('openrouter')).toThrow();
 		});
 	});
 });
@@ -117,12 +132,22 @@ describe('Chat API Schemas', () => {
 			expect(result.provider).toBe('openai');
 		});
 
-		it('should default provider to openai', () => {
+		it('should default provider to openrouter', () => {
 			const result = ChatRequestSchema.parse({
 				messages: [{ role: 'user', content: 'Hello' }],
 				persona: 'general'
 			});
-			expect(result.provider).toBe('openai');
+			expect(result.provider).toBe('openrouter');
+		});
+
+		it('should accept optional byokKey for BYOK mode', () => {
+			const result = ChatRequestSchema.parse({
+				messages: [{ role: 'user', content: 'Hello' }],
+				persona: 'general',
+				provider: 'openai',
+				byokKey: 'sk-test1234567890abcdefghijklmnopqrst'
+			});
+			expect(result.byokKey).toBe('sk-test1234567890abcdefghijklmnopqrst');
 		});
 
 		it('should reject empty messages array', () => {
@@ -159,10 +184,10 @@ describe('Chat API Schemas', () => {
 	});
 });
 
-describe('API Key Schemas', () => {
-	describe('SaveApiKeySchema', () => {
+describe('BYOK Key Schemas', () => {
+	describe('ByokKeySchema', () => {
 		it('should accept valid OpenAI API key', () => {
-			const result = SaveApiKeySchema.parse({
+			const result = ByokKeySchema.parse({
 				provider: 'openai',
 				apiKey: 'sk-proj1234567890abcdefghijklmnopqrst'
 			});
@@ -172,7 +197,7 @@ describe('API Key Schemas', () => {
 		it('should accept valid Anthropic API key', () => {
 			// Anthropic keys: sk-ant- followed by 90+ alphanumeric/hyphen chars
 			const anthropicKey = 'sk-ant-' + 'a'.repeat(90);
-			const result = SaveApiKeySchema.parse({
+			const result = ByokKeySchema.parse({
 				provider: 'anthropic',
 				apiKey: anthropicKey
 			});
@@ -181,7 +206,7 @@ describe('API Key Schemas', () => {
 
 		it('should accept valid Google API key', () => {
 			// Google keys: 35-45 alphanumeric chars with underscores/hyphens
-			const result = SaveApiKeySchema.parse({
+			const result = ByokKeySchema.parse({
 				provider: 'google',
 				apiKey: 'AIzaSyA1234567890abcdefghijklmnopqrs'  // 39 chars
 			});
@@ -190,7 +215,7 @@ describe('API Key Schemas', () => {
 
 		it('should reject invalid OpenAI key format', () => {
 			expect(() =>
-				SaveApiKeySchema.parse({
+				ByokKeySchema.parse({
 					provider: 'openai',
 					apiKey: 'invalid-key'
 				})
@@ -199,20 +224,38 @@ describe('API Key Schemas', () => {
 
 		it('should reject empty API key', () => {
 			expect(() =>
-				SaveApiKeySchema.parse({
+				ByokKeySchema.parse({
 					provider: 'openai',
 					apiKey: ''
 				})
 			).toThrow();
 		});
 
-		it('should trim whitespace from API key', () => {
-			const result = SaveApiKeySchema.parse({
+		it('should trim whitespace during validation', () => {
+			const result = ByokKeySchema.parse({
 				provider: 'openai',
 				apiKey: '  sk-proj1234567890abcdefghijklmnopqrst  '
 			});
 			expect(result.apiKey).toBe('  sk-proj1234567890abcdefghijklmnopqrst  ');
-			// Note: The schema trims during validation, not in the output
+			// Note: The schema trims during validation check, not in the output
+		});
+	});
+
+	describe('validateByokKey', () => {
+		it('should validate OpenAI key format', () => {
+			expect(validateByokKey('openai', 'sk-proj1234567890abcdefghijklmnopqrst')).toBe(true);
+			expect(validateByokKey('openai', 'invalid')).toBe(false);
+		});
+
+		it('should validate Anthropic key format', () => {
+			const validKey = 'sk-ant-' + 'a'.repeat(90);
+			expect(validateByokKey('anthropic', validKey)).toBe(true);
+			expect(validateByokKey('anthropic', 'sk-ant-short')).toBe(false);
+		});
+
+		it('should validate Google key format', () => {
+			expect(validateByokKey('google', 'AIzaSyA1234567890abcdefghijklmnopqrs')).toBe(true);
+			expect(validateByokKey('google', 'short')).toBe(false);
 		});
 	});
 });

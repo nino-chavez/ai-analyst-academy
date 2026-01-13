@@ -28,9 +28,15 @@ export const ProgressStatusSchema = z.enum(['not_started', 'in_progress', 'compl
 export type ProgressStatus = z.infer<typeof ProgressStatusSchema>;
 
 /**
- * API provider types - must match database CHECK constraint
+ * API provider types for BYOK (Bring Your Own Key) mode
  */
-export const ProviderSchema = z.enum(['openai', 'anthropic', 'google']);
+export const ByokProviderSchema = z.enum(['openai', 'anthropic', 'google']);
+export type ByokProvider = z.infer<typeof ByokProviderSchema>;
+
+/**
+ * All provider types including platform-provided OpenRouter
+ */
+export const ProviderSchema = z.enum(['openrouter', 'openai', 'anthropic', 'google']);
 export type Provider = z.infer<typeof ProviderSchema>;
 
 // ============================================================================
@@ -123,6 +129,9 @@ export type ChatMessage = z.infer<typeof ChatMessageSchema>;
 
 /**
  * Chat API request body
+ * Supports two modes:
+ * 1. Default (OpenRouter): No byokKey needed, uses platform API key
+ * 2. BYOK: Client sends their API key per-request (never stored server-side)
  */
 export const ChatRequestSchema = z.object({
 	messages: z
@@ -130,34 +139,44 @@ export const ChatRequestSchema = z.object({
 		.min(1, 'At least one message is required')
 		.max(50, 'Too many messages in conversation (max 50)'),
 	persona: ChatPersonaSchema,
-	provider: ProviderSchema.default('openai')
+	provider: ProviderSchema.default('openrouter'),
+	// Optional: Client-side BYOK key (only sent per-request, never stored)
+	byokKey: z.string().min(1).optional()
 });
 export type ChatRequest = z.infer<typeof ChatRequestSchema>;
 
 // ============================================================================
-// API Key Schemas
+// API Key Schemas (for client-side BYOK validation)
 // ============================================================================
 
 /**
- * API key patterns by provider
+ * API key patterns by BYOK provider
  */
-const API_KEY_PATTERNS = {
+const BYOK_KEY_PATTERNS: Record<ByokProvider, RegExp> = {
 	openai: /^sk-[a-zA-Z0-9]{32,}$/,
 	anthropic: /^sk-ant-[a-zA-Z0-9-]{90,}$/,
 	google: /^[a-zA-Z0-9_-]{35,45}$/
 };
 
 /**
- * Schema for saving an API key
+ * Validate a BYOK API key format (used client-side before sending)
  */
-export const SaveApiKeySchema = z
+export function validateByokKey(provider: ByokProvider, key: string): boolean {
+	const pattern = BYOK_KEY_PATTERNS[provider];
+	return pattern.test(key.trim());
+}
+
+/**
+ * Schema for client-side BYOK key validation
+ */
+export const ByokKeySchema = z
 	.object({
-		provider: ProviderSchema,
+		provider: ByokProviderSchema,
 		apiKey: z.string().min(1, 'API key is required')
 	})
 	.refine(
 		(data) => {
-			const pattern = API_KEY_PATTERNS[data.provider];
+			const pattern = BYOK_KEY_PATTERNS[data.provider];
 			return pattern.test(data.apiKey.trim());
 		},
 		{
@@ -165,7 +184,7 @@ export const SaveApiKeySchema = z
 			path: ['apiKey']
 		}
 	);
-export type SaveApiKey = z.infer<typeof SaveApiKeySchema>;
+export type ByokKey = z.infer<typeof ByokKeySchema>;
 
 // ============================================================================
 // Onboarding Schemas

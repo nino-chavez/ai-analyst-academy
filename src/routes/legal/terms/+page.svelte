@@ -71,8 +71,31 @@
 			<section>
 				<h2>5. Use of the "Sandbox" Environment</h2>
 				<p>The "Sandbox" feature allows you to test AI workflows and interact with AI models. Your use of the Sandbox is subject to the following specific terms:</p>
+
+				<h3>5.1. Default AI Access</h3>
+				<p>
+					The Sandbox includes built-in AI access provided by the platform at no additional cost to you. This default mode:
+				</p>
 				<ul>
-					<li><strong>Bring Your Own Key (BYOK):</strong> The Sandbox operates using your own API keys from providers such as OpenAI, Anthropic, or Google. You are solely responsible for any charges incurred through your API usage. We do not have access to your API keys beyond encrypted storage for your convenience.</li>
+					<li>Uses our platform's API keys to provide AI functionality</li>
+					<li>Is subject to reasonable usage limits to ensure fair access for all users</li>
+					<li>May use different AI models than those available through BYOK</li>
+					<li>Is provided "as is" with no guarantee of specific model availability</li>
+				</ul>
+
+				<h3>5.2. Bring Your Own Key (BYOK) — Optional</h3>
+				<p>
+					Power users may optionally use their own API keys from providers such as OpenAI, Anthropic, or Google. When using BYOK:
+				</p>
+				<ul>
+					<li><strong>Client-Side Storage:</strong> Your API keys are stored exclusively in your browser's local storage. <strong>We never store your BYOK keys on our servers.</strong></li>
+					<li><strong>Per-Request Transmission:</strong> Keys are sent directly to the AI provider only when you make a request, and are not logged or retained by our backend.</li>
+					<li><strong>Your Responsibility:</strong> You are solely responsible for any charges incurred through your API usage with BYOK providers.</li>
+					<li><strong>Key Security:</strong> You are responsible for the security of your API keys. If you believe your key has been compromised, revoke it immediately with the provider and configure a new key.</li>
+				</ul>
+
+				<h3>5.3. General Sandbox Terms</h3>
+				<ul>
 					<li><strong>No Persistence Guarantee:</strong> The Sandbox is a testing environment. We do not guarantee the permanent storage of any data, code, or prompts entered into the Sandbox. We recommend you back up your work locally.</li>
 					<li><strong>Prohibited Inputs:</strong> You must not input sensitive personal data (PII), confidential business information, or production secrets into the Sandbox.</li>
 					<li><strong>No High-Risk Use:</strong> You may not use the Sandbox for any high-risk activities, including but not limited to the development of weaponry, critical infrastructure management, or illegal acts.</li>

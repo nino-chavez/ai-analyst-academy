@@ -56,13 +56,23 @@
 
 				<h3>2.4. API Keys (BYOK - Bring Your Own Key)</h3>
 				<p>
-					If you choose to use the AI Sandbox feature, you may optionally store your own API keys from providers like OpenAI, Anthropic, or Google. These keys are:
+					The AI Sandbox provides two modes of operation:
+				</p>
+
+				<h4>Default Mode</h4>
+				<p>
+					By default, the Sandbox uses our platform's API keys to provide AI functionality. In this mode, we do not collect or store any API keys from you.
+				</p>
+
+				<h4>BYOK Mode (Optional)</h4>
+				<p>
+					Power users may optionally use their own API keys from providers like OpenAI, Anthropic, or Google. When you choose BYOK:
 				</p>
 				<ul>
-					<li><strong>Encrypted at rest</strong> using industry-standard encryption</li>
-					<li><strong>Never logged</strong> or stored in plaintext</li>
-					<li><strong>Used only</strong> to make API calls on your behalf within the Sandbox</li>
-					<li><strong>Deletable at any time</strong> through your account settings</li>
+					<li><strong>Client-Side Only:</strong> Your API keys are stored exclusively in your browser's local storage (localStorage). <strong>We never store your BYOK keys on our servers.</strong></li>
+					<li><strong>No Server Storage:</strong> Unlike traditional BYOK implementations, we do not encrypt or store your keys in our database.</li>
+					<li><strong>Per-Request Transmission:</strong> Your key is sent only when making an API request, routed directly to the AI provider, and is not logged or retained.</li>
+					<li><strong>Your Control:</strong> You can clear your stored key at any time by clearing your browser's local storage or using the Sandbox settings.</li>
 				</ul>
 
 				<h3>2.5. Sandbox Inputs</h3>
