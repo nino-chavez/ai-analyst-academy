@@ -712,9 +712,9 @@
 
 	.step-node.current {
 		border-color: var(--color-warning-500);
-		background-color: var(--color-warning-50);
-		color: var(--color-warning-600);
-		box-shadow: 0 0 0 4px var(--color-warning-100);
+		background-color: var(--warning-subtle-bg);
+		color: var(--warning-subtle-text);
+		box-shadow: 0 0 0 4px var(--warning-subtle-border);
 	}
 
 	.progress-text {
@@ -980,7 +980,7 @@
 	}
 
 	.complete-btn.completed:hover {
-		background-color: var(--color-success-50);
+		background-color: var(--success-subtle-bg);
 	}
 
 	/* Lab Navigation */

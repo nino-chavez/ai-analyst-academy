@@ -344,9 +344,9 @@
 	}
 
 	.nav-item.active {
-		color: var(--color-primary-600);
-		background-color: var(--color-primary-50);
-		border-color: var(--color-primary-200);
+		color: var(--primary-subtle-text);
+		background-color: var(--primary-subtle-bg);
+		border-color: var(--primary-subtle-border);
 	}
 
 	/* Messages */
@@ -362,15 +362,15 @@
 	}
 
 	.success-message {
-		background-color: var(--color-success-50);
-		border: var(--border-width) solid var(--color-success-200);
-		color: var(--color-success-700);
+		background-color: var(--success-subtle-bg);
+		border: var(--border-width) solid var(--success-subtle-border);
+		color: var(--success-subtle-text);
 	}
 
 	.error-message {
-		background-color: var(--color-error-50);
-		border: var(--border-width) solid var(--color-error-200);
-		color: var(--color-error-700);
+		background-color: var(--error-subtle-bg);
+		border: var(--border-width) solid var(--error-subtle-border);
+		color: var(--error-subtle-text);
 	}
 
 	/* Settings Content */
@@ -431,7 +431,7 @@
 	.form-input:focus {
 		outline: none;
 		border-color: var(--color-primary-500);
-		box-shadow: 0 0 0 3px var(--color-primary-100);
+		box-shadow: 0 0 0 3px var(--primary-subtle-border);
 	}
 
 	.form-input::placeholder {
@@ -542,7 +542,7 @@
 
 	/* Danger Zone */
 	.danger-zone {
-		border-color: var(--color-error-200);
+		border-color: var(--error-subtle-border);
 	}
 
 	.danger-zone .section-title {
@@ -612,12 +612,12 @@
 
 	.btn-danger-outline {
 		background-color: transparent;
-		color: var(--color-error-600);
-		border: var(--border-width) solid var(--color-error-200);
+		color: var(--error-subtle-text);
+		border: var(--border-width) solid var(--error-subtle-border);
 	}
 
 	.btn-danger-outline:hover {
-		background-color: var(--color-error-50);
+		background-color: var(--error-subtle-bg);
 	}
 
 	/* Spinner */

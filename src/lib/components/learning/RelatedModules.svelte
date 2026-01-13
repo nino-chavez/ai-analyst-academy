@@ -193,13 +193,13 @@
 	}
 
 	.related-link.next {
-		border-color: var(--color-primary-200);
-		background-color: var(--color-primary-50);
+		border-color: var(--primary-subtle-border);
+		background-color: var(--primary-subtle-bg);
 	}
 
 	.related-link.next:hover {
 		border-color: var(--color-primary-400);
-		background-color: var(--color-primary-100);
+		background-color: var(--primary-icon-bg);
 	}
 
 	.link-icon {
@@ -260,8 +260,8 @@
 	}
 
 	.related-chip.same-phase {
-		background-color: var(--color-primary-50);
-		border-color: var(--color-primary-200);
-		color: var(--color-primary-700);
+		background-color: var(--primary-subtle-bg);
+		border-color: var(--primary-subtle-border);
+		color: var(--primary-subtle-text);
 	}
 </style>

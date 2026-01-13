@@ -411,18 +411,18 @@
 	}
 
 	.stat-icon.streak {
-		background-color: var(--color-warning-100);
-		color: var(--color-warning-600);
+		background-color: var(--warning-subtle-bg);
+		color: var(--warning-subtle-text);
 	}
 
 	.stat-icon.time {
-		background-color: var(--color-info-100);
-		color: var(--color-info-600);
+		background-color: var(--primary-subtle-bg);
+		color: var(--primary-subtle-text);
 	}
 
 	.stat-icon.trophy {
-		background-color: var(--color-success-100);
-		color: var(--color-success-600);
+		background-color: var(--success-icon-bg);
+		color: var(--success-icon-color);
 	}
 
 	.stat-content {
@@ -554,13 +554,13 @@
 	}
 
 	.activity-icon.module {
-		background-color: var(--color-primary-100);
-		color: var(--color-primary-600);
+		background-color: var(--primary-subtle-bg);
+		color: var(--primary-subtle-text);
 	}
 
 	.activity-icon.lab {
-		background-color: var(--color-secondary-100);
-		color: var(--color-secondary-600);
+		background-color: var(--color-bg-tertiary);
+		color: var(--color-text-secondary);
 	}
 
 	.activity-content {
@@ -659,8 +659,8 @@
 	}
 
 	.achievement-card.earned .achievement-icon {
-		background-color: var(--color-warning-100);
-		color: var(--color-warning-600);
+		background-color: var(--warning-subtle-bg);
+		color: var(--warning-subtle-text);
 	}
 
 	.achievement-content {
@@ -747,8 +747,8 @@
 	}
 
 	.review-card.due {
-		border-color: var(--color-warning-300);
-		background-color: var(--color-warning-50);
+		border-color: var(--warning-subtle-border);
+		background-color: var(--warning-subtle-bg);
 	}
 
 	.review-card.active {
@@ -810,8 +810,8 @@
 	}
 
 	.review-status.due {
-		color: var(--color-warning-700);
-		background-color: var(--color-warning-100);
+		color: var(--warning-subtle-text);
+		background-color: var(--warning-subtle-bg);
 	}
 
 	.review-status.upcoming {
@@ -872,43 +872,47 @@
 	}
 
 	.rating-btn.forgot {
-		color: var(--color-error-700);
-		background-color: var(--color-error-50);
-		border-color: var(--color-error-300);
+		color: var(--error-subtle-text);
+		background-color: var(--error-subtle-bg);
+		border-color: var(--error-subtle-border);
 	}
 
 	.rating-btn.forgot:hover {
-		background-color: var(--color-error-100);
+		background-color: var(--error-subtle-bg);
+		opacity: 0.8;
 	}
 
 	.rating-btn.hard {
-		color: var(--color-warning-700);
-		background-color: var(--color-warning-50);
-		border-color: var(--color-warning-300);
+		color: var(--warning-subtle-text);
+		background-color: var(--warning-subtle-bg);
+		border-color: var(--warning-subtle-border);
 	}
 
 	.rating-btn.hard:hover {
-		background-color: var(--color-warning-100);
+		background-color: var(--warning-subtle-bg);
+		opacity: 0.8;
 	}
 
 	.rating-btn.good {
-		color: var(--color-success-700);
-		background-color: var(--color-success-50);
-		border-color: var(--color-success-300);
+		color: var(--success-subtle-text);
+		background-color: var(--success-subtle-bg);
+		border-color: var(--success-subtle-border);
 	}
 
 	.rating-btn.good:hover {
-		background-color: var(--color-success-100);
+		background-color: var(--success-subtle-bg);
+		opacity: 0.8;
 	}
 
 	.rating-btn.easy {
-		color: var(--color-primary-700);
-		background-color: var(--color-primary-50);
-		border-color: var(--color-primary-300);
+		color: var(--primary-subtle-text);
+		background-color: var(--primary-subtle-bg);
+		border-color: var(--primary-subtle-border);
 	}
 
 	.rating-btn.easy:hover {
-		background-color: var(--color-primary-100);
+		background-color: var(--primary-subtle-bg);
+		opacity: 0.8;
 	}
 
 	.cancel-btn {

@@ -844,8 +844,8 @@
 	}
 
 	.nav-link.complete {
-		background-color: var(--color-success-50);
-		border-color: var(--color-success-200);
+		background-color: var(--success-subtle-bg);
+		border-color: var(--success-subtle-border);
 	}
 
 	.nav-link.complete:hover {

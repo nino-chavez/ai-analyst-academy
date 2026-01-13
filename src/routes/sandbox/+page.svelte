@@ -463,13 +463,13 @@
 	}
 
 	.mode-badge.default {
-		background-color: var(--color-primary-50);
-		color: var(--color-primary-700);
+		background-color: var(--primary-subtle-bg);
+		color: var(--primary-subtle-text);
 	}
 
 	.mode-badge.byok {
-		background-color: var(--color-success-50);
-		color: var(--color-success-700);
+		background-color: var(--success-subtle-bg);
+		color: var(--success-subtle-text);
 	}
 
 	.mode-switch {
@@ -570,7 +570,7 @@
 	.form-input:focus {
 		outline: none;
 		border-color: var(--color-primary-500);
-		box-shadow: 0 0 0 3px var(--color-primary-100);
+		box-shadow: 0 0 0 3px var(--primary-subtle-border);
 	}
 
 	.form-error {
@@ -716,13 +716,13 @@
 	}
 
 	.provider-badge.default {
-		background-color: var(--color-primary-100);
-		color: var(--color-primary-700);
+		background-color: var(--primary-subtle-bg);
+		color: var(--primary-subtle-text);
 	}
 
 	.provider-badge.byok {
-		background-color: var(--color-success-100);
-		color: var(--color-success-700);
+		background-color: var(--success-subtle-bg);
+		color: var(--success-subtle-text);
 	}
 
 	.messages-container {
@@ -804,9 +804,9 @@
 		align-items: center;
 		gap: var(--space-2);
 		padding: var(--space-3) var(--space-4);
-		background-color: var(--color-error-50);
-		border-top: var(--border-width) solid var(--color-error-200);
-		color: var(--color-error-700);
+		background-color: var(--error-subtle-bg);
+		border-top: var(--border-width) solid var(--error-subtle-border);
+		color: var(--error-subtle-text);
 		font-size: var(--text-sm);
 	}
 
@@ -846,7 +846,7 @@
 	.message-input:focus {
 		outline: none;
 		border-color: var(--color-primary-500);
-		box-shadow: 0 0 0 3px var(--color-primary-100);
+		box-shadow: 0 0 0 3px var(--primary-subtle-border);
 	}
 
 	.send-button {

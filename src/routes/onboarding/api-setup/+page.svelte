@@ -274,10 +274,10 @@
 		align-items: center;
 		gap: var(--space-2);
 		padding: var(--space-3) var(--space-4);
-		background-color: var(--color-error-50);
-		border: var(--border-width) solid var(--color-error-200);
+		background-color: var(--error-subtle-bg);
+		border: var(--border-width) solid var(--error-subtle-border);
 		border-radius: var(--radius-lg);
-		color: var(--color-error-700);
+		color: var(--error-subtle-text);
 		font-size: var(--text-sm);
 		margin-bottom: var(--space-6);
 	}
@@ -299,8 +299,8 @@
 	}
 
 	.mode-card.default-mode {
-		border-color: var(--color-success-300);
-		background-color: var(--color-success-50);
+		border-color: var(--success-subtle-border);
+		background-color: var(--success-subtle-bg);
 	}
 
 	.mode-header {
@@ -322,16 +322,16 @@
 	}
 
 	.default-mode .mode-icon {
-		background-color: var(--color-success-100);
-		color: var(--color-success-600);
+		background-color: var(--success-icon-bg);
+		color: var(--success-icon-color);
 	}
 
 	.mode-badge {
 		display: inline-flex;
 		align-items: center;
 		padding: var(--space-1) var(--space-3);
-		background-color: var(--color-success-100);
-		color: var(--color-success-700);
+		background-color: var(--success-icon-bg);
+		color: var(--success-subtle-text);
 		font-size: var(--text-xs);
 		font-weight: var(--font-semibold);
 		border-radius: var(--radius-full);

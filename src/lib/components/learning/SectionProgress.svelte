@@ -195,9 +195,9 @@
 
 	.step-node.current {
 		border-color: var(--color-primary-500);
-		background-color: var(--color-primary-50);
-		color: var(--color-primary-600);
-		box-shadow: 0 0 0 4px var(--color-primary-100);
+		background-color: var(--primary-subtle-bg);
+		color: var(--primary-subtle-text);
+		box-shadow: 0 0 0 4px var(--primary-subtle-border);
 	}
 
 	.step-node.upcoming {

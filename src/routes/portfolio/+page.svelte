@@ -927,8 +927,8 @@
 	}
 
 	.status-badge.complete {
-		color: var(--color-success-700);
-		background-color: var(--color-success-100);
+		color: var(--success-subtle-text);
+		background-color: var(--success-subtle-bg);
 	}
 
 	.card-title {
@@ -1104,8 +1104,8 @@
 
 	/* Action button danger variant */
 	.action-btn-danger:hover {
-		background-color: var(--color-error-100);
-		color: var(--color-error-600);
+		background-color: var(--error-subtle-bg);
+		color: var(--error-subtle-text);
 	}
 
 	/* Modal Styles */
@@ -1224,7 +1224,7 @@
 	.form-input:focus {
 		outline: none;
 		border-color: var(--color-primary-500);
-		box-shadow: 0 0 0 3px var(--color-primary-100);
+		box-shadow: 0 0 0 3px var(--primary-subtle-border);
 	}
 
 	.form-input::placeholder {
@@ -1269,10 +1269,10 @@
 	.form-error {
 		padding: var(--space-3) var(--space-4);
 		margin: var(--space-4) var(--space-6) 0;
-		background-color: var(--color-error-50);
-		border: var(--border-width) solid var(--color-error-200);
+		background-color: var(--error-subtle-bg);
+		border: var(--border-width) solid var(--error-subtle-border);
 		border-radius: var(--radius-lg);
-		color: var(--color-error-700);
+		color: var(--error-subtle-text);
 		font-size: var(--text-sm);
 	}
 

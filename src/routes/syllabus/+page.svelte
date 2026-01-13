@@ -507,7 +507,7 @@
 		padding: var(--space-3);
 		font-size: var(--text-sm);
 		color: var(--color-text-primary);
-		background-color: var(--color-success-50);
+		background-color: var(--success-subtle-bg);
 		border-left: 3px solid var(--color-success-500);
 		border-radius: var(--radius-md);
 	}

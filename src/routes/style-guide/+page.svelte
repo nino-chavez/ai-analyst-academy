@@ -1007,8 +1007,8 @@ const estimateTokens = (text) => Math.ceil(text.length / 4);</code></pre>
 	}
 
 	.nav-item.active {
-		color: var(--color-primary-600);
-		background-color: var(--color-primary-50);
+		color: var(--primary-subtle-text);
+		background-color: var(--primary-subtle-bg);
 	}
 
 	/* Main Content */
@@ -1077,28 +1077,28 @@ const estimateTokens = (text) => Math.ceil(text.length / 4);</code></pre>
 	}
 
 	.badge-primary {
-		background-color: var(--color-primary-100);
-		color: var(--color-primary-700);
+		background-color: var(--primary-subtle-bg);
+		color: var(--primary-subtle-text);
 	}
 
 	.badge-secondary {
-		background-color: var(--color-secondary-100);
-		color: var(--color-secondary-700);
+		background-color: var(--secondary-subtle-bg);
+		color: var(--secondary-subtle-text);
 	}
 
 	.badge-success {
-		background-color: var(--color-success-100);
-		color: var(--color-success-700);
+		background-color: var(--success-subtle-bg);
+		color: var(--success-subtle-text);
 	}
 
 	.badge-warning {
-		background-color: var(--color-warning-100);
-		color: var(--color-warning-700);
+		background-color: var(--warning-subtle-bg);
+		color: var(--warning-subtle-text);
 	}
 
 	.badge-error {
-		background-color: var(--color-error-100);
-		color: var(--color-error-700);
+		background-color: var(--error-subtle-bg);
+		color: var(--error-subtle-text);
 	}
 
 	.badge-phase-1 {
@@ -1578,7 +1578,7 @@ const estimateTokens = (text) => Math.ceil(text.length / 4);</code></pre>
 	.input:focus {
 		outline: none;
 		border-color: var(--input-border-focus);
-		box-shadow: 0 0 0 3px var(--color-primary-100);
+		box-shadow: 0 0 0 3px var(--primary-subtle-border);
 	}
 
 	.input::placeholder {
@@ -1755,26 +1755,26 @@ const estimateTokens = (text) => Math.ceil(text.length / 4);</code></pre>
 	}
 
 	.alert-info {
-		background-color: var(--color-info-50);
-		color: var(--color-info-700);
+		background-color: var(--info-subtle-bg);
+		color: var(--info-subtle-text);
 		border-left: var(--border-width-4) solid var(--color-info-500);
 	}
 
 	.alert-success {
-		background-color: var(--color-success-50);
-		color: var(--color-success-700);
+		background-color: var(--success-subtle-bg);
+		color: var(--success-subtle-text);
 		border-left: var(--border-width-4) solid var(--color-success-500);
 	}
 
 	.alert-warning {
-		background-color: var(--color-warning-50);
-		color: var(--color-warning-700);
+		background-color: var(--warning-subtle-bg);
+		color: var(--warning-subtle-text);
 		border-left: var(--border-width-4) solid var(--color-warning-500);
 	}
 
 	.alert-error {
-		background-color: var(--color-error-50);
-		color: var(--color-error-700);
+		background-color: var(--error-subtle-bg);
+		color: var(--error-subtle-text);
 		border-left: var(--border-width-4) solid var(--color-error-500);
 	}
 

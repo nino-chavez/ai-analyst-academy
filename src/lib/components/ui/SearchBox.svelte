@@ -297,7 +297,7 @@
 
 	.search-input:focus {
 		border-color: var(--color-primary-500);
-		box-shadow: 0 0 0 3px var(--color-primary-100);
+		box-shadow: 0 0 0 3px var(--primary-subtle-border);
 	}
 
 	.search-spinner {
@@ -441,18 +441,18 @@
 	}
 
 	.result-badge.type-module {
-		color: var(--color-primary-700);
-		background-color: var(--color-primary-100);
+		color: var(--primary-subtle-text);
+		background-color: var(--primary-subtle-bg);
 	}
 
 	.result-badge.type-lab {
-		color: var(--color-warning-700);
-		background-color: var(--color-warning-100);
+		color: var(--warning-subtle-text);
+		background-color: var(--warning-subtle-bg);
 	}
 
 	.result-badge.type-concept {
-		color: var(--color-success-700);
-		background-color: var(--color-success-100);
+		color: var(--success-subtle-text);
+		background-color: var(--success-subtle-bg);
 	}
 
 	.result-phase {

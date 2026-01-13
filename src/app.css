@@ -289,6 +289,23 @@
     --success-subtle-bg: var(--color-success-50);
     --success-subtle-text: var(--color-success-700);
     --success-subtle-border: var(--color-success-200);
+    --success-icon-bg: var(--color-success-100);
+    --success-icon-color: var(--color-success-600);
+
+    /* Error States */
+    --error-subtle-bg: var(--color-error-50);
+    --error-subtle-text: var(--color-error-700);
+    --error-subtle-border: var(--color-error-200);
+
+    /* Warning States */
+    --warning-subtle-bg: var(--color-warning-50);
+    --warning-subtle-text: var(--color-warning-700);
+    --warning-subtle-border: var(--color-warning-200);
+
+    /* Primary Subtle States */
+    --primary-subtle-bg: var(--color-primary-50);
+    --primary-subtle-text: var(--color-primary-700);
+    --primary-subtle-border: var(--color-primary-200);
 
     /* Active/Selected States */
     --active-subtle-bg: var(--color-primary-50);
@@ -352,6 +369,23 @@
     --success-subtle-bg: color-mix(in srgb, var(--color-success-500) 15%, transparent);
     --success-subtle-text: var(--color-success-400);
     --success-subtle-border: var(--color-success-700);
+    --success-icon-bg: color-mix(in srgb, var(--color-success-500) 20%, var(--color-bg-secondary));
+    --success-icon-color: var(--color-success-400);
+
+    /* Error States */
+    --error-subtle-bg: color-mix(in srgb, var(--color-error-500) 15%, transparent);
+    --error-subtle-text: var(--color-error-400);
+    --error-subtle-border: var(--color-error-700);
+
+    /* Warning States */
+    --warning-subtle-bg: color-mix(in srgb, var(--color-warning-500) 15%, transparent);
+    --warning-subtle-text: var(--color-warning-400);
+    --warning-subtle-border: var(--color-warning-700);
+
+    /* Primary Subtle States */
+    --primary-subtle-bg: color-mix(in srgb, var(--color-primary-500) 15%, transparent);
+    --primary-subtle-text: var(--color-primary-400);
+    --primary-subtle-border: var(--color-primary-700);
 
     /* Active/Selected States */
     --active-subtle-bg: color-mix(in srgb, var(--color-primary-500) 15%, var(--color-bg-secondary));
@@ -411,6 +445,17 @@
       --success-subtle-bg: color-mix(in srgb, var(--color-success-500) 15%, transparent);
       --success-subtle-text: var(--color-success-400);
       --success-subtle-border: var(--color-success-700);
+      --success-icon-bg: color-mix(in srgb, var(--color-success-500) 20%, var(--color-bg-secondary));
+      --success-icon-color: var(--color-success-400);
+      --error-subtle-bg: color-mix(in srgb, var(--color-error-500) 15%, transparent);
+      --error-subtle-text: var(--color-error-400);
+      --error-subtle-border: var(--color-error-700);
+      --warning-subtle-bg: color-mix(in srgb, var(--color-warning-500) 15%, transparent);
+      --warning-subtle-text: var(--color-warning-400);
+      --warning-subtle-border: var(--color-warning-700);
+      --primary-subtle-bg: color-mix(in srgb, var(--color-primary-500) 15%, transparent);
+      --primary-subtle-text: var(--color-primary-400);
+      --primary-subtle-border: var(--color-primary-700);
       --active-subtle-bg: color-mix(in srgb, var(--color-primary-500) 15%, var(--color-bg-secondary));
       --active-subtle-text: var(--color-primary-300);
       --viewed-subtle-bg: color-mix(in srgb, var(--color-success-500) 10%, var(--color-bg-primary));

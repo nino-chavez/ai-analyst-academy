@@ -57,15 +57,15 @@
 					<span class="stat-label">Phases</span>
 				</div>
 				<div class="stat">
-					<span class="stat-value">16</span>
+					<span class="stat-value">18</span>
 					<span class="stat-label">Modules</span>
 				</div>
 				<div class="stat">
-					<span class="stat-value">8</span>
+					<span class="stat-value">11</span>
 					<span class="stat-label">Labs</span>
 				</div>
 				<div class="stat">
-					<span class="stat-value">20h</span>
+					<span class="stat-value">40h</span>
 					<span class="stat-label">Content</span>
 				</div>
 			</div>
@@ -496,7 +496,7 @@
 		height: 48px;
 		margin-bottom: var(--space-3);
 		color: var(--phase-color, var(--color-primary-500));
-		background-color: var(--phase-color-light, var(--color-primary-50));
+		background-color: var(--phase-color-light, var(--primary-subtle-bg));
 		border-radius: var(--radius-lg);
 	}
 
@@ -585,7 +585,7 @@
 		height: 56px;
 		margin: 0 auto var(--space-4) auto;
 		color: var(--color-primary-600);
-		background-color: var(--color-primary-100);
+		background-color: var(--primary-icon-bg);
 		border-radius: var(--radius-xl);
 	}
 
