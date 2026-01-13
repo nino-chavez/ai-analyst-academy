@@ -1,0 +1,18 @@
+id: "phase-1"
+title: "AI Literacy"
+description: "Master the fundamentals of AI systems, token economics, and effective prompting techniques"
+order: 1
+color: "phase-1"
+icon: "brain"
+estimatedHours: 4
+modules:
+  - "1.1-economics-of-intelligence"
+  - "1.2-context-and-memory"
+  - "1.3-providers-and-models"
+  - "1.4-prompting-as-management"
+labs:
+  - "persona-stress-test"
+  - "chain-of-thought-audit"
+deliverable:
+  title: "Prompt Library"
+  description: "Create a personal library of reusable, tested prompts for your professional domain"

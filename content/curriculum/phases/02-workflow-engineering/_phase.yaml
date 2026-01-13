@@ -1,0 +1,19 @@
+id: "phase-2"
+title: "Workflow Engineering"
+description: "Design AI-enhanced processes by identifying automation opportunities and orchestrating multi-step workflows"
+order: 2
+color: "phase-2"
+icon: "workflow"
+estimatedHours: 5
+modules:
+  - "2.1-process-analysis"
+  - "2.2-task-decomposition"
+  - "2.3-quality-and-iteration"
+  - "2.4-human-ai-handoffs"
+labs:
+  - "workflow-mapping"
+  - "data-hygiene"
+  - "quality-gate-design"
+deliverable:
+  title: "Workflow Automation Proposal"
+  description: "Document a real workflow with AI integration opportunities, including ROI analysis"

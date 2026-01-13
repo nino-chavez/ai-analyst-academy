@@ -1,0 +1,801 @@
+<script lang="ts">
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
+
+	let selectedProvider = $state<string>('');
+	let selectedPersona = $state<string | null>(null);
+	let messages = $state<Array<{ role: 'user' | 'assistant'; content: string }>>([]);
+	let inputValue = $state('');
+	let isLoading = $state(false);
+	let errorMessage = $state<string | null>(null);
+	let isDemoMode = $state(false);
+
+	// Initialize provider from configured keys
+	$effect(() => {
+		if (data.configuredProviders.length > 0 && !selectedProvider) {
+			// Prefer OpenAI, then Anthropic, then Google
+			const preferred = ['openai', 'anthropic', 'google'];
+			for (const p of preferred) {
+				if (data.configuredProviders.some(cp => cp.provider === p)) {
+					selectedProvider = p;
+					break;
+				}
+			}
+		}
+	});
+
+	const personas = [
+		{
+			id: 'general',
+			name: 'General Assistant',
+			description: 'A helpful AI assistant for general questions and tasks',
+			icon: 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z'
+		},
+		{
+			id: 'gen-z',
+			name: 'Gen-Z Consumer',
+			description: 'Test your prompts against a skeptical Gen-Z perspective',
+			icon: 'M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+		},
+		{
+			id: 'investor',
+			name: 'Investor',
+			description: 'Evaluate pitches and business ideas from an investor lens',
+			icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+		},
+		{
+			id: 'editor',
+			name: 'Strict Editor',
+			description: 'Get critical feedback on your writing and content',
+			icon: 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'
+		}
+	];
+
+	const providerNames: Record<string, string> = {
+		openai: 'OpenAI',
+		anthropic: 'Anthropic',
+		google: 'Google'
+	};
+
+	function selectPersona(id: string) {
+		selectedPersona = id;
+		messages = [];
+		errorMessage = null;
+	}
+
+	async function handleSubmit() {
+		if (!inputValue.trim() || isLoading) return;
+
+		const userMessage = inputValue.trim();
+		messages = [...messages, { role: 'user', content: userMessage }];
+		inputValue = '';
+		isLoading = true;
+		errorMessage = null;
+
+		if (isDemoMode) {
+			// Demo mode - simulated response
+			setTimeout(() => {
+				messages = [
+					...messages,
+					{
+						role: 'assistant',
+						content:
+							'This is a demo response. Connect your API key in Settings to enable real AI conversations with different personas.'
+					}
+				];
+				isLoading = false;
+			}, 1000);
+			return;
+		}
+
+		try {
+			const response = await fetch('/api/chat', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					messages: messages.map(m => ({ role: m.role, content: m.content })),
+					persona: selectedPersona,
+					provider: selectedProvider
+				})
+			});
+
+			if (!response.ok) {
+				const errorData = await response.json().catch(() => ({ message: 'Request failed' }));
+				throw new Error(errorData.message || `Error: ${response.status}`);
+			}
+
+			const data = await response.json();
+			messages = [...messages, { role: 'assistant', content: data.content }];
+		} catch (err) {
+			console.error('Chat error:', err);
+			errorMessage = err instanceof Error ? err.message : 'Failed to send message';
+			// Remove the user message if the request failed
+			messages = messages.slice(0, -1);
+		} finally {
+			isLoading = false;
+		}
+	}
+
+	function handleKeydown(event: KeyboardEvent) {
+		if (event.key === 'Enter' && !event.shiftKey) {
+			event.preventDefault();
+			handleSubmit();
+		}
+	}
+
+	function enterDemoMode() {
+		isDemoMode = true;
+	}
+</script>
+
+<svelte:head>
+	<title>AI Sandbox | AI Operator Academy</title>
+	<meta
+		name="description"
+		content="Practice AI prompting with your own API keys in a safe sandbox environment"
+	/>
+</svelte:head>
+
+<div class="sandbox-page">
+	<header class="page-header">
+		<h1 class="page-title">AI Sandbox</h1>
+		<p class="page-description">
+			Practice prompting techniques with real AI models using your own API keys
+		</p>
+	</header>
+
+	{#if !data.hasApiKeys && !isDemoMode}
+		<div class="setup-prompt">
+			<div class="setup-icon">
+				<svg
+					width="48"
+					height="48"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="1.5"
+				>
+					<path
+						d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"
+					/>
+				</svg>
+			</div>
+			<h2 class="setup-title">Connect Your API Key</h2>
+			<p class="setup-description">
+				The sandbox uses your own API keys to interact with AI models. This teaches real-world AI
+				usage and keeps your data private.
+			</p>
+			<div class="setup-actions">
+				<a href="/settings/api-keys" class="btn btn-primary">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M12 4v16m8-8H4" />
+					</svg>
+					Add API Key
+				</a>
+				<button class="btn btn-secondary" onclick={enterDemoMode}>
+					Try Demo Mode
+				</button>
+			</div>
+			<p class="setup-note">
+				Supports OpenAI, Anthropic, and Google Gemini. Keys are encrypted and stored securely.
+			</p>
+		</div>
+	{:else if !selectedPersona}
+		<div class="persona-selection">
+			<h2 class="selection-title">Choose a Persona</h2>
+			<p class="selection-description">
+				Select an AI persona to practice with. Each persona has different characteristics and use
+				cases.
+			</p>
+
+			{#if data.hasApiKeys && !isDemoMode}
+				<div class="provider-selector">
+					<label class="provider-label" for="provider-select">Using:</label>
+					<select id="provider-select" class="provider-select" bind:value={selectedProvider}>
+						{#each data.configuredProviders as cp (cp.provider)}
+							<option value={cp.provider}>
+								{providerNames[cp.provider]} ({cp.keyHint})
+							</option>
+						{/each}
+					</select>
+				</div>
+			{:else if isDemoMode}
+				<div class="demo-badge">
+					<span>Demo Mode</span>
+					<a href="/settings/api-keys" class="demo-upgrade">Add API key for real responses</a>
+				</div>
+			{/if}
+
+			<div class="personas-grid">
+				{#each personas as persona (persona.id)}
+					<button class="persona-card" onclick={() => selectPersona(persona.id)}>
+						<div class="persona-icon">
+							<svg
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="1.5"
+							>
+								<path d={persona.icon} />
+							</svg>
+						</div>
+						<h3 class="persona-name">{persona.name}</h3>
+						<p class="persona-description">{persona.description}</p>
+					</button>
+				{/each}
+			</div>
+		</div>
+	{:else}
+		<div class="chat-container">
+			<div class="chat-header">
+				<button class="back-button" onclick={() => (selectedPersona = null)}>
+					<svg
+						width="20"
+						height="20"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+					>
+						<polyline points="15 18 9 12 15 6" />
+					</svg>
+					<span>Change Persona</span>
+				</button>
+				<div class="current-persona">
+					<span class="persona-label">Chatting with:</span>
+					<span class="persona-value">{personas.find((p) => p.id === selectedPersona)?.name}</span>
+					{#if !isDemoMode && selectedProvider}
+						<span class="provider-badge">{providerNames[selectedProvider]}</span>
+					{:else if isDemoMode}
+						<span class="provider-badge demo">Demo</span>
+					{/if}
+				</div>
+			</div>
+
+			<div class="messages-container">
+				{#if messages.length === 0}
+					<div class="empty-state">
+						<p>Start a conversation by typing a message below.</p>
+					</div>
+				{:else}
+					{#each messages as message, i (i)}
+						<div class="message {message.role}">
+							<div class="message-content">{message.content}</div>
+						</div>
+					{/each}
+					{#if isLoading}
+						<div class="message assistant loading">
+							<div class="typing-indicator">
+								<span></span>
+								<span></span>
+								<span></span>
+							</div>
+						</div>
+					{/if}
+				{/if}
+			</div>
+
+			{#if errorMessage}
+				<div class="error-banner">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<circle cx="12" cy="12" r="10" />
+						<line x1="12" y1="8" x2="12" y2="12" />
+						<line x1="12" y1="16" x2="12.01" y2="16" />
+					</svg>
+					<span>{errorMessage}</span>
+					<button class="error-dismiss" onclick={() => (errorMessage = null)} aria-label="Dismiss">
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<line x1="18" y1="6" x2="6" y2="18" />
+							<line x1="6" y1="6" x2="18" y2="18" />
+						</svg>
+					</button>
+				</div>
+			{/if}
+
+			<form class="input-container" onsubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+				<textarea
+					class="message-input"
+					placeholder="Type your message..."
+					bind:value={inputValue}
+					onkeydown={handleKeydown}
+					rows="1"
+				></textarea>
+				<button
+					type="submit"
+					class="send-button"
+					disabled={!inputValue.trim() || isLoading}
+					aria-label="Send message"
+				>
+					<svg
+						width="20"
+						height="20"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						aria-hidden="true"
+					>
+						<line x1="22" y1="2" x2="11" y2="13" />
+						<polygon points="22 2 15 22 11 13 2 9 22 2" />
+					</svg>
+				</button>
+			</form>
+		</div>
+	{/if}
+</div>
+
+<style>
+	.sandbox-page {
+		max-width: var(--container-lg);
+		margin: 0 auto;
+		padding: var(--space-6) var(--space-4);
+	}
+
+	.page-header {
+		text-align: center;
+		margin-bottom: var(--space-8);
+	}
+
+	.page-title {
+		font-size: var(--text-3xl);
+		font-weight: var(--font-bold);
+		color: var(--color-text-primary);
+		margin: 0 0 var(--space-2) 0;
+	}
+
+	.page-description {
+		font-size: var(--text-lg);
+		color: var(--color-text-secondary);
+		margin: 0;
+	}
+
+	/* Setup Prompt */
+	.setup-prompt {
+		max-width: 480px;
+		margin: 0 auto;
+		text-align: center;
+		padding: var(--space-8);
+		background-color: var(--color-bg-secondary);
+		border: var(--border-width) solid var(--color-border-primary);
+		border-radius: var(--radius-xl);
+	}
+
+	.setup-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 80px;
+		height: 80px;
+		background-color: var(--color-primary-50);
+		border-radius: var(--radius-full);
+		color: var(--color-primary-600);
+		margin-bottom: var(--space-4);
+	}
+
+	.setup-title {
+		font-size: var(--text-xl);
+		font-weight: var(--font-semibold);
+		color: var(--color-text-primary);
+		margin: 0 0 var(--space-2) 0;
+	}
+
+	.setup-description {
+		font-size: var(--text-base);
+		color: var(--color-text-secondary);
+		margin: 0 0 var(--space-6) 0;
+		line-height: var(--leading-relaxed);
+	}
+
+	.setup-actions {
+		display: flex;
+		gap: var(--space-3);
+		justify-content: center;
+		margin-bottom: var(--space-4);
+	}
+
+	.setup-note {
+		font-size: var(--text-sm);
+		color: var(--color-text-tertiary);
+		margin: 0;
+	}
+
+	/* Provider Selector */
+	.provider-selector {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-2);
+		margin-bottom: var(--space-6);
+	}
+
+	.provider-label {
+		font-size: var(--text-sm);
+		color: var(--color-text-secondary);
+	}
+
+	.provider-select {
+		padding: var(--space-2) var(--space-3);
+		background-color: var(--color-bg-primary);
+		border: var(--border-width) solid var(--color-border-primary);
+		border-radius: var(--radius-md);
+		font-size: var(--text-sm);
+		color: var(--color-text-primary);
+	}
+
+	.provider-select:focus {
+		outline: none;
+		border-color: var(--color-primary-500);
+	}
+
+	/* Demo Badge */
+	.demo-badge {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-3);
+		padding: var(--space-3);
+		background-color: var(--color-warning-50);
+		border: var(--border-width) solid var(--color-warning-200);
+		border-radius: var(--radius-lg);
+		margin-bottom: var(--space-6);
+	}
+
+	.demo-badge span {
+		font-size: var(--text-sm);
+		font-weight: var(--font-medium);
+		color: var(--color-warning-700);
+	}
+
+	.demo-upgrade {
+		font-size: var(--text-sm);
+		color: var(--color-primary-600);
+		text-decoration: underline;
+	}
+
+	/* Persona Selection */
+	.persona-selection {
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	.selection-title {
+		font-size: var(--text-xl);
+		font-weight: var(--font-semibold);
+		color: var(--color-text-primary);
+		margin: 0 0 var(--space-2) 0;
+		text-align: center;
+	}
+
+	.selection-description {
+		font-size: var(--text-base);
+		color: var(--color-text-secondary);
+		margin: 0 0 var(--space-6) 0;
+		text-align: center;
+	}
+
+	.personas-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		gap: var(--space-4);
+	}
+
+	.persona-card {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		padding: var(--space-6);
+		background-color: var(--color-bg-primary);
+		border: var(--border-width) solid var(--color-border-primary);
+		border-radius: var(--radius-lg);
+		cursor: pointer;
+		transition: all var(--duration-150) var(--ease-out);
+	}
+
+	.persona-card:hover {
+		border-color: var(--color-primary-400);
+		box-shadow: var(--shadow-md);
+		transform: translateY(-2px);
+	}
+
+	.persona-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 48px;
+		height: 48px;
+		background-color: var(--color-bg-tertiary);
+		border-radius: var(--radius-full);
+		color: var(--color-text-secondary);
+		margin-bottom: var(--space-3);
+	}
+
+	.persona-name {
+		font-size: var(--text-base);
+		font-weight: var(--font-semibold);
+		color: var(--color-text-primary);
+		margin: 0 0 var(--space-1) 0;
+	}
+
+	.persona-description {
+		font-size: var(--text-sm);
+		color: var(--color-text-secondary);
+		margin: 0;
+		line-height: var(--leading-relaxed);
+	}
+
+	/* Chat Container */
+	.chat-container {
+		display: flex;
+		flex-direction: column;
+		height: calc(100vh - 240px);
+		min-height: 400px;
+		background-color: var(--color-bg-secondary);
+		border: var(--border-width) solid var(--color-border-primary);
+		border-radius: var(--radius-xl);
+		overflow: hidden;
+	}
+
+	.chat-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: var(--space-3) var(--space-4);
+		background-color: var(--color-bg-primary);
+		border-bottom: var(--border-width) solid var(--color-border-secondary);
+	}
+
+	.back-button {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-1);
+		padding: var(--space-2) var(--space-3);
+		background: none;
+		border: var(--border-width) solid var(--color-border-primary);
+		border-radius: var(--radius-md);
+		font-size: var(--text-sm);
+		color: var(--color-text-secondary);
+		cursor: pointer;
+		transition: all var(--duration-150) var(--ease-out);
+	}
+
+	.back-button:hover {
+		background-color: var(--color-bg-tertiary);
+		color: var(--color-text-primary);
+	}
+
+	.current-persona {
+		display: flex;
+		align-items: center;
+		gap: var(--space-2);
+	}
+
+	.persona-label {
+		font-size: var(--text-sm);
+		color: var(--color-text-tertiary);
+	}
+
+	.persona-value {
+		font-size: var(--text-sm);
+		font-weight: var(--font-medium);
+		color: var(--color-text-primary);
+	}
+
+	.provider-badge {
+		font-size: var(--text-xs);
+		font-weight: var(--font-medium);
+		padding: var(--space-1) var(--space-2);
+		background-color: var(--color-bg-tertiary);
+		border-radius: var(--radius-full);
+		color: var(--color-text-secondary);
+	}
+
+	.provider-badge.demo {
+		background-color: var(--color-warning-100);
+		color: var(--color-warning-700);
+	}
+
+	.messages-container {
+		flex: 1;
+		overflow-y: auto;
+		padding: var(--space-4);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-3);
+	}
+
+	.empty-state {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+		color: var(--color-text-tertiary);
+		font-size: var(--text-sm);
+	}
+
+	.message {
+		max-width: 80%;
+		padding: var(--space-3) var(--space-4);
+		border-radius: var(--radius-lg);
+		line-height: var(--leading-relaxed);
+	}
+
+	.message.user {
+		align-self: flex-end;
+		background-color: var(--color-primary-600);
+		color: white;
+	}
+
+	.message.assistant {
+		align-self: flex-start;
+		background-color: var(--color-bg-primary);
+		border: var(--border-width) solid var(--color-border-secondary);
+		color: var(--color-text-primary);
+	}
+
+	.message.loading {
+		padding: var(--space-4);
+	}
+
+	.typing-indicator {
+		display: flex;
+		gap: 4px;
+	}
+
+	.typing-indicator span {
+		width: 8px;
+		height: 8px;
+		background-color: var(--color-text-tertiary);
+		border-radius: var(--radius-full);
+		animation: bounce 1.4s infinite ease-in-out both;
+	}
+
+	.typing-indicator span:nth-child(1) {
+		animation-delay: -0.32s;
+	}
+	.typing-indicator span:nth-child(2) {
+		animation-delay: -0.16s;
+	}
+
+	@keyframes bounce {
+		0%,
+		80%,
+		100% {
+			transform: scale(0);
+		}
+		40% {
+			transform: scale(1);
+		}
+	}
+
+	/* Error Banner */
+	.error-banner {
+		display: flex;
+		align-items: center;
+		gap: var(--space-2);
+		padding: var(--space-3) var(--space-4);
+		background-color: var(--color-error-50);
+		border-top: var(--border-width) solid var(--color-error-200);
+		color: var(--color-error-700);
+		font-size: var(--text-sm);
+	}
+
+	.error-dismiss {
+		margin-left: auto;
+		padding: var(--space-1);
+		background: none;
+		border: none;
+		color: var(--color-error-500);
+		cursor: pointer;
+	}
+
+	.error-dismiss:hover {
+		color: var(--color-error-700);
+	}
+
+	.input-container {
+		display: flex;
+		gap: var(--space-2);
+		padding: var(--space-4);
+		background-color: var(--color-bg-primary);
+		border-top: var(--border-width) solid var(--color-border-secondary);
+	}
+
+	.message-input {
+		flex: 1;
+		padding: var(--space-3);
+		background-color: var(--color-bg-secondary);
+		border: var(--border-width) solid var(--color-border-primary);
+		border-radius: var(--radius-lg);
+		font-size: var(--text-base);
+		color: var(--color-text-primary);
+		resize: none;
+		font-family: inherit;
+	}
+
+	.message-input:focus {
+		outline: none;
+		border-color: var(--color-primary-500);
+		box-shadow: 0 0 0 3px var(--color-primary-100);
+	}
+
+	.send-button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 44px;
+		height: 44px;
+		background-color: var(--color-primary-600);
+		border: none;
+		border-radius: var(--radius-lg);
+		color: white;
+		cursor: pointer;
+		transition: all var(--duration-150) var(--ease-out);
+	}
+
+	.send-button:hover:not(:disabled) {
+		background-color: var(--color-primary-700);
+	}
+
+	.send-button:disabled {
+		background-color: var(--color-bg-tertiary);
+		color: var(--color-text-tertiary);
+		cursor: not-allowed;
+	}
+
+	/* Buttons */
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2);
+		padding: var(--space-3) var(--space-5);
+		font-size: var(--text-sm);
+		font-weight: var(--font-medium);
+		border-radius: var(--radius-lg);
+		cursor: pointer;
+		transition: all var(--duration-150) var(--ease-out);
+		text-decoration: none;
+	}
+
+	.btn-primary {
+		background-color: var(--color-primary-600);
+		color: white;
+		border: none;
+	}
+
+	.btn-primary:hover {
+		background-color: var(--color-primary-700);
+	}
+
+	.btn-secondary {
+		background-color: transparent;
+		color: var(--color-text-secondary);
+		border: var(--border-width) solid var(--color-border-primary);
+	}
+
+	.btn-secondary:hover {
+		background-color: var(--color-bg-tertiary);
+		color: var(--color-text-primary);
+	}
+
+	@media (max-width: 640px) {
+		.setup-actions {
+			flex-direction: column;
+		}
+
+		.chat-header {
+			flex-direction: column;
+			gap: var(--space-2);
+			align-items: flex-start;
+		}
+
+		.message {
+			max-width: 90%;
+		}
+	}
+</style>

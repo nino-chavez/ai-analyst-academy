@@ -1,0 +1,37 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-01-13T01:57:58.084Z",
+  "phases": [
+    {
+      "id": "phase-1",
+      "order": 1,
+      "title": "AI Literacy",
+      "moduleCount": 4,
+      "labCount": 2
+    },
+    {
+      "id": "phase-2",
+      "order": 2,
+      "title": "Workflow Engineering",
+      "moduleCount": 4,
+      "labCount": 3
+    },
+    {
+      "id": "phase-3",
+      "order": 3,
+      "title": "Agentic Orchestration",
+      "moduleCount": 5,
+      "labCount": 2
+    },
+    {
+      "id": "phase-4",
+      "order": 4,
+      "title": "Strategy & Economics",
+      "moduleCount": 4,
+      "labCount": 3
+    }
+  ],
+  "totalModules": 17,
+  "totalLabs": 11,
+  "totalEstimatedHours": 21
+}

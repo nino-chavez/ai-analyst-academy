@@ -1,0 +1,19 @@
+id: "phase-3"
+title: "Agentic Orchestration"
+description: "Design and deploy autonomous AI agents, multi-agent systems, and intelligent workflows that reason and act"
+order: 3
+color: "phase-3"
+icon: "agents"
+estimatedHours: 7
+modules:
+  - "3.1-no-code-ai-tools"
+  - "3.2-api-fundamentals"
+  - "3.3-automation-platforms"
+  - "3.4-testing-and-deployment"
+  - "3.5-customization-fine-tuning"
+labs:
+  - "build-ai-assistant"
+  - "multi-agent-orchestration"
+deliverable:
+  title: "Multi-Agent System"
+  description: "Design and deploy a working multi-agent system where AI agents collaborate to complete complex tasks"

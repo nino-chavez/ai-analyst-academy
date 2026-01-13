@@ -1,0 +1,19 @@
+id: "phase-4"
+title: "Strategy & Economics"
+description: "Build business cases for AI initiatives and develop governance frameworks for responsible deployment"
+order: 4
+color: "phase-4"
+icon: "strategy"
+estimatedHours: 5
+modules:
+  - "4.1-ai-business-cases"
+  - "4.2-organizational-change"
+  - "4.3-risk-and-governance"
+  - "4.4-future-proofing"
+labs:
+  - "roi-calculator"
+  - "governance-framework"
+  - "agentic-research"
+deliverable:
+  title: "AI Strategy Presentation"
+  description: "Create a comprehensive AI strategy proposal for your organization or a hypothetical company"
