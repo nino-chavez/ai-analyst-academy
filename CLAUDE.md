@@ -29,7 +29,7 @@ Test these routes for console errors:
 
 ## Project Overview
 
-AI Analyst Academy is a standalone interactive learning platform built with SvelteKit and Svelte 5. It delivers the AI Analyst curriculum through 16 modules, 8 labs, and a capstone project.
+AI Analyst Academy is a standalone interactive learning platform built with SvelteKit and Svelte 5. It delivers the AI Analyst curriculum through 6 phases, 24 modules, 12 labs, and a capstone project.
 
 ### Tech Stack
 

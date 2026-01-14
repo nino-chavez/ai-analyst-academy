@@ -69,9 +69,9 @@ The curriculum maps **100%** of the "Business Engineer/Operator" persona skills 
 |---------|--------|-------|
 | Markdown processing | Done | Uses marked + gray-matter |
 | Build-time generation | Done | `pnpm run build:content` |
-| 4 Phases | Done | All content files present |
-| 17 Modules | Done | WHY-WHAT-HOW structure (includes 3.5) |
-| 10 Labs + Capstone | Done | Full exercises |
+| 6 Phases | Done | All content files present |
+| 24 Modules | Done | WHY-WHAT-HOW structure |
+| 12 Labs + Capstone | Done | Full exercises |
 | Search index | Done | Infrastructure ready |
 
 ### Database Schema — Complete

@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Course schedule data
 	const courseInfo = {
-		totalHours: 34,
+		totalHours: 35,
 		modules: 24,
 		labs: 12,
 		format: 'Self-paced',

@@ -53,19 +53,19 @@
 		<div class="hero-visual">
 			<div class="stats-card">
 				<div class="stat">
-					<span class="stat-value">4</span>
+					<span class="stat-value">6</span>
 					<span class="stat-label">Phases</span>
 				</div>
 				<div class="stat">
-					<span class="stat-value">18</span>
+					<span class="stat-value">24</span>
 					<span class="stat-label">Modules</span>
 				</div>
 				<div class="stat">
-					<span class="stat-value">11</span>
+					<span class="stat-value">12</span>
 					<span class="stat-label">Labs</span>
 				</div>
 				<div class="stat">
-					<span class="stat-value">40h</span>
+					<span class="stat-value">35h</span>
 					<span class="stat-label">Content</span>
 				</div>
 			</div>

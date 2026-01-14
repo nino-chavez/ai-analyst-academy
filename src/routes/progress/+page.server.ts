@@ -41,7 +41,9 @@ const PHASES = [
 	{ id: 1, name: 'AI Literacy', modules: ['1.1', '1.2', '1.3', '1.4'] },
 	{ id: 2, name: 'Workflow Engineering', modules: ['2.1', '2.2', '2.3', '2.4'] },
 	{ id: 3, name: 'Agentic Orchestration', modules: ['3.1', '3.2', '3.3', '3.4', '3.5'] },
-	{ id: 4, name: 'Strategy & Economics', modules: ['4.1', '4.2', '4.3', '4.4'] }
+	{ id: 4, name: 'Strategy & Economics', modules: ['4.1', '4.2', '4.3', '4.4'] },
+	{ id: 5, name: 'AI Leadership & Influence', modules: ['5.1', '5.2', '5.3', '5.4'] },
+	{ id: 6, name: 'Enterprise AI Architecture', modules: ['6.1', '6.2', '6.3', '6.4'] }
 ];
 
 function formatTimeAgo(date: Date): string {
@@ -192,22 +194,30 @@ function calculateAchievements(
 // Module ID to human-readable title mapping
 const MODULE_TITLES: Record<string, string> = {
 	'1.1': 'Economics of Intelligence',
-	'1.2': 'Types of AI Systems',
-	'1.3': 'Prompt Engineering Fundamentals',
-	'1.4': 'Understanding AI Limitations',
-	'2.1': 'Identifying Automation Opportunities',
-	'2.2': 'Workflow Mapping & Documentation',
-	'2.3': 'Quality Gates & Validation',
-	'2.4': 'Data Preparation & Hygiene',
-	'3.1': 'Building AI Assistants',
-	'3.2': 'Multi-Agent Orchestration',
-	'3.3': 'Integration Patterns',
-	'3.4': 'Error Handling & Fallbacks',
+	'1.2': 'Context and Memory',
+	'1.3': 'Providers and Models',
+	'1.4': 'Prompting as Management',
+	'2.1': 'Workflow Decomposition',
+	'2.2': 'Quality Gates',
+	'2.3': 'Human-AI Collaboration',
+	'2.4': 'Human-AI Handoffs',
+	'3.1': 'No-Code AI Tools',
+	'3.2': 'API Fundamentals',
+	'3.3': 'Automation Platforms',
+	'3.4': 'Testing and Deployment',
 	'3.5': 'Customization & Fine-Tuning',
-	'4.1': 'ROI & Business Case',
-	'4.2': 'Governance & Compliance',
-	'4.3': 'Change Management',
-	'4.4': 'Future of AI Operations'
+	'4.1': 'ROI Analysis',
+	'4.2': 'Risk Management',
+	'4.3': 'Governance Frameworks',
+	'4.4': 'Future-Proofing',
+	'5.1': 'Selling AI to Skeptics',
+	'5.2': 'Building AI-Capable Teams',
+	'5.3': 'Project Scoping & Estimation',
+	'5.4': 'Stakeholder Communication',
+	'6.1': 'The Discovery Shift',
+	'6.2': 'Vertical AI Playbooks',
+	'6.3': 'Portfolio Strategy',
+	'6.4': 'Operating Models for AI'
 };
 
 function getModuleTitle(moduleId: string): string {
