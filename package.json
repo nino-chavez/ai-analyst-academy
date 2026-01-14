@@ -42,6 +42,7 @@
   "dependencies": {
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.48.1",
+    "@vercel/analytics": "^1.6.1",
     "zod": "^4.3.5"
   }
 }

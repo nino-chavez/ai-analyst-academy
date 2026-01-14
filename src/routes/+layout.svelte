@@ -7,6 +7,7 @@
 	import { setContext } from 'svelte';
 	import { browser } from '$app/environment';
 	import { Header } from '$components';
+	import { inject } from '@vercel/analytics';
 
 	interface Props {
 		data: {
@@ -125,6 +126,13 @@
 		if (browser) {
 			document.addEventListener('keydown', handleGlobalKeydown);
 			return () => document.removeEventListener('keydown', handleGlobalKeydown);
+		}
+	});
+
+	// Initialize Vercel Analytics (privacy-focused, no cookies)
+	$effect(() => {
+		if (browser) {
+			inject();
 		}
 	});
 </script>
