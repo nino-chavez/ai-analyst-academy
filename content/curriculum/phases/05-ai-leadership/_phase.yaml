@@ -1,0 +1,18 @@
+id: "phase-5"
+title: "AI Leadership & Influence"
+description: "Lead AI initiatives from concept to approval. Build the skills to sell AI to skeptics, scope projects accurately, and communicate effectively with stakeholders at all levels"
+order: 5
+color: "phase-5"
+icon: "leadership"
+estimatedHours: 6
+modules:
+  - "5.1-selling-ai-to-skeptics"
+  - "5.2-building-ai-capable-teams"
+  - "5.3-project-scoping-estimation"
+  - "5.4-stakeholder-communication"
+labs:
+  - "executive-pitch"
+  - "team-capability-assessment"
+deliverable:
+  title: "AI Initiative Proposal"
+  description: "Create a complete AI initiative proposal ready for executive approval, including business case, team structure, timeline, and risk mitigation"

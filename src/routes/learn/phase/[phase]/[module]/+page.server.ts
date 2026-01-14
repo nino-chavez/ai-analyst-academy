@@ -15,7 +15,7 @@ interface SavedProgress {
 export const load: PageServerLoad = async ({ params, locals }) => {
 	const phaseNumber = parseInt(params.phase, 10);
 
-	if (isNaN(phaseNumber) || phaseNumber < 1 || phaseNumber > 4) {
+	if (isNaN(phaseNumber) || phaseNumber < 1 || phaseNumber > 6) {
 		error(404, 'Phase not found');
 	}
 

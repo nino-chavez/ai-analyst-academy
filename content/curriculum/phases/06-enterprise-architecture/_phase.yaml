@@ -1,0 +1,18 @@
+id: "phase-6"
+title: "Enterprise AI Architecture"
+description: "Think at portfolio scale. Design vertical AI playbooks, balance innovation investments, and create operating models that scale AI across the enterprise"
+order: 6
+color: "phase-6"
+icon: "architecture"
+estimatedHours: 7
+modules:
+  - "6.1-the-discovery-shift"
+  - "6.2-vertical-ai-playbooks"
+  - "6.3-portfolio-strategy"
+  - "6.4-operating-models-for-ai"
+labs:
+  - "vertical-deep-dive"
+  - "portfolio-prioritization"
+deliverable:
+  title: "Enterprise AI Roadmap"
+  description: "Develop a 12-month strategic AI roadmap for an enterprise, including portfolio prioritization, capability building, and governance framework"

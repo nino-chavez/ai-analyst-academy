@@ -144,6 +144,47 @@
 					Master ROI analysis, governance frameworks, and organizational AI adoption
 				</p>
 			</a>
+
+			<a href="/learn/phase/5" class="phase-card phase-5 card-interactive animate-slide-up">
+				<div class="phase-icon">
+					<!-- Leadership/People icon -->
+					<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+						<circle cx="9" cy="7" r="4"/>
+						<path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+						<path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+					</svg>
+				</div>
+				<div class="phase-number">Phase 5</div>
+				<h3 class="phase-title">AI Leadership</h3>
+				<p class="phase-description">
+					Sell AI to skeptics, build capable teams, and communicate with stakeholders
+				</p>
+			</a>
+
+			<a href="/learn/phase/6" class="phase-card phase-6 card-interactive animate-slide-up">
+				<div class="phase-icon">
+					<!-- Architecture/Building icon -->
+					<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+						<rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+						<path d="M9 22v-4h6v4"/>
+						<path d="M8 6h.01"/>
+						<path d="M16 6h.01"/>
+						<path d="M12 6h.01"/>
+						<path d="M12 10h.01"/>
+						<path d="M12 14h.01"/>
+						<path d="M16 10h.01"/>
+						<path d="M16 14h.01"/>
+						<path d="M8 10h.01"/>
+						<path d="M8 14h.01"/>
+					</svg>
+				</div>
+				<div class="phase-number">Phase 6</div>
+				<h3 class="phase-title">Enterprise Architecture</h3>
+				<p class="phase-description">
+					Design vertical playbooks, portfolio strategy, and operating models for scale
+				</p>
+			</a>
 		</div>
 	</section>
 
@@ -163,7 +204,7 @@
 				</div>
 				<h3 class="feature-title">Structured Curriculum</h3>
 				<p class="feature-description">
-					16 modules organized in 4 progressive phases, each building on the previous
+					24 modules organized in 6 progressive phases, each building on the previous
 				</p>
 			</div>
 
@@ -178,7 +219,7 @@
 				</div>
 				<h3 class="feature-title">Hands-on Labs</h3>
 				<p class="feature-description">
-					8 practical labs where you apply concepts to real business scenarios
+					12 practical labs where you apply concepts to real business scenarios
 				</p>
 			</div>
 
@@ -453,7 +494,7 @@
 
 	@media (min-width: 1024px) {
 		.phases-grid {
-			grid-template-columns: repeat(4, 1fr);
+			grid-template-columns: repeat(3, 1fr);
 		}
 	}
 
@@ -487,6 +528,12 @@
 	.phase-4:hover {
 		border-color: var(--color-phase-4);
 	}
+	.phase-5:hover {
+		border-color: var(--color-phase-5);
+	}
+	.phase-6:hover {
+		border-color: var(--color-phase-6);
+	}
 
 	.phase-icon {
 		display: flex;
@@ -518,6 +565,16 @@
 	.phase-4 .phase-icon {
 		color: var(--color-phase-4);
 		background-color: var(--color-phase-4-light);
+	}
+
+	.phase-5 .phase-icon {
+		color: var(--color-phase-5);
+		background-color: var(--color-phase-5-light);
+	}
+
+	.phase-6 .phase-icon {
+		color: var(--color-phase-6);
+		background-color: var(--color-phase-6-light);
 	}
 
 	.phase-number {

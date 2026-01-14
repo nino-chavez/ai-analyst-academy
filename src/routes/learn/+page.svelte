@@ -362,6 +362,12 @@
 	.phase-4 {
 		--phase-color: var(--color-phase-4);
 	}
+	.phase-5 {
+		--phase-color: var(--color-phase-5);
+	}
+	.phase-6 {
+		--phase-color: var(--color-phase-6);
+	}
 
 	.phase-header {
 		display: flex;

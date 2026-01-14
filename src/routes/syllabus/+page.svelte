@@ -1,9 +1,9 @@
 <script lang="ts">
 	// Course schedule data
 	const courseInfo = {
-		totalHours: 20,
-		modules: 16,
-		labs: 8,
+		totalHours: 34,
+		modules: 24,
+		labs: 12,
 		format: 'Self-paced',
 		prerequisites: 'None - designed for business professionals with no coding experience'
 	};
@@ -77,6 +77,40 @@
 				{ id: 'lab-7', title: 'Governance Policy Draft', duration: '1 hour' }
 			],
 			deliverable: 'AI Strategy Document - A comprehensive plan for AI adoption in an organization'
+		},
+		{
+			id: 5,
+			title: 'AI Leadership & Influence',
+			description: 'Learn to sell AI initiatives, build capable teams, and communicate effectively with stakeholders at all levels.',
+			estimatedHours: 6,
+			modules: [
+				{ id: '5.1', title: 'Selling AI to Skeptics', duration: '45 min', topics: ['Skeptic taxonomy', 'Objection handling', 'Pilot pitching'] },
+				{ id: '5.2', title: 'Building AI-Capable Teams', duration: '45 min', topics: ['AI fluency spectrum', 'Capability assessment', 'Learning paths'] },
+				{ id: '5.3', title: 'Project Scoping & Estimation', duration: '45 min', topics: ['PERT estimation', 'Staffing models', 'Scope management'] },
+				{ id: '5.4', title: 'Stakeholder Communication', duration: '45 min', topics: ['Communication cadence', 'Difficult conversations', 'Executive updates'] }
+			],
+			labs: [
+				{ id: 'lab-9', title: 'The Executive Pitch', duration: '1 hour' },
+				{ id: 'lab-10', title: 'Team Capability Assessment', duration: '45 min' }
+			],
+			deliverable: 'AI Initiative Proposal - A complete project proposal ready for leadership approval'
+		},
+		{
+			id: 6,
+			title: 'Enterprise AI Architecture',
+			description: 'Design enterprise-scale AI strategies including vertical playbooks, portfolio management, and operating models.',
+			estimatedHours: 7,
+			modules: [
+				{ id: '6.1', title: 'The Discovery Shift', duration: '45 min', topics: ['GEO/AEO', 'Citation economy', 'Share of Voice'] },
+				{ id: '6.2', title: 'Vertical AI Playbooks', duration: '45 min', topics: ['Agentic commerce', 'Industry patterns', 'Protocol design'] },
+				{ id: '6.3', title: 'Portfolio Strategy', duration: '45 min', topics: ['Three horizons', 'Prioritization matrix', 'Balanced investment'] },
+				{ id: '6.4', title: 'Operating Models for AI', duration: '45 min', topics: ['CoE design', 'Governance', 'Scaling patterns'] }
+			],
+			labs: [
+				{ id: 'lab-11', title: 'Vertical Deep Dive', duration: '1.5 hours' },
+				{ id: 'lab-12', title: 'Portfolio Prioritization', duration: '45 min' }
+			],
+			deliverable: 'Enterprise AI Roadmap - A 12-month strategic roadmap with portfolio prioritization'
 		}
 	];
 
@@ -389,6 +423,8 @@
 	.phase-2 .phase-badge { background-color: var(--color-phase-2); }
 	.phase-3 .phase-badge { background-color: var(--color-phase-3); }
 	.phase-4 .phase-badge { background-color: var(--color-phase-4); }
+	.phase-5 .phase-badge { background-color: var(--color-phase-5); }
+	.phase-6 .phase-badge { background-color: var(--color-phase-6); }
 
 	.phase-title {
 		flex: 1;

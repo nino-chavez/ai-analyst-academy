@@ -660,7 +660,8 @@
 	}
 
 	.section-body :global(pre) {
-		background-color: var(--color-bg-secondary);
+		background-color: var(--color-neutral-900);
+		color: var(--color-neutral-100);
 		padding: var(--space-4);
 		border-radius: var(--radius-md);
 		overflow-x: auto;
@@ -670,6 +671,7 @@
 	.section-body :global(pre code) {
 		background: none;
 		padding: 0;
+		color: inherit;
 	}
 
 	.section-body :global(blockquote) {
@@ -697,6 +699,35 @@
 		font-weight: var(--font-semibold);
 		color: var(--color-text-primary);
 		background-color: var(--color-bg-secondary);
+	}
+
+	/* Diagrams */
+	.section-body :global(figure.diagram) {
+		margin: var(--space-6) 0;
+		padding: var(--space-4);
+		background-color: var(--color-bg-secondary);
+		border: var(--border-width) solid var(--color-border-secondary);
+		border-radius: var(--radius-lg);
+	}
+
+	.section-body :global(figure.diagram img) {
+		width: 100%;
+		height: auto;
+		display: block;
+		border-radius: var(--radius-md);
+	}
+
+	/* Dark mode: invert hand-drawn diagrams */
+	:global([data-theme='dark']) .section-body :global(figure.diagram img) {
+		filter: invert(1) hue-rotate(180deg);
+	}
+
+	.section-body :global(figure.diagram figcaption) {
+		margin-top: var(--space-3);
+		text-align: center;
+		font-size: var(--text-sm);
+		color: var(--color-text-secondary);
+		font-style: italic;
 	}
 
 	/* Inline content */

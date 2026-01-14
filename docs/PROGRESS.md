@@ -50,6 +50,7 @@ The curriculum maps **100%** of the "Business Engineer/Operator" persona skills 
 | `/onboarding/api-setup` | BYOK intro | Done | Links to settings/api-keys |
 | `/progress` | Progress dashboard | Done | Review queue, spaced repetition, achievements |
 | `/portfolio` | Portfolio page | Done | Full CRUD for deliverables |
+| `/portfolio/prompts` | Prompt library | Done | CRUD for saved prompts |
 | `/sandbox` | AI chat | Demo | Multiple personas, demo mode only |
 | `/style-guide` | Design system | Done | Token reference |
 
@@ -212,7 +213,7 @@ With all gaps filled, consider updating Capstone requirements:
 | `/progress/competencies` | sitemap.md | Medium | Bloom's taxonomy mapping |
 | `/progress/review-queue` | sitemap.md | Medium | Spaced repetition |
 | `/progress/time-tracking` | sitemap.md | Medium | Session timing |
-| `/portfolio/prompts` | sitemap.md | Low | saved_prompts queries |
+| ~~`/portfolio/prompts`~~ | ~~sitemap.md~~ | ~~Low~~ | ~~saved_prompts queries~~ **Done** |
 | `/portfolio/export` | sitemap.md | Medium | PDF/HTML generation |
 | `/sandbox/persona/[name]` | sitemap.md | Low | Persona context loading |
 | `/sandbox/lab/[slug]` | sitemap.md | Low | Lab context loading |
@@ -342,7 +343,7 @@ export const features = {
 | `phase_deliverables` | Yes | Yes | Deliverables |
 | `capstone_projects` | Yes | No | Capstone |
 | `sandbox_sessions` | Yes | No | Chat history |
-| `saved_prompts` | Yes | No | Prompt library |
+| `saved_prompts` | Yes | Yes | Prompt library |
 | `review_queue` | Yes | Yes | Spaced repetition |
 
 ---
@@ -395,6 +396,7 @@ pnpm run build:content
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-01-13 | **Prompt Library Complete** — `/portfolio/prompts` with full CRUD, search, category filtering, copy to clipboard; wired to `saved_prompts` table; added navigation link from portfolio page | Claude |
 | 2026-01-12 | **Deliverable Submission Complete** — Verified full CRUD in /portfolio; create, update, delete actions; phase selection; mark complete functionality; updated progress status to 85% | Claude |
 | 2026-01-12 | **Review Queue & Spaced Repetition** — Review queue UI with SM-2 algorithm; due/upcoming items; rating buttons (Forgot, Hard, Good, Easy); ease factor and interval tracking | Claude |
 | 2026-01-12 | **Data Integration Complete** — Module/lab progress persistence with auto-save; streak tracking; search wired with keyboard shortcuts (/, Cmd+K) and mobile modal; new user redirect to onboarding | Claude |
