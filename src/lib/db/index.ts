@@ -21,7 +21,9 @@ import type {
 	LabProgressInsert,
 	LabProgressUpdate,
 	PhaseDeliverableInsert,
-	PhaseDeliverableUpdate
+	PhaseDeliverableUpdate,
+	SavedPromptInsert,
+	SavedPromptUpdate
 } from '$lib/types/database';
 
 // Use a flexible type that accepts any Supabase client with the expected methods
@@ -225,5 +227,53 @@ export async function deleteReviewQueueItem(
 ) {
 	return (supabase.from('review_queue') as any)
 		.delete()
+		.eq('id', id);
+}
+
+// =============================================================================
+// Saved Prompts
+// =============================================================================
+
+export async function insertSavedPrompt(
+	supabase: SupabaseClient,
+	prompt: SavedPromptInsert
+) {
+	return (supabase.from('saved_prompts') as any).insert(prompt);
+}
+
+export async function updateSavedPrompt(
+	supabase: SupabaseClient,
+	id: string,
+	updates: SavedPromptUpdate
+) {
+	return (supabase.from('saved_prompts') as any)
+		.update(updates)
+		.eq('id', id);
+}
+
+export async function deleteSavedPrompt(
+	supabase: SupabaseClient,
+	id: string
+) {
+	return (supabase.from('saved_prompts') as any)
+		.delete()
+		.eq('id', id);
+}
+
+export async function incrementPromptUseCount(
+	supabase: SupabaseClient,
+	id: string
+) {
+	// First get current count, then increment
+	const { data } = await supabase
+		.from('saved_prompts')
+		.select('use_count')
+		.eq('id', id)
+		.single();
+
+	const currentCount = data?.use_count ?? 0;
+
+	return (supabase.from('saved_prompts') as any)
+		.update({ use_count: currentCount + 1, updated_at: new Date().toISOString() })
 		.eq('id', id);
 }

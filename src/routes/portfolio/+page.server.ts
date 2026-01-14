@@ -139,7 +139,7 @@ export const actions: Actions = {
 			return fail(400, { error: 'Title is required', field: 'title' });
 		}
 
-		if (!phaseId || !['phase-1', 'phase-2', 'phase-3', 'phase-4'].includes(phaseId)) {
+		if (!phaseId || !['phase-1', 'phase-2', 'phase-3', 'phase-4', 'phase-5', 'phase-6'].includes(phaseId)) {
 			return fail(400, { error: 'Valid phase is required', field: 'phaseId' });
 		}
 

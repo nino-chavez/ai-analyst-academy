@@ -100,6 +100,8 @@
 		{ name: 'Phase 2', var: '--color-phase-2', lightVar: '--color-phase-2-light' },
 		{ name: 'Phase 3', var: '--color-phase-3', lightVar: '--color-phase-3-light' },
 		{ name: 'Phase 4', var: '--color-phase-4', lightVar: '--color-phase-4-light' },
+		{ name: 'Phase 5', var: '--color-phase-5', lightVar: '--color-phase-5-light' },
+		{ name: 'Phase 6', var: '--color-phase-6', lightVar: '--color-phase-6-light' },
 		{ name: 'Capstone', var: '--color-capstone', lightVar: '--color-capstone-light' }
 	];
 
@@ -784,6 +786,8 @@ const estimateTokens = (text) => Math.ceil(text.length / 4);</code></pre>
 						<span class="badge badge-phase-2">Phase 2</span>
 						<span class="badge badge-phase-3">Phase 3</span>
 						<span class="badge badge-phase-4">Phase 4</span>
+						<span class="badge badge-phase-5">Phase 5</span>
+						<span class="badge badge-phase-6">Phase 6</span>
 					</div>
 				</div>
 
@@ -1119,6 +1123,16 @@ const estimateTokens = (text) => Math.ceil(text.length / 4);</code></pre>
 	.badge-phase-4 {
 		background-color: var(--color-phase-4-light);
 		color: var(--color-phase-4-dark);
+	}
+
+	.badge-phase-5 {
+		background-color: var(--color-phase-5-light);
+		color: var(--color-phase-5-dark);
+	}
+
+	.badge-phase-6 {
+		background-color: var(--color-phase-6-light);
+		color: var(--color-phase-6-dark);
 	}
 
 	/* Colors Section */

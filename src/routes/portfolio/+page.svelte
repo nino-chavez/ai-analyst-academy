@@ -178,10 +178,44 @@
 				<span class="stat-label">Completed</span>
 			</div>
 			<div class="stat-card">
-				<span class="stat-value">{data.stats.phasesWithDeliverables}/4</span>
+				<span class="stat-value">{data.stats.phasesWithDeliverables}/6</span>
 				<span class="stat-label">Phase Deliverables</span>
 			</div>
 		</div>
+	</section>
+
+	<!-- Prompt Library Link -->
+	<section class="prompt-library-section">
+		<a href="/portfolio/prompts" class="prompt-library-card">
+			<div class="prompt-library-icon">
+				<svg
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+				>
+					<path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" />
+					<path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01" />
+				</svg>
+			</div>
+			<div class="prompt-library-content">
+				<h3 class="prompt-library-title">Prompt Library</h3>
+				<p class="prompt-library-description">Save and organize your best prompts for quick reuse</p>
+			</div>
+			<svg
+				class="prompt-library-arrow"
+				width="20"
+				height="20"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+			>
+				<path d="M9 18l6-6-6-6" />
+			</svg>
+		</a>
 	</section>
 
 	<!-- Portfolio Items -->
@@ -376,17 +410,17 @@
 			<div class="cta-text">
 				<h3 class="cta-title">Ready for your Capstone?</h3>
 				<p class="cta-description">
-					{#if data.stats.phasesWithDeliverables >= 4}
+					{#if data.stats.phasesWithDeliverables >= 6}
 						You've completed all phase deliverables. Start your capstone project now!
 					{:else}
-						Complete all four phases to unlock the capstone project - your chance to demonstrate
+						Complete all six phases to unlock the capstone project - your chance to demonstrate
 						mastery.
 					{/if}
 				</p>
 			</div>
 		</div>
 		<a href="/learn/lab/capstone" class="btn btn-primary">
-			{data.stats.phasesWithDeliverables >= 4 ? 'Start Capstone' : 'View Capstone'}
+			{data.stats.phasesWithDeliverables >= 6 ? 'Start Capstone' : 'View Capstone'}
 			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 				<polyline points="9 18 15 12 9 6" />
 			</svg>
@@ -461,10 +495,12 @@
 						required
 						disabled={isSubmitting}
 					>
-						<option value="phase-1">Phase 1 - Economics</option>
-						<option value="phase-2">Phase 2 - Control</option>
-						<option value="phase-3">Phase 3 - Systems</option>
-						<option value="phase-4">Phase 4 - Deployment</option>
+						<option value="phase-1">Phase 1 - AI Literacy</option>
+						<option value="phase-2">Phase 2 - Workflow Engineering</option>
+						<option value="phase-3">Phase 3 - Agentic Orchestration</option>
+						<option value="phase-4">Phase 4 - Strategy & Economics</option>
+						<option value="phase-5">Phase 5 - AI Leadership & Influence</option>
+						<option value="phase-6">Phase 6 - Enterprise AI Architecture</option>
 					</select>
 				</div>
 
@@ -916,6 +952,12 @@
 	.phase-badge.phase-4 {
 		background-color: var(--color-phase-4);
 	}
+	.phase-badge.phase-5 {
+		background-color: var(--color-phase-5);
+	}
+	.phase-badge.phase-6 {
+		background-color: var(--color-phase-6);
+	}
 
 	.status-badge {
 		padding: 2px var(--space-2);
@@ -1308,5 +1350,71 @@
 		to {
 			transform: rotate(360deg);
 		}
+	}
+
+	/* Prompt Library Link */
+	.prompt-library-section {
+		margin-bottom: var(--space-8);
+	}
+
+	.prompt-library-card {
+		display: flex;
+		align-items: center;
+		gap: var(--space-4);
+		padding: var(--space-4) var(--space-5);
+		background-color: var(--color-bg-secondary);
+		border: var(--border-width) solid var(--color-border-primary);
+		border-radius: var(--radius-xl);
+		text-decoration: none;
+		transition: all var(--duration-150) var(--ease-out);
+	}
+
+	.prompt-library-card:hover {
+		border-color: var(--color-primary-400);
+		box-shadow: var(--shadow-md);
+	}
+
+	.prompt-library-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 48px;
+		height: 48px;
+		background-color: var(--color-primary-100);
+		border-radius: var(--radius-lg);
+		color: var(--color-primary-600);
+		flex-shrink: 0;
+	}
+
+	:global([data-theme='dark']) .prompt-library-icon {
+		background-color: var(--color-primary-900);
+	}
+
+	.prompt-library-content {
+		flex: 1;
+	}
+
+	.prompt-library-title {
+		font-size: var(--text-base);
+		font-weight: var(--font-semibold);
+		color: var(--color-text-primary);
+		margin: 0 0 var(--space-1) 0;
+	}
+
+	.prompt-library-description {
+		font-size: var(--text-sm);
+		color: var(--color-text-secondary);
+		margin: 0;
+	}
+
+	.prompt-library-arrow {
+		color: var(--color-text-tertiary);
+		flex-shrink: 0;
+		transition: transform var(--duration-150) var(--ease-out);
+	}
+
+	.prompt-library-card:hover .prompt-library-arrow {
+		transform: translateX(4px);
+		color: var(--color-primary-600);
 	}
 </style>

@@ -4,12 +4,12 @@ title: "Capstone Project"
 phase: capstone
 estimatedHours: 10
 objectives:
-  - Demonstrate mastery of all four program phases
+  - Demonstrate mastery of all six program phases
   - Create a portfolio-worthy AI project
   - Apply end-to-end AI operator skills
 prerequisites:
-  - All Phase 1-4 modules
-  - Labs 1-7
+  - All Phase 1-6 modules
+  - Labs 1-12
 ---
 
 # Capstone Project: AI Analyst Certification
@@ -263,7 +263,7 @@ Before submitting, verify:
 
 **Completeness**
 - [ ] All required deliverables included
-- [ ] All four phases represented
+- [ ] All six phases represented
 - [ ] Working prototype accessible
 - [ ] Presentation deck complete
 

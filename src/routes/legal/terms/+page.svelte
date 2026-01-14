@@ -26,7 +26,7 @@
 				<h2>2. Description of Services</h2>
 				<p>AI Analyst Academy provides an online educational platform designed to train AI Analysts. The Services include, but are not limited to:</p>
 				<ul>
-					<li><strong>Curriculum:</strong> Access to 17 learning modules across 4 phases (AI Literacy, Workflow Engineering, Agentic Orchestration, Strategy & Economics).</li>
+					<li><strong>Curriculum:</strong> Access to 24 learning modules across 6 phases (AI Literacy, Workflow Engineering, Agentic Orchestration, Strategy & Economics, AI Leadership & Influence, Enterprise AI Architecture).</li>
 					<li><strong>Labs:</strong> Interactive hands-on exercises and technical demonstrations.</li>
 					<li><strong>Sandbox:</strong> A testing environment for experimenting with AI prompts, code, and workflows.</li>
 					<li><strong>Capstone Project:</strong> A comprehensive final project structure and evaluation.</li>
