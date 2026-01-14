@@ -1,0 +1,67 @@
+<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .title { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 18px; fill: #e5e5e5; font-weight: 600; font-style: italic; }
+    .label { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 12px; fill: #e5e5e5; }
+    .desc { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 11px; fill: #a3a3a3; font-style: italic; }
+    .box { stroke-width: 2; stroke-linecap: round; }
+    .line { stroke: #525252; stroke-width: 2; fill: none; stroke-linecap: round; }
+    .center-box { fill: #1e40af; stroke: #3b82f6; }
+    .unit-box { fill: #262626; stroke: #525252; }
+    .arrow { stroke: #3b82f6; stroke-width: 2; fill: none; stroke-linecap: round; marker-end: url(#arrow-blue); }
+    .check { stroke: #22c55e; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .x-mark { stroke: #ef4444; stroke-width: 2; fill: none; stroke-linecap: round; }
+  </style>
+
+  <defs>
+    <marker id="arrow-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#3b82f6" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="200" y="30" class="title" text-anchor="middle">Centralized AI CoE</text>
+
+  <!-- Central AI CoE Box -->
+  <rect x="130" y="80" width="140" height="60" rx="8" class="box center-box" />
+  <text x="200" y="107" class="label" text-anchor="middle" fill="white">AI Center of</text>
+  <text x="200" y="125" class="label" text-anchor="middle" fill="white">Excellence</text>
+
+  <!-- Business Units -->
+  <rect x="40" y="200" width="90" height="50" rx="6" class="box unit-box" />
+  <text x="85" y="222" class="label" text-anchor="middle">Sales</text>
+  <text x="85" y="238" class="desc" text-anchor="middle">BU</text>
+
+  <rect x="155" y="200" width="90" height="50" rx="6" class="box unit-box" />
+  <text x="200" y="222" class="label" text-anchor="middle">Marketing</text>
+  <text x="200" y="238" class="desc" text-anchor="middle">BU</text>
+
+  <rect x="270" y="200" width="90" height="50" rx="6" class="box unit-box" />
+  <text x="315" y="222" class="label" text-anchor="middle">Operations</text>
+  <text x="315" y="238" class="desc" text-anchor="middle">BU</text>
+
+  <!-- Arrows from center to units -->
+  <path d="M 165 140 L 100 195" class="arrow" />
+  <path d="M 200 140 L 200 195" class="arrow" />
+  <path d="M 235 140 L 300 195" class="arrow" />
+
+  <!-- Pros/Cons with SVG icons -->
+  <g transform="translate(95, 278)">
+    <path d="M 0 4 L 3 7 L 8 0" class="check" />
+  </g>
+  <text x="210" y="285" class="desc" text-anchor="middle">Consistent standards</text>
+
+  <g transform="translate(95, 295)">
+    <path d="M 0 4 L 3 7 L 8 0" class="check" />
+  </g>
+  <text x="210" y="302" class="desc" text-anchor="middle">Efficient resource use</text>
+
+  <g transform="translate(95, 312)">
+    <path d="M 0 0 L 7 7 M 7 0 L 0 7" class="x-mark" />
+  </g>
+  <text x="210" y="319" class="desc" text-anchor="middle">May lack business context</text>
+
+  <g transform="translate(95, 329)">
+    <path d="M 0 0 L 7 7 M 7 0 L 0 7" class="x-mark" />
+  </g>
+  <text x="210" y="336" class="desc" text-anchor="middle">Potential bottlenecks</text>
+</svg>

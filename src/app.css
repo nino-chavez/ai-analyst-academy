@@ -94,6 +94,14 @@
     --color-phase-4-light: #fff7ed;
     --color-phase-4-dark: #ea580c;
 
+    --color-phase-5: #ec4899;
+    --color-phase-5-light: #fdf2f8;
+    --color-phase-5-dark: #db2777;
+
+    --color-phase-6: #6366f1;
+    --color-phase-6-light: #eef2ff;
+    --color-phase-6-dark: #4f46e5;
+
     --color-capstone: #eab308;
     --color-capstone-light: #fefce8;
     --color-capstone-dark: #ca8a04;
@@ -343,6 +351,11 @@
     --lab-header-border: var(--color-warning-300);
     --lab-badge-bg: var(--color-warning-100);
     --lab-capstone-gradient: linear-gradient(135deg, var(--color-capstone-light) 0%, var(--color-bg-secondary) 100%);
+
+    /* Code Blocks - Light Mode */
+    --code-block-bg: var(--color-neutral-100);
+    --code-block-text: var(--color-neutral-800);
+    --code-block-border: var(--color-neutral-200);
   }
 
   /* ===== Theme: Dark Mode ===== */
@@ -423,6 +436,11 @@
     --lab-header-border: var(--color-warning-700);
     --lab-badge-bg: var(--color-warning-800);
     --lab-capstone-gradient: linear-gradient(135deg, var(--color-capstone-dark) 0%, var(--color-bg-secondary) 100%);
+
+    /* Code Blocks - Dark Mode */
+    --code-block-bg: var(--color-neutral-900);
+    --code-block-text: var(--color-neutral-100);
+    --code-block-border: var(--color-neutral-700);
   }
 
   /* System preference detection */
@@ -477,6 +495,11 @@
       --lab-header-border: var(--color-warning-700);
       --lab-badge-bg: var(--color-warning-800);
       --lab-capstone-gradient: linear-gradient(135deg, var(--color-capstone-dark) 0%, var(--color-bg-secondary) 100%);
+
+      /* Code Blocks - System Dark Mode */
+      --code-block-bg: var(--color-neutral-900);
+      --code-block-text: var(--color-neutral-100);
+      --code-block-border: var(--color-neutral-700);
     }
   }
 }
@@ -560,8 +583,9 @@
   }
 
   pre {
-    background-color: var(--color-neutral-900);
-    color: var(--color-neutral-100);
+    background-color: var(--code-block-bg);
+    color: var(--code-block-text);
+    border: 1px solid var(--code-block-border);
     padding: var(--space-4);
     border-radius: var(--radius-md);
     overflow-x: auto;
@@ -844,6 +868,8 @@
   .phase-2 { --phase-color: var(--color-phase-2); --phase-color-light: var(--color-phase-2-light); }
   .phase-3 { --phase-color: var(--color-phase-3); --phase-color-light: var(--color-phase-3-light); }
   .phase-4 { --phase-color: var(--color-phase-4); --phase-color-light: var(--color-phase-4-light); }
+  .phase-5 { --phase-color: var(--color-phase-5); --phase-color-light: var(--color-phase-5-light); }
+  .phase-6 { --phase-color: var(--color-phase-6); --phase-color-light: var(--color-phase-6-light); }
   .phase-capstone { --phase-color: var(--color-capstone); --phase-color-light: var(--color-capstone-light); }
 
   .bg-phase { background-color: var(--phase-color); }

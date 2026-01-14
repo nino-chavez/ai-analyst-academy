@@ -1,0 +1,84 @@
+<svg viewBox="0 0 400 380" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .title { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 18px; fill: #e5e5e5; font-weight: 600; font-style: italic; }
+    .label { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 12px; fill: #e5e5e5; }
+    .small-label { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 10px; fill: #e5e5e5; }
+    .desc { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 11px; fill: #a3a3a3; font-style: italic; }
+    .box { stroke-width: 2; stroke-linecap: round; }
+    .line-solid { stroke: #a855f7; stroke-width: 2; fill: none; stroke-linecap: round; marker-end: url(#arrow-purple); }
+    .line-dashed { stroke: #22c55e; stroke-width: 1.5; fill: none; stroke-linecap: round; stroke-dasharray: 4,3; }
+    .center-box { fill: #4a1d5f; stroke: #a855f7; }
+    .unit-box { fill: #262626; stroke: #525252; }
+    .embed-box { fill: #14532d; stroke: #22c55e; }
+    .check { stroke: #22c55e; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+
+  <defs>
+    <marker id="arrow-purple" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#a855f7" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="200" y="25" class="title" text-anchor="middle">Hybrid AI Model</text>
+  <text x="200" y="42" class="desc" text-anchor="middle">(Recommended)</text>
+
+  <!-- Central AI CoE Box -->
+  <rect x="120" y="60" width="160" height="55" rx="8" class="box center-box" />
+  <text x="200" y="82" class="label" text-anchor="middle" fill="white">Central AI CoE</text>
+  <text x="200" y="100" class="small-label" text-anchor="middle" fill="#d4d4d4">Standards • Platform • Expertise</text>
+
+  <!-- Business Units with embedded AI -->
+  <g>
+    <rect x="30" y="175" width="100" height="80" rx="6" class="box unit-box" />
+    <text x="80" y="197" class="label" text-anchor="middle">Sales</text>
+    <rect x="42" y="205" width="76" height="35" rx="4" class="box embed-box" />
+    <text x="80" y="227" class="small-label" text-anchor="middle" fill="white">Embedded AI</text>
+  </g>
+
+  <g>
+    <rect x="150" y="175" width="100" height="80" rx="6" class="box unit-box" />
+    <text x="200" y="197" class="label" text-anchor="middle">Marketing</text>
+    <rect x="162" y="205" width="76" height="35" rx="4" class="box embed-box" />
+    <text x="200" y="227" class="small-label" text-anchor="middle" fill="white">Embedded AI</text>
+  </g>
+
+  <g>
+    <rect x="270" y="175" width="100" height="80" rx="6" class="box unit-box" />
+    <text x="320" y="197" class="label" text-anchor="middle">Operations</text>
+    <rect x="282" y="205" width="76" height="35" rx="4" class="box embed-box" />
+    <text x="320" y="227" class="small-label" text-anchor="middle" fill="white">Embedded AI</text>
+  </g>
+
+  <!-- Arrows from center (governance/platform) -->
+  <path d="M 155 115 L 90 170" class="line-solid" />
+  <path d="M 200 115 L 200 170" class="line-solid" />
+  <path d="M 245 115 L 310 170" class="line-solid" />
+
+  <!-- Dotted coordination lines between embedded teams -->
+  <path d="M 118 222 L 150 222" class="line-dashed" />
+  <path d="M 250 222 L 282 222" class="line-dashed" />
+
+  <!-- Legend -->
+  <line x1="80" y1="280" x2="110" y2="280" stroke="#a855f7" stroke-width="2" />
+  <text x="120" y="284" class="small-label">Governance &amp; Platform</text>
+
+  <line x1="80" y1="298" x2="110" y2="298" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="4,3" />
+  <text x="120" y="302" class="small-label">Peer collaboration</text>
+
+  <!-- Pros with SVG checkmark icons -->
+  <g transform="translate(95, 323)">
+    <path d="M 0 4 L 3 7 L 8 0" class="check" />
+  </g>
+  <text x="210" y="330" class="desc" text-anchor="middle">Best of both worlds</text>
+
+  <g transform="translate(95, 340)">
+    <path d="M 0 4 L 3 7 L 8 0" class="check" />
+  </g>
+  <text x="210" y="347" class="desc" text-anchor="middle">Consistent + contextual</text>
+
+  <g transform="translate(95, 357)">
+    <path d="M 0 4 L 3 7 L 8 0" class="check" />
+  </g>
+  <text x="210" y="364" class="desc" text-anchor="middle">Clear ownership</text>
+</svg>

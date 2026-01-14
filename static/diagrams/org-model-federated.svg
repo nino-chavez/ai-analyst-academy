@@ -1,0 +1,72 @@
+<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .title { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 18px; fill: #e5e5e5; font-weight: 600; font-style: italic; }
+    .label { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 12px; fill: #e5e5e5; }
+    .desc { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 11px; fill: #a3a3a3; font-style: italic; }
+    .box { stroke-width: 2; stroke-linecap: round; }
+    .line { stroke: #22c55e; stroke-width: 1.5; fill: none; stroke-linecap: round; stroke-dasharray: 4,3; }
+    .unit-box { fill: #14532d; stroke: #22c55e; }
+    .ai-badge { fill: #166534; stroke: #22c55e; }
+    .check { stroke: #22c55e; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .x-mark { stroke: #ef4444; stroke-width: 2; fill: none; stroke-linecap: round; }
+  </style>
+
+  <!-- Title -->
+  <text x="200" y="30" class="title" text-anchor="middle">Federated AI Model</text>
+
+  <!-- Business Units with embedded AI -->
+  <g>
+    <rect x="30" y="70" width="100" height="90" rx="8" class="box unit-box" />
+    <text x="80" y="95" class="label" text-anchor="middle">Sales</text>
+    <rect x="45" y="110" width="70" height="35" rx="4" class="box ai-badge" />
+    <text x="80" y="132" class="label" text-anchor="middle" fill="white">AI Team</text>
+  </g>
+
+  <g>
+    <rect x="150" y="70" width="100" height="90" rx="8" class="box unit-box" />
+    <text x="200" y="95" class="label" text-anchor="middle">Marketing</text>
+    <rect x="165" y="110" width="70" height="35" rx="4" class="box ai-badge" />
+    <text x="200" y="132" class="label" text-anchor="middle" fill="white">AI Team</text>
+  </g>
+
+  <g>
+    <rect x="270" y="70" width="100" height="90" rx="8" class="box unit-box" />
+    <text x="320" y="95" class="label" text-anchor="middle">Operations</text>
+    <rect x="285" y="110" width="70" height="35" rx="4" class="box ai-badge" />
+    <text x="320" y="132" class="label" text-anchor="middle" fill="white">AI Team</text>
+  </g>
+
+  <!-- Dotted coordination lines -->
+  <path d="M 130 127 L 150 127" class="line" />
+  <path d="M 250 127 L 270 127" class="line" />
+  <path d="M 115 165 Q 200 210 285 165" class="line" />
+
+  <!-- Coordination label -->
+  <text x="200" y="220" class="desc" text-anchor="middle">Loose coordination</text>
+
+  <!-- Pros/Cons with SVG icons -->
+  <g transform="translate(95, 253)">
+    <path d="M 0 4 L 3 7 L 8 0" class="check" />
+  </g>
+  <text x="210" y="260" class="desc" text-anchor="middle">Deep business context</text>
+
+  <g transform="translate(95, 270)">
+    <path d="M 0 4 L 3 7 L 8 0" class="check" />
+  </g>
+  <text x="210" y="277" class="desc" text-anchor="middle">Fast decision making</text>
+
+  <g transform="translate(95, 287)">
+    <path d="M 0 0 L 7 7 M 7 0 L 0 7" class="x-mark" />
+  </g>
+  <text x="210" y="294" class="desc" text-anchor="middle">Duplicate efforts</text>
+
+  <g transform="translate(95, 304)">
+    <path d="M 0 0 L 7 7 M 7 0 L 0 7" class="x-mark" />
+  </g>
+  <text x="210" y="311" class="desc" text-anchor="middle">Inconsistent approaches</text>
+
+  <g transform="translate(95, 321)">
+    <path d="M 0 0 L 7 7 M 7 0 L 0 7" class="x-mark" />
+  </g>
+  <text x="210" y="328" class="desc" text-anchor="middle">Harder to share learnings</text>
+</svg>

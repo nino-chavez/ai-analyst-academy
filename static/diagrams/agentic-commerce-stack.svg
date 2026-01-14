@@ -1,0 +1,141 @@
+<svg viewBox="0 0 800 650" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .title { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 24px; fill: #e5e5e5; font-weight: 600; font-style: italic; }
+    .layer-title { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 16px; fill: #f5f5f5; font-weight: 600; }
+    .layer-desc { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 12px; fill: #a3a3a3; font-style: italic; }
+    .component { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 11px; fill: #e5e5e5; }
+    .label { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 10px; fill: #737373; }
+    .box { stroke-width: 2; stroke-linecap: round; rx: 8; }
+    .arrow { stroke: #525252; stroke-width: 2; fill: none; stroke-linecap: round; marker-end: url(#arrowhead); }
+
+    .layer-experience { fill: #1e3a5f; stroke: #3b82f6; }
+    .layer-orchestration { fill: #4a3728; stroke: #f59e0b; }
+    .layer-intelligence { fill: #14532d; stroke: #22c55e; }
+    .layer-data { fill: #262626; stroke: #525252; }
+    .layer-integration { fill: #4a1d5f; stroke: #a855f7; }
+
+    .component-box { fill: #1f1f1f; stroke: #404040; stroke-width: 1.5; rx: 6; }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#525252" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="400" y="35" class="title" text-anchor="middle">Agentic Commerce Technology Stack</text>
+
+  <!-- Layer 1: Customer Experience (Top) -->
+  <rect x="60" y="60" width="680" height="90" class="box layer-experience" />
+  <text x="100" y="88" class="layer-title">Customer Experience Layer</text>
+  <text x="100" y="106" class="layer-desc">User-facing AI interfaces and interactions</text>
+
+  <rect x="80" y="120" width="120" height="25" class="component-box" />
+  <text x="140" y="137" class="component" text-anchor="middle">Conversational UI</text>
+
+  <rect x="220" y="120" width="100" height="25" class="component-box" />
+  <text x="270" y="137" class="component" text-anchor="middle">Voice Agents</text>
+
+  <rect x="340" y="120" width="120" height="25" class="component-box" />
+  <text x="400" y="137" class="component" text-anchor="middle">Personalization</text>
+
+  <rect x="480" y="120" width="110" height="25" class="component-box" />
+  <text x="535" y="137" class="component" text-anchor="middle">Proactive AI</text>
+
+  <rect x="610" y="120" width="115" height="25" class="component-box" />
+  <text x="667" y="137" class="component" text-anchor="middle">Multi-modal</text>
+
+  <!-- Arrow down -->
+  <path d="M 400 150 L 400 170" class="arrow" />
+
+  <!-- Layer 2: Agent Orchestration -->
+  <rect x="60" y="170" width="680" height="90" class="box layer-orchestration" />
+  <text x="100" y="198" class="layer-title">Agent Orchestration Layer</text>
+  <text x="100" y="216" class="layer-desc">Workflow management and agent coordination</text>
+
+  <rect x="80" y="230" width="130" height="25" class="component-box" />
+  <text x="145" y="247" class="component" text-anchor="middle">Task Routing</text>
+
+  <rect x="230" y="230" width="130" height="25" class="component-box" />
+  <text x="295" y="247" class="component" text-anchor="middle">Multi-Agent Coord</text>
+
+  <rect x="380" y="230" width="130" height="25" class="component-box" />
+  <text x="445" y="247" class="component" text-anchor="middle">State Management</text>
+
+  <rect x="530" y="230" width="130" height="25" class="component-box" />
+  <text x="595" y="247" class="component" text-anchor="middle">Human-in-Loop</text>
+
+  <!-- Arrow down -->
+  <path d="M 400 260 L 400 280" class="arrow" />
+
+  <!-- Layer 3: AI Intelligence -->
+  <rect x="60" y="280" width="680" height="90" class="box layer-intelligence" />
+  <text x="100" y="308" class="layer-title">AI Intelligence Layer</text>
+  <text x="100" y="326" class="layer-desc">Core AI models and reasoning capabilities</text>
+
+  <rect x="80" y="340" width="100" height="25" class="component-box" />
+  <text x="130" y="357" class="component" text-anchor="middle">LLMs</text>
+
+  <rect x="200" y="340" width="100" height="25" class="component-box" />
+  <text x="250" y="357" class="component" text-anchor="middle">Embeddings</text>
+
+  <rect x="320" y="340" width="100" height="25" class="component-box" />
+  <text x="370" y="357" class="component" text-anchor="middle">RAG</text>
+
+  <rect x="440" y="340" width="100" height="25" class="component-box" />
+  <text x="490" y="357" class="component" text-anchor="middle">Fine-tuning</text>
+
+  <rect x="560" y="340" width="100" height="25" class="component-box" />
+  <text x="610" y="357" class="component" text-anchor="middle">Evaluation</text>
+
+  <!-- Arrow down -->
+  <path d="M 400 370 L 400 390" class="arrow" />
+
+  <!-- Layer 4: Data Platform -->
+  <rect x="60" y="390" width="680" height="90" class="box layer-data" />
+  <text x="100" y="418" class="layer-title">Data Platform Layer</text>
+  <text x="100" y="436" class="layer-desc">Data storage, processing, and governance</text>
+
+  <rect x="80" y="450" width="120" height="25" class="component-box" />
+  <text x="140" y="467" class="component" text-anchor="middle">Vector DB</text>
+
+  <rect x="220" y="450" width="120" height="25" class="component-box" />
+  <text x="280" y="467" class="component" text-anchor="middle">Knowledge Base</text>
+
+  <rect x="360" y="450" width="120" height="25" class="component-box" />
+  <text x="420" y="467" class="component" text-anchor="middle">Customer 360</text>
+
+  <rect x="500" y="450" width="120" height="25" class="component-box" />
+  <text x="560" y="467" class="component" text-anchor="middle">Analytics</text>
+
+  <!-- Arrow down -->
+  <path d="M 400 480 L 400 500" class="arrow" />
+
+  <!-- Layer 5: Integration -->
+  <rect x="60" y="500" width="680" height="90" class="box layer-integration" />
+  <text x="100" y="528" class="layer-title">Integration Layer</text>
+  <text x="100" y="546" class="layer-desc">Connections to existing enterprise systems</text>
+
+  <rect x="80" y="560" width="90" height="25" class="component-box" />
+  <text x="125" y="577" class="component" text-anchor="middle">CRM</text>
+
+  <rect x="190" y="560" width="90" height="25" class="component-box" />
+  <text x="235" y="577" class="component" text-anchor="middle">ERP</text>
+
+  <rect x="300" y="560" width="90" height="25" class="component-box" />
+  <text x="345" y="577" class="component" text-anchor="middle">PIM</text>
+
+  <rect x="410" y="560" width="90" height="25" class="component-box" />
+  <text x="455" y="577" class="component" text-anchor="middle">OMS</text>
+
+  <rect x="520" y="560" width="90" height="25" class="component-box" />
+  <text x="565" y="577" class="component" text-anchor="middle">Payment</text>
+
+  <rect x="630" y="560" width="90" height="25" class="component-box" />
+  <text x="675" y="577" class="component" text-anchor="middle">Logistics</text>
+
+  <!-- Side annotations -->
+  <text x="755" y="105" class="label" transform="rotate(90, 755, 105)">USER FACING</text>
+  <text x="755" y="545" class="label" transform="rotate(90, 755, 545)">INFRASTRUCTURE</text>
+</svg>

@@ -1,0 +1,98 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .title { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 24px; fill: #e5e5e5; font-weight: 600; font-style: italic; }
+    .label { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 13px; fill: #e5e5e5; }
+    .axis-label { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 13px; fill: #a3a3a3; font-style: italic; }
+    .quadrant-label { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 20px; fill: #f5f5f5; font-weight: 600; }
+    .quadrant-action { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 13px; fill: #d4d4d4; font-style: italic; }
+    .line { stroke: #525252; stroke-width: 2; fill: none; stroke-linecap: round; }
+    .arrow { stroke: #a3a3a3; stroke-width: 2; fill: none; stroke-linecap: round; }
+    .box { stroke-width: 2; fill: none; stroke-linecap: round; }
+    .quick-win { fill: #14532d; stroke: #22c55e; }
+    .strategic { fill: #1e3a5f; stroke: #3b82f6; }
+    .fill-in { fill: #262626; stroke: #525252; }
+    .avoid { fill: #450a0a; stroke: #dc2626; }
+    .icon-green { fill: #22c55e; }
+    .icon-blue { fill: #3b82f6; }
+    .icon-gray { fill: #a3a3a3; }
+    .icon-red { fill: #dc2626; }
+  </style>
+
+  <!-- Title -->
+  <text x="400" y="40" class="title" text-anchor="middle">AI Initiative Prioritization Matrix</text>
+
+  <!-- Axes -->
+  <!-- Vertical axis (Impact) -->
+  <path d="M 100 520 Q 98 300 100 80" class="arrow" />
+  <path d="M 95 90 L 100 75 L 105 90" class="arrow" />
+  <text x="45" y="300" class="axis-label" transform="rotate(-90, 45, 300)">BUSINESS IMPACT</text>
+  <text x="80" y="95" class="axis-label" text-anchor="end">High</text>
+  <text x="80" y="510" class="axis-label" text-anchor="end">Low</text>
+
+  <!-- Horizontal axis (Effort) -->
+  <path d="M 100 520 Q 400 522 720 520" class="arrow" />
+  <path d="M 710 515 L 725 520 L 710 525" class="arrow" />
+  <text x="410" y="570" class="axis-label" text-anchor="middle">IMPLEMENTATION EFFORT</text>
+  <text x="130" y="555" class="axis-label">Low</text>
+  <text x="690" y="555" class="axis-label">High</text>
+
+  <!-- Quadrant dividers -->
+  <path d="M 100 300 Q 280 298 410 300 Q 540 302 720 300" class="line" stroke-dasharray="8,4" opacity="0.4"/>
+  <path d="M 410 80 Q 408 200 410 300 Q 412 400 410 520" class="line" stroke-dasharray="8,4" opacity="0.4"/>
+
+  <!-- Quadrant 1: High Impact, Low Effort (top left) - Quick Wins -->
+  <rect x="120" y="100" width="270" height="180" rx="12" class="box quick-win" stroke-width="3"/>
+  <!-- Lightning bolt icon -->
+  <g transform="translate(243, 115)">
+    <path d="M 12 0 L 5 12 L 10 12 L 8 24 L 19 10 L 13 10 L 17 0 Z" class="icon-green" />
+  </g>
+  <text x="255" y="175" class="quadrant-label" text-anchor="middle">Quick Wins</text>
+  <text x="255" y="200" class="quadrant-action" text-anchor="middle">Do these first!</text>
+  <text x="255" y="230" class="label" text-anchor="middle">• Email automation</text>
+  <text x="255" y="252" class="label" text-anchor="middle">• Document summarization</text>
+  <text x="255" y="274" class="label" text-anchor="middle">• Meeting transcription</text>
+
+  <!-- Quadrant 2: High Impact, High Effort (top right) - Strategic Projects -->
+  <rect x="430" y="100" width="270" height="180" rx="12" class="box strategic" stroke-width="3"/>
+  <!-- Target/crosshair icon -->
+  <g transform="translate(553, 115)">
+    <circle cx="12" cy="12" r="10" fill="none" stroke="#3b82f6" stroke-width="2"/>
+    <circle cx="12" cy="12" r="5" fill="none" stroke="#3b82f6" stroke-width="2"/>
+    <circle cx="12" cy="12" r="2" class="icon-blue"/>
+  </g>
+  <text x="565" y="175" class="quadrant-label" text-anchor="middle">Strategic Projects</text>
+  <text x="565" y="200" class="quadrant-action" text-anchor="middle">Plan and resource carefully</text>
+  <text x="565" y="230" class="label" text-anchor="middle">• Customer service AI</text>
+  <text x="565" y="252" class="label" text-anchor="middle">• Predictive analytics</text>
+  <text x="565" y="274" class="label" text-anchor="middle">• Workflow automation</text>
+
+  <!-- Quadrant 3: Low Impact, Low Effort (bottom left) - Fill-Ins -->
+  <rect x="120" y="320" width="270" height="180" rx="12" class="box fill-in" stroke-width="3"/>
+  <!-- Clipboard/list icon -->
+  <g transform="translate(243, 335)">
+    <rect x="4" y="0" width="16" height="24" rx="2" fill="none" stroke="#a3a3a3" stroke-width="2"/>
+    <rect x="7" y="-2" width="10" height="4" rx="1" class="icon-gray"/>
+    <line x1="8" y1="8" x2="16" y2="8" stroke="#a3a3a3" stroke-width="2"/>
+    <line x1="8" y1="14" x2="16" y2="14" stroke="#a3a3a3" stroke-width="2"/>
+    <line x1="8" y1="20" x2="14" y2="20" stroke="#a3a3a3" stroke-width="2"/>
+  </g>
+  <text x="255" y="395" class="quadrant-label" text-anchor="middle">Fill-Ins</text>
+  <text x="255" y="420" class="quadrant-action" text-anchor="middle">Do when capacity allows</text>
+  <text x="255" y="450" class="label" text-anchor="middle">• Internal chatbots</text>
+  <text x="255" y="472" class="label" text-anchor="middle">• Template generators</text>
+  <text x="255" y="494" class="label" text-anchor="middle">• Simple alerts</text>
+
+  <!-- Quadrant 4: Low Impact, High Effort (bottom right) - Avoid -->
+  <rect x="430" y="320" width="270" height="180" rx="12" class="box avoid" stroke-width="3"/>
+  <!-- X/stop icon -->
+  <g transform="translate(553, 335)">
+    <circle cx="12" cy="12" r="11" fill="none" stroke="#dc2626" stroke-width="2"/>
+    <line x1="7" y1="7" x2="17" y2="17" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="17" y1="7" x2="7" y2="17" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+  <text x="565" y="395" class="quadrant-label" text-anchor="middle">Avoid / Deprioritize</text>
+  <text x="565" y="420" class="quadrant-action" text-anchor="middle">Reconsider or redesign</text>
+  <text x="565" y="450" class="label" text-anchor="middle">• Over-engineered solutions</text>
+  <text x="565" y="472" class="label" text-anchor="middle">• Edge case automation</text>
+  <text x="565" y="494" class="label" text-anchor="middle">• Low-value integrations</text>
+</svg>

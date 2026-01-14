@@ -1,0 +1,85 @@
+<svg viewBox="0 0 850 280" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .title { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 22px; fill: #e5e5e5; font-weight: 600; }
+    .phase-title { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 15px; fill: #f5f5f5; font-weight: 600; }
+    .phase-subtitle { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 12px; fill: #d4d4d4; }
+    .task { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 11px; fill: #e5e5e5; }
+    .week-label { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 10px; fill: #a3a3a3; }
+    .line { stroke: #404040; stroke-width: 2; fill: none; }
+    .arrow { stroke: #737373; stroke-width: 2; fill: none; marker-end: url(#timeline-arrow); }
+    .box { stroke-width: 2; stroke-linecap: round; rx: 8; }
+    .phase-1 { fill: #1e3a5f; stroke: #3b82f6; }
+    .phase-2 { fill: #4a3728; stroke: #f59e0b; }
+    .phase-3 { fill: #1a3d2e; stroke: #22c55e; }
+    .milestone { fill: #a855f7; }
+  </style>
+
+  <defs>
+    <marker id="timeline-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#737373" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="425" y="30" class="title" text-anchor="middle">90-Day AI Pilot Timeline</text>
+
+  <!-- Timeline arrow -->
+  <path d="M 40 130 L 810 130" class="arrow" />
+
+  <!-- Week markers -->
+  <line x1="40" y1="125" x2="40" y2="135" stroke="#737373" stroke-width="2" />
+  <text x="40" y="150" class="week-label" text-anchor="middle">Day 0</text>
+
+  <line x1="280" y1="125" x2="280" y2="135" stroke="#737373" stroke-width="2" />
+  <text x="280" y="150" class="week-label" text-anchor="middle">Day 30</text>
+
+  <line x1="530" y1="125" x2="530" y2="135" stroke="#737373" stroke-width="2" />
+  <text x="530" y="150" class="week-label" text-anchor="middle">Day 60</text>
+
+  <line x1="780" y1="125" x2="780" y2="135" stroke="#737373" stroke-width="2" />
+  <text x="780" y="150" class="week-label" text-anchor="middle">Day 90</text>
+
+  <!-- Phase 1: Foundation (Days 1-30) -->
+  <rect x="50" y="55" width="220" height="65" class="box phase-1" />
+  <text x="160" y="77" class="phase-title" text-anchor="middle">Phase 1: Foundation</text>
+  <text x="160" y="95" class="phase-subtitle" text-anchor="middle">Weeks 1-4</text>
+  <text x="160" y="112" class="task" text-anchor="middle">Setup • Quick Wins • Baseline</text>
+
+  <!-- Phase 2: Expansion (Days 31-60) -->
+  <rect x="290" y="55" width="230" height="65" class="box phase-2" />
+  <text x="405" y="77" class="phase-title" text-anchor="middle">Phase 2: Expansion</text>
+  <text x="405" y="95" class="phase-subtitle" text-anchor="middle">Weeks 5-8</text>
+  <text x="405" y="112" class="task" text-anchor="middle">Scale Use Cases • Train Team</text>
+
+  <!-- Phase 3: Optimization (Days 61-90) -->
+  <rect x="540" y="55" width="230" height="65" class="box phase-3" />
+  <text x="655" y="77" class="phase-title" text-anchor="middle">Phase 3: Optimization</text>
+  <text x="655" y="95" class="phase-subtitle" text-anchor="middle">Weeks 9-12</text>
+  <text x="655" y="112" class="task" text-anchor="middle">Measure • Refine • Document</text>
+
+  <!-- Milestones -->
+  <circle cx="160" cy="130" r="8" class="milestone" />
+  <text x="160" y="175" class="task" text-anchor="middle" font-weight="600">First</text>
+  <text x="160" y="188" class="task" text-anchor="middle" font-weight="600">AI Win</text>
+
+  <circle cx="405" cy="130" r="8" class="milestone" />
+  <text x="405" y="175" class="task" text-anchor="middle" font-weight="600">Team</text>
+  <text x="405" y="188" class="task" text-anchor="middle" font-weight="600">Trained</text>
+
+  <circle cx="655" cy="130" r="8" class="milestone" />
+  <text x="655" y="175" class="task" text-anchor="middle" font-weight="600">ROI</text>
+  <text x="655" y="188" class="task" text-anchor="middle" font-weight="600">Proven</text>
+
+  <!-- Key activities below -->
+  <text x="160" y="215" class="week-label" text-anchor="middle">• Tool selection</text>
+  <text x="160" y="230" class="week-label" text-anchor="middle">• Initial prompts</text>
+  <text x="160" y="245" class="week-label" text-anchor="middle">• Pilot team</text>
+
+  <text x="405" y="215" class="week-label" text-anchor="middle">• Workflow integration</text>
+  <text x="405" y="230" class="week-label" text-anchor="middle">• More use cases</text>
+  <text x="405" y="245" class="week-label" text-anchor="middle">• Address blockers</text>
+
+  <text x="655" y="215" class="week-label" text-anchor="middle">• Measure outcomes</text>
+  <text x="655" y="230" class="week-label" text-anchor="middle">• Best practices</text>
+  <text x="655" y="245" class="week-label" text-anchor="middle">• Scale plan</text>
+</svg>

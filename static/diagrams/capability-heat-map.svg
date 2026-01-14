@@ -1,0 +1,154 @@
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .title { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 22px; fill: #e5e5e5; font-weight: 600; font-style: italic; }
+    .header { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 13px; fill: #e5e5e5; font-weight: 600; }
+    .row-label { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 13px; fill: #e5e5e5; font-weight: 500; }
+    .cell-text { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 12px; fill: #e5e5e5; font-style: italic; }
+    .legend-text { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 11px; fill: #a3a3a3; }
+    .box { stroke: #404040; stroke-width: 1; }
+    .header-box { fill: #262626; stroke: #525252; stroke-width: 1.5; }
+
+    .level-0 { fill: #1f1f1f; } /* Not applicable */
+    .level-1 { fill: #7f1d1d; } /* Low - needs development */
+    .level-2 { fill: #713f12; } /* Medium - progressing */
+    .level-3 { fill: #14532d; } /* High - strong */
+    .level-4 { fill: #166534; } /* Expert - leading */
+  </style>
+
+  <!-- Title -->
+  <text x="400" y="35" class="title" text-anchor="middle">Team AI Capability Heat Map</text>
+
+  <!-- Column Headers -->
+  <rect x="160" y="55" width="120" height="40" rx="4" class="header-box" />
+  <text x="220" y="77" class="header" text-anchor="middle">Prompt</text>
+  <text x="220" y="91" class="cell-text" text-anchor="middle">Engineering</text>
+
+  <rect x="290" y="55" width="120" height="40" rx="4" class="header-box" />
+  <text x="350" y="77" class="header" text-anchor="middle">Workflow</text>
+  <text x="350" y="91" class="cell-text" text-anchor="middle">Design</text>
+
+  <rect x="420" y="55" width="120" height="40" rx="4" class="header-box" />
+  <text x="480" y="77" class="header" text-anchor="middle">Tool</text>
+  <text x="480" y="91" class="cell-text" text-anchor="middle">Selection</text>
+
+  <rect x="550" y="55" width="120" height="40" rx="4" class="header-box" />
+  <text x="610" y="77" class="header" text-anchor="middle">Quality</text>
+  <text x="610" y="91" class="cell-text" text-anchor="middle">Assurance</text>
+
+  <rect x="680" y="55" width="100" height="40" rx="4" class="header-box" />
+  <text x="730" y="77" class="header" text-anchor="middle">Change</text>
+  <text x="730" y="91" class="cell-text" text-anchor="middle">Mgmt</text>
+
+  <!-- Row 1: Product Team -->
+  <rect x="30" y="105" width="120" height="50" rx="4" class="header-box" />
+  <text x="90" y="135" class="row-label" text-anchor="middle">Product Team</text>
+
+  <rect x="160" y="105" width="120" height="50" rx="4" class="box level-4" />
+  <text x="220" y="135" class="cell-text" text-anchor="middle">Expert</text>
+
+  <rect x="290" y="105" width="120" height="50" rx="4" class="box level-3" />
+  <text x="350" y="135" class="cell-text" text-anchor="middle">High</text>
+
+  <rect x="420" y="105" width="120" height="50" rx="4" class="box level-3" />
+  <text x="480" y="135" class="cell-text" text-anchor="middle">High</text>
+
+  <rect x="550" y="105" width="120" height="50" rx="4" class="box level-2" />
+  <text x="610" y="135" class="cell-text" text-anchor="middle">Medium</text>
+
+  <rect x="680" y="105" width="100" height="50" rx="4" class="box level-2" />
+  <text x="730" y="135" class="cell-text" text-anchor="middle">Medium</text>
+
+  <!-- Row 2: Engineering -->
+  <rect x="30" y="165" width="120" height="50" rx="4" class="header-box" />
+  <text x="90" y="195" class="row-label" text-anchor="middle">Engineering</text>
+
+  <rect x="160" y="165" width="120" height="50" rx="4" class="box level-3" />
+  <text x="220" y="195" class="cell-text" text-anchor="middle">High</text>
+
+  <rect x="290" y="165" width="120" height="50" rx="4" class="box level-4" />
+  <text x="350" y="195" class="cell-text" text-anchor="middle">Expert</text>
+
+  <rect x="420" y="165" width="120" height="50" rx="4" class="box level-4" />
+  <text x="480" y="195" class="cell-text" text-anchor="middle">Expert</text>
+
+  <rect x="550" y="165" width="120" height="50" rx="4" class="box level-3" />
+  <text x="610" y="195" class="cell-text" text-anchor="middle">High</text>
+
+  <rect x="680" y="165" width="100" height="50" rx="4" class="box level-1" />
+  <text x="730" y="195" class="cell-text" text-anchor="middle">Low</text>
+
+  <!-- Row 3: Marketing -->
+  <rect x="30" y="225" width="120" height="50" rx="4" class="header-box" />
+  <text x="90" y="255" class="row-label" text-anchor="middle">Marketing</text>
+
+  <rect x="160" y="225" width="120" height="50" rx="4" class="box level-2" />
+  <text x="220" y="255" class="cell-text" text-anchor="middle">Medium</text>
+
+  <rect x="290" y="225" width="120" height="50" rx="4" class="box level-2" />
+  <text x="350" y="255" class="cell-text" text-anchor="middle">Medium</text>
+
+  <rect x="420" y="225" width="120" height="50" rx="4" class="box level-3" />
+  <text x="480" y="255" class="cell-text" text-anchor="middle">High</text>
+
+  <rect x="550" y="225" width="120" height="50" rx="4" class="box level-1" />
+  <text x="610" y="255" class="cell-text" text-anchor="middle">Low</text>
+
+  <rect x="680" y="225" width="100" height="50" rx="4" class="box level-3" />
+  <text x="730" y="255" class="cell-text" text-anchor="middle">High</text>
+
+  <!-- Row 4: Sales -->
+  <rect x="30" y="285" width="120" height="50" rx="4" class="header-box" />
+  <text x="90" y="315" class="row-label" text-anchor="middle">Sales</text>
+
+  <rect x="160" y="285" width="120" height="50" rx="4" class="box level-1" />
+  <text x="220" y="315" class="cell-text" text-anchor="middle">Low</text>
+
+  <rect x="290" y="285" width="120" height="50" rx="4" class="box level-1" />
+  <text x="350" y="315" class="cell-text" text-anchor="middle">Low</text>
+
+  <rect x="420" y="285" width="120" height="50" rx="4" class="box level-2" />
+  <text x="480" y="315" class="cell-text" text-anchor="middle">Medium</text>
+
+  <rect x="550" y="285" width="120" height="50" rx="4" class="box level-1" />
+  <text x="610" y="315" class="cell-text" text-anchor="middle">Low</text>
+
+  <rect x="680" y="285" width="100" height="50" rx="4" class="box level-2" />
+  <text x="730" y="315" class="cell-text" text-anchor="middle">Medium</text>
+
+  <!-- Row 5: Operations -->
+  <rect x="30" y="345" width="120" height="50" rx="4" class="header-box" />
+  <text x="90" y="375" class="row-label" text-anchor="middle">Operations</text>
+
+  <rect x="160" y="345" width="120" height="50" rx="4" class="box level-2" />
+  <text x="220" y="375" class="cell-text" text-anchor="middle">Medium</text>
+
+  <rect x="290" y="345" width="120" height="50" rx="4" class="box level-3" />
+  <text x="350" y="375" class="cell-text" text-anchor="middle">High</text>
+
+  <rect x="420" y="345" width="120" height="50" rx="4" class="box level-2" />
+  <text x="480" y="375" class="cell-text" text-anchor="middle">Medium</text>
+
+  <rect x="550" y="345" width="120" height="50" rx="4" class="box level-4" />
+  <text x="610" y="375" class="cell-text" text-anchor="middle">Expert</text>
+
+  <rect x="680" y="345" width="100" height="50" rx="4" class="box level-3" />
+  <text x="730" y="375" class="cell-text" text-anchor="middle">High</text>
+
+  <!-- Legend -->
+  <text x="200" y="440" class="legend-text" text-anchor="middle">Legend:</text>
+
+  <rect x="270" y="425" width="50" height="25" rx="3" class="box level-1" />
+  <text x="295" y="442" class="legend-text" text-anchor="middle">Low</text>
+
+  <rect x="340" y="425" width="60" height="25" rx="3" class="box level-2" />
+  <text x="370" y="442" class="legend-text" text-anchor="middle">Medium</text>
+
+  <rect x="420" y="425" width="50" height="25" rx="3" class="box level-3" />
+  <text x="445" y="442" class="legend-text" text-anchor="middle">High</text>
+
+  <rect x="490" y="425" width="60" height="25" rx="3" class="box level-4" />
+  <text x="520" y="442" class="legend-text" text-anchor="middle">Expert</text>
+
+  <!-- Insight callout -->
+  <text x="400" y="480" class="legend-text" text-anchor="middle" font-style="italic">Focus development on red/yellow cells for greatest impact</text>
+</svg>
