@@ -11,6 +11,7 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { untrack } from 'svelte';
+	import { trackModuleNavigation, trackModuleComplete, trackConceptUnderstood, trackExerciseComplete } from '$lib/analytics';
 
 	interface SavedProgress {
 		sectionsViewed: string[];
@@ -132,6 +133,7 @@
 	function handleConceptToggle(conceptId: string, understood: boolean) {
 		if (understood) {
 			conceptsUnderstood.add(conceptId);
+			trackConceptUnderstood(conceptId, data.module.id);
 		} else {
 			conceptsUnderstood.delete(conceptId);
 		}
@@ -141,6 +143,7 @@
 	function handleExerciseComplete(exerciseId: string, completed: boolean) {
 		if (completed) {
 			exercisesCompleted.add(exerciseId);
+			trackExerciseComplete(exerciseId, data.module.id);
 		} else {
 			exercisesCompleted.delete(exerciseId);
 		}
@@ -294,6 +297,11 @@
 			return data.module.exercises;
 		}
 		return [];
+	}
+
+	// Navigation tracking
+	function handleNavClick(direction: 'next' | 'previous', targetTitle: string) {
+		trackModuleNavigation(direction, data.module.title, targetTitle);
 	}
 </script>
 
@@ -481,7 +489,7 @@
 	<!-- Module Navigation -->
 	<nav class="module-nav">
 		{#if data.navigation.prev}
-			<a href={data.navigation.prev.href} class="nav-link prev">
+			<a href={data.navigation.prev.href} class="nav-link prev" onclick={() => handleNavClick('previous', data.navigation.prev?.title || '')}>
 				<svg
 					width="16"
 					height="16"
@@ -502,7 +510,7 @@
 		{/if}
 
 		{#if data.navigation.next}
-			<a href={data.navigation.next.href} class="nav-link next">
+			<a href={data.navigation.next.href} class="nav-link next" onclick={() => handleNavClick('next', data.navigation.next?.title || '')}>
 				<span class="nav-text">
 					<span class="nav-label">Next Module</span>
 					<span class="nav-title">{data.navigation.next.title}</span>
@@ -519,7 +527,7 @@
 				</svg>
 			</a>
 		{:else}
-			<a href="/learn/phase/{data.phaseNumber}" class="nav-link next complete">
+			<a href="/learn/phase/{data.phaseNumber}" class="nav-link next complete" onclick={() => trackModuleComplete(data.module.id, data.module.title, progress())}>
 				<span class="nav-text">
 					<span class="nav-label">Phase Complete!</span>
 					<span class="nav-title">Back to Phase {data.phaseNumber}</span>

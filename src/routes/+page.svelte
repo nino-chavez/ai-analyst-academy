@@ -1,7 +1,22 @@
 <script lang="ts">
 	import { ProgressRing } from '$components';
+	import { trackCTAClick, trackPhaseStart } from '$lib/analytics';
 
-	// Icon components for cleaner, more professional look
+	function handleStartLearning() {
+		trackCTAClick('hero', 'Start Learning');
+	}
+
+	function handleViewCurriculum() {
+		trackCTAClick('hero', 'View Curriculum');
+	}
+
+	function handleGetStarted() {
+		trackCTAClick('footer_cta', 'Get Started Free');
+	}
+
+	function handlePhaseClick(phaseNumber: number, phaseTitle: string) {
+		trackPhaseStart(phaseNumber, phaseTitle);
+	}
 </script>
 
 <svelte:head>
@@ -32,7 +47,7 @@
 				projects.
 			</p>
 			<div class="hero-actions">
-				<a href="/learn" class="btn btn-primary">
+				<a href="/learn" class="btn btn-primary" onclick={handleStartLearning}>
 					Start Learning
 					<svg
 						width="16"
@@ -45,7 +60,7 @@
 						<polyline points="9 18 15 12 9 6" />
 					</svg>
 				</a>
-				<a href="/learn" class="btn btn-secondary">
+				<a href="/learn" class="btn btn-secondary" onclick={handleViewCurriculum}>
 					View Curriculum
 				</a>
 			</div>
@@ -80,7 +95,7 @@
 		</p>
 
 		<div class="phases-grid stagger-children">
-			<a href="/learn/phase/1" class="phase-card phase-1 card-interactive animate-slide-up">
+			<a href="/learn/phase/1" class="phase-card phase-1 card-interactive animate-slide-up" onclick={() => handlePhaseClick(1, 'AI Literacy')}>
 				<div class="phase-icon">
 					<!-- Brain icon for AI Literacy -->
 					<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -95,7 +110,7 @@
 				</p>
 			</a>
 
-			<a href="/learn/phase/2" class="phase-card phase-2 card-interactive animate-slide-up">
+			<a href="/learn/phase/2" class="phase-card phase-2 card-interactive animate-slide-up" onclick={() => handlePhaseClick(2, 'Workflow Engineering')}>
 				<div class="phase-icon">
 					<!-- Workflow/Settings icon -->
 					<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -112,7 +127,7 @@
 				</p>
 			</a>
 
-			<a href="/learn/phase/3" class="phase-card phase-3 card-interactive animate-slide-up">
+			<a href="/learn/phase/3" class="phase-card phase-3 card-interactive animate-slide-up" onclick={() => handlePhaseClick(3, 'Agentic Orchestration')}>
 				<div class="phase-icon">
 					<!-- Code/Build icon -->
 					<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -128,7 +143,7 @@
 				</p>
 			</a>
 
-			<a href="/learn/phase/4" class="phase-card phase-4 card-interactive animate-slide-up">
+			<a href="/learn/phase/4" class="phase-card phase-4 card-interactive animate-slide-up" onclick={() => handlePhaseClick(4, 'Strategy & Economics')}>
 				<div class="phase-icon">
 					<!-- Chart/Strategy icon -->
 					<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -145,7 +160,7 @@
 				</p>
 			</a>
 
-			<a href="/learn/phase/5" class="phase-card phase-5 card-interactive animate-slide-up">
+			<a href="/learn/phase/5" class="phase-card phase-5 card-interactive animate-slide-up" onclick={() => handlePhaseClick(5, 'AI Leadership')}>
 				<div class="phase-icon">
 					<!-- Leadership/People icon -->
 					<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -162,7 +177,7 @@
 				</p>
 			</a>
 
-			<a href="/learn/phase/6" class="phase-card phase-6 card-interactive animate-slide-up">
+			<a href="/learn/phase/6" class="phase-card phase-6 card-interactive animate-slide-up" onclick={() => handlePhaseClick(6, 'Enterprise Architecture')}>
 				<div class="phase-icon">
 					<!-- Architecture/Building icon -->
 					<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -266,7 +281,7 @@
 				Start your journey today. No prerequisites required - just curiosity and a willingness to
 				learn.
 			</p>
-			<a href="/learn" class="btn btn-primary btn-lg">
+			<a href="/learn" class="btn btn-primary btn-lg" onclick={handleGetStarted}>
 				Get Started Free
 				<svg
 					width="18"
