@@ -5,6 +5,7 @@
 		serializeSchema,
 		getLandingPageMeta
 	} from '$lib/seo';
+	import WhatsNew from '$lib/components/WhatsNew.svelte';
 
 	interface Props {
 		data: {
@@ -19,9 +20,9 @@
 
 	let { data }: Props = $props();
 
-	// Generate SEO data
-	const meta = getLandingPageMeta();
-	const schemas = generateLandingPageSchemas(data.stats);
+	// Generate SEO data - use $derived to track data changes
+	const meta = $derived(getLandingPageMeta(data.stats));
+	const schemas = $derived(generateLandingPageSchemas(data.stats));
 
 	function handleStartLearning() {
 		trackCTAClick('hero', 'Start Learning');
@@ -113,19 +114,19 @@
 		<div class="hero-visual">
 			<div class="stats-card">
 				<div class="stat">
-					<span class="stat-value">6</span>
+					<span class="stat-value">{data.stats.totalPhases}</span>
 					<span class="stat-label">Phases</span>
 				</div>
 				<div class="stat">
-					<span class="stat-value">24</span>
+					<span class="stat-value">{data.stats.totalModules}</span>
 					<span class="stat-label">Modules</span>
 				</div>
 				<div class="stat">
-					<span class="stat-value">12</span>
+					<span class="stat-value">{data.stats.totalLabs}</span>
 					<span class="stat-label">Labs</span>
 				</div>
 				<div class="stat">
-					<span class="stat-value">35h</span>
+					<span class="stat-value">{data.stats.totalEstimatedHours}h</span>
 					<span class="stat-label">Content</span>
 				</div>
 			</div>
@@ -264,7 +265,7 @@
 				</div>
 				<h3 class="feature-title">Structured Curriculum</h3>
 				<p class="feature-description">
-					24 modules organized in 6 progressive phases, each building on the previous
+					{data.stats.totalModules} modules organized in {data.stats.totalPhases} progressive phases, each building on the previous
 				</p>
 			</div>
 
@@ -279,7 +280,7 @@
 				</div>
 				<h3 class="feature-title">Hands-on Labs</h3>
 				<p class="feature-description">
-					12 practical labs where you apply concepts to real business scenarios
+					{data.stats.totalLabs} practical labs where you apply concepts to real business scenarios
 				</p>
 			</div>
 
@@ -318,6 +319,9 @@
 		</div>
 	</section>
 
+	<!-- What's New Section -->
+	<WhatsNew maxEntries={2} />
+
 	<!-- CTA Section -->
 	<section class="cta">
 		<div class="cta-content">
@@ -351,6 +355,7 @@
 			</div>
 			<div class="footer-links">
 				<a href="/syllabus">Syllabus</a>
+				<a href="/changelog">Changelog</a>
 				<a href="/legal/terms">Terms of Service</a>
 				<a href="/legal/privacy">Privacy Policy</a>
 			</div>

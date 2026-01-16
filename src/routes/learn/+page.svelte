@@ -43,14 +43,11 @@
 
 	let { data }: Props = $props();
 
-	// Generate SEO data
-	const meta = getLearnPageMeta(data.stats);
-	const courseSchema = generateCourseSchema(data.stats);
-	const pageSchema = generateWebPageSchema(
-		'AI Analyst Curriculum',
-		meta.description,
-		'/learn',
-		'CollectionPage'
+	// Generate SEO data - use $derived to track data changes
+	const meta = $derived(getLearnPageMeta(data.stats));
+	const courseSchema = $derived(generateCourseSchema(data.stats));
+	const pageSchema = $derived(
+		generateWebPageSchema('AI Analyst Curriculum', meta.description, '/learn', 'CollectionPage')
 	);
 
 	function getPhaseColor(order: number): string {

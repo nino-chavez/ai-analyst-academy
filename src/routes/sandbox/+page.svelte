@@ -54,6 +54,36 @@
 			name: 'Strict Editor',
 			description: 'Get critical feedback on your writing and content',
 			icon: 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'
+		},
+		{
+			id: 'skeptical-cfo',
+			name: 'Skeptical CFO',
+			description: 'Practice defending ROI with a risk-averse finance leader',
+			icon: 'M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2zM10 8.5a.5.5 0 11-1 0 .5.5 0 011 0zm5 5a.5.5 0 11-1 0 .5.5 0 011 0z'
+		},
+		{
+			id: 'burned-it-leader',
+			name: 'Burned IT Leader',
+			description: 'Navigate objections from someone whose AI project failed',
+			icon: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
+		},
+		{
+			id: 'budget-guardian',
+			name: 'Budget Guardian',
+			description: 'Address job security concerns with a protective leader',
+			icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'
+		},
+		{
+			id: 'vague-executive',
+			name: 'Vague Executive',
+			description: 'Practice discovery interviews with unclear requirements',
+			icon: 'M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+		},
+		{
+			id: 'hostile-stakeholder',
+			name: 'Hostile Stakeholder',
+			description: 'Practice de-escalation with an actively opposed leader',
+			icon: 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z'
 		}
 	];
 

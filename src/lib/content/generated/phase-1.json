@@ -12,7 +12,8 @@
       "1.2-context-and-memory",
       "1.3-providers-and-models",
       "1.4-prompting-as-management",
-      "1.5-problem-classification"
+      "1.5-problem-classification",
+      "1.6-ai-mental-models"
     ],
     "labs": [
       "persona-stress-test",
@@ -503,6 +504,243 @@
             {
               "id": "complexity-audit-4",
               "text": "The complexity matches the problem, not my ambition",
+              "completed": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "1.6-ai-mental-models",
+      "slug": "1.6-ai-mental-models",
+      "title": "AI Mental Models",
+      "phase": 1,
+      "module": 6,
+      "phaseId": "phase-1",
+      "estimatedMinutes": 15,
+      "bloomLevel": "understand",
+      "content": "# AI Mental Models\n\n## WHY This Matters\n\nThere's a dangerous pattern in AI adoption called the **\"Cockpit Child\" problem**: operators who can use AI tools fluently but don't understand *why* they work—or more critically, *why they fail*.\n\n**The research is clear:**\n> \"Validating an AI's output is cognitively harder than creating it from scratch. It requires enough expertise to spot subtle hallucinations.\"\n\nWithout understanding the mechanics:\n- You can't predict when AI will fail\n- You can't spot confident-but-wrong outputs\n- You can't explain to stakeholders why a recommendation might be unreliable\n- You're operating on faith, not understanding\n\n**The goal of this module:** Give you enough understanding of *how* LLMs work that you develop intuition for when to trust them and when to verify.\n\n---\n\n## WHAT You Need to Know\n\n### How LLMs Actually Process Text\n\n**Tokenization in practice:**\n\n| Text | Approximate Tokens |\n|------|-------------------|\n| \"Hello world\" | 2 |\n| \"The quick brown fox jumps over the lazy dog\" | 9 |\n| \"2024-01-15T14:30:00Z\" | 7-10 (dates are token-expensive) |\n| \"日本語\" (Japanese) | 3-5 (non-Latin scripts often use more) |\n\n### Attention: What the Model \"Looks At\"\n\n**Practical implications:**\n- Put critical instructions at the start and end of long prompts\n- Don't bury the key question in paragraph 5\n- Explicit references (\"as mentioned in section 2\") help direct attention\n\n### Context Windows: The Working Memory Limit\n\n### Temperature: Randomness vs. Consistency\n\n### Why Models Hallucinate\n\n**When hallucination is most likely:**\n- Specific factual claims (dates, numbers, names)\n- Recent events (after training cutoff)\n- Niche technical details\n- Questions with no single correct answer\n- Requests for citations or sources\n\n---\n\n## HOW to Apply This\n\n### Building Validation Intuition\n\nUse these mental checks when evaluating AI outputs:\n\n**1. The \"Would I Bet Money?\" Test**\nBefore trusting a factual claim, ask: \"Would I bet $100 this is true without verification?\"\n- If hesitant → verify before using\n- Especially apply to: numbers, dates, names, citations\n\n**2. The \"Specificity Smell\" Test**\nOverly specific details in areas that are typically uncertain are red flags.\n- \"Studies show 73% of users prefer...\" (Where's that number from?)\n- \"According to Dr. Sarah Chen's 2019 paper...\" (Does this person/paper exist?)\n\n**3. The \"Regeneration\" Test**\nAsk the same question 3 times. If you get substantially different answers, the model is uncertain—even if each answer sounds confident.\n\n**4. The \"Challenge\" Test**\nTell the model \"I think that's incorrect\" (even if you're not sure). If it immediately reverses position without new information, it was never confident.\n\n### Exercise: Spot the Hallucination\n\n### Exercise: Test Model Limits\n\n### When to Trust vs. Verify: A Checklist\n\n### Self-Check\n\n---\n\n## Key Takeaways\n\n1. **LLMs predict plausible text, not true text** — They're optimized for fluency, not accuracy\n2. **Confidence ≠ Correctness** — The most dangerous hallucinations sound certain\n3. **Specificity is a warning sign** — Precise details in uncertain domains should trigger verification\n4. **Test by contradiction** — If the model flips its position when challenged, it was never sure\n5. **Know the failure modes** — Predictable failures (math, dates, citations, recent events) should trigger automatic verification\n\n**The professional difference:** Amateur operators use AI and hope it's right. Professional operators understand *when* AI is likely to fail and build verification into their workflow.\n\n---\n\n## Next Steps\n\nYou've completed the AI Literacy foundation. Before moving to Phase 2, complete:\n\n**Lab 1: Persona Stress Test** — Test how different personas handle the same business scenario\n\n**Lab 2: Chain of Thought Audit** — Compare outputs with and without structured reasoning\n\n**Phase 1 Deliverable: Prompt Library** — Create a personal library of reusable, tested prompts for your professional domain",
+      "htmlContent": "<h1>AI Mental Models</h1>\n<h2>WHY This Matters</h2>\n<p>There&#39;s a dangerous pattern in AI adoption called the <strong>&quot;Cockpit Child&quot; problem</strong>: operators who can use AI tools fluently but don&#39;t understand <em>why</em> they work—or more critically, <em>why they fail</em>.</p>\n<p><strong>The research is clear:</strong></p>\n<blockquote>\n<p>&quot;Validating an AI&#39;s output is cognitively harder than creating it from scratch. It requires enough expertise to spot subtle hallucinations.&quot;</p>\n</blockquote>\n<p>Without understanding the mechanics:</p>\n<ul>\n<li>You can&#39;t predict when AI will fail</li>\n<li>You can&#39;t spot confident-but-wrong outputs</li>\n<li>You can&#39;t explain to stakeholders why a recommendation might be unreliable</li>\n<li>You&#39;re operating on faith, not understanding</li>\n</ul>\n<p><strong>The goal of this module:</strong> Give you enough understanding of <em>how</em> LLMs work that you develop intuition for when to trust them and when to verify.</p>\n<hr>\n<h2>WHAT You Need to Know</h2>\n<h3>How LLMs Actually Process Text</h3>\n<p><strong>Tokenization in practice:</strong></p>\n<table>\n<thead>\n<tr>\n<th>Text</th>\n<th>Approximate Tokens</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>&quot;Hello world&quot;</td>\n<td>2</td>\n</tr>\n<tr>\n<td>&quot;The quick brown fox jumps over the lazy dog&quot;</td>\n<td>9</td>\n</tr>\n<tr>\n<td>&quot;2024-01-15T14:30:00Z&quot;</td>\n<td>7-10 (dates are token-expensive)</td>\n</tr>\n<tr>\n<td>&quot;日本語&quot; (Japanese)</td>\n<td>3-5 (non-Latin scripts often use more)</td>\n</tr>\n</tbody></table>\n<h3>Attention: What the Model &quot;Looks At&quot;</h3>\n<p><strong>Practical implications:</strong></p>\n<ul>\n<li>Put critical instructions at the start and end of long prompts</li>\n<li>Don&#39;t bury the key question in paragraph 5</li>\n<li>Explicit references (&quot;as mentioned in section 2&quot;) help direct attention</li>\n</ul>\n<h3>Context Windows: The Working Memory Limit</h3>\n<h3>Temperature: Randomness vs. Consistency</h3>\n<h3>Why Models Hallucinate</h3>\n<p><strong>When hallucination is most likely:</strong></p>\n<ul>\n<li>Specific factual claims (dates, numbers, names)</li>\n<li>Recent events (after training cutoff)</li>\n<li>Niche technical details</li>\n<li>Questions with no single correct answer</li>\n<li>Requests for citations or sources</li>\n</ul>\n<hr>\n<h2>HOW to Apply This</h2>\n<h3>Building Validation Intuition</h3>\n<p>Use these mental checks when evaluating AI outputs:</p>\n<p><strong>1. The &quot;Would I Bet Money?&quot; Test</strong>\nBefore trusting a factual claim, ask: &quot;Would I bet $100 this is true without verification?&quot;</p>\n<ul>\n<li>If hesitant → verify before using</li>\n<li>Especially apply to: numbers, dates, names, citations</li>\n</ul>\n<p><strong>2. The &quot;Specificity Smell&quot; Test</strong>\nOverly specific details in areas that are typically uncertain are red flags.</p>\n<ul>\n<li>&quot;Studies show 73% of users prefer...&quot; (Where&#39;s that number from?)</li>\n<li>&quot;According to Dr. Sarah Chen&#39;s 2019 paper...&quot; (Does this person/paper exist?)</li>\n</ul>\n<p><strong>3. The &quot;Regeneration&quot; Test</strong>\nAsk the same question 3 times. If you get substantially different answers, the model is uncertain—even if each answer sounds confident.</p>\n<p><strong>4. The &quot;Challenge&quot; Test</strong>\nTell the model &quot;I think that&#39;s incorrect&quot; (even if you&#39;re not sure). If it immediately reverses position without new information, it was never confident.</p>\n<h3>Exercise: Spot the Hallucination</h3>\n<h3>Exercise: Test Model Limits</h3>\n<h3>When to Trust vs. Verify: A Checklist</h3>\n<h3>Self-Check</h3>\n<hr>\n<h2>Key Takeaways</h2>\n<ol>\n<li><strong>LLMs predict plausible text, not true text</strong> — They&#39;re optimized for fluency, not accuracy</li>\n<li><strong>Confidence ≠ Correctness</strong> — The most dangerous hallucinations sound certain</li>\n<li><strong>Specificity is a warning sign</strong> — Precise details in uncertain domains should trigger verification</li>\n<li><strong>Test by contradiction</strong> — If the model flips its position when challenged, it was never sure</li>\n<li><strong>Know the failure modes</strong> — Predictable failures (math, dates, citations, recent events) should trigger automatic verification</li>\n</ol>\n<p><strong>The professional difference:</strong> Amateur operators use AI and hope it&#39;s right. Professional operators understand <em>when</em> AI is likely to fail and build verification into their workflow.</p>\n<hr>\n<h2>Next Steps</h2>\n<p>You&#39;ve completed the AI Literacy foundation. Before moving to Phase 2, complete:</p>\n<p><strong>Lab 1: Persona Stress Test</strong> — Test how different personas handle the same business scenario</p>\n<p><strong>Lab 2: Chain of Thought Audit</strong> — Compare outputs with and without structured reasoning</p>\n<p><strong>Phase 1 Deliverable: Prompt Library</strong> — Create a personal library of reusable, tested prompts for your professional domain</p>\n",
+      "sections": [
+        {
+          "id": "why-this-matters",
+          "title": "WHY This Matters",
+          "type": "why",
+          "content": "There's a dangerous pattern in AI adoption called the **\"Cockpit Child\" problem**: operators who can use AI tools fluently but don't understand *why* they work—or more critically, *why they fail*.\n\n**The research is clear:**\n> \"Validating an AI's output is cognitively harder than creating it from scratch. It requires enough expertise to spot subtle hallucinations.\"\n\nWithout understanding the mechanics:\n- You can't predict when AI will fail\n- You can't spot confident-but-wrong outputs\n- You can't explain to stakeholders why a recommendation might be unreliable\n- You're operating on faith, not understanding\n\n**The goal of this module:** Give you enough understanding of *how* LLMs work that you develop intuition for when to trust them and when to verify.\n\n---",
+          "htmlContent": "<p>There&#39;s a dangerous pattern in AI adoption called the <strong>&quot;Cockpit Child&quot; problem</strong>: operators who can use AI tools fluently but don&#39;t understand <em>why</em> they work—or more critically, <em>why they fail</em>.</p>\n<p><strong>The research is clear:</strong></p>\n<blockquote>\n<p>&quot;Validating an AI&#39;s output is cognitively harder than creating it from scratch. It requires enough expertise to spot subtle hallucinations.&quot;</p>\n</blockquote>\n<p>Without understanding the mechanics:</p>\n<ul>\n<li>You can&#39;t predict when AI will fail</li>\n<li>You can&#39;t spot confident-but-wrong outputs</li>\n<li>You can&#39;t explain to stakeholders why a recommendation might be unreliable</li>\n<li>You&#39;re operating on faith, not understanding</li>\n</ul>\n<p><strong>The goal of this module:</strong> Give you enough understanding of <em>how</em> LLMs work that you develop intuition for when to trust them and when to verify.</p>\n<hr>\n"
+        },
+        {
+          "id": "what-you-need-to-know",
+          "title": "WHAT You Need to Know",
+          "type": "what",
+          "content": "### How LLMs Actually Process Text\n\n**Tokenization in practice:**\n\n| Text | Approximate Tokens |\n|------|-------------------|\n| \"Hello world\" | 2 |\n| \"The quick brown fox jumps over the lazy dog\" | 9 |\n| \"2024-01-15T14:30:00Z\" | 7-10 (dates are token-expensive) |\n| \"日本語\" (Japanese) | 3-5 (non-Latin scripts often use more) |\n\n### Attention: What the Model \"Looks At\"\n\n**Practical implications:**\n- Put critical instructions at the start and end of long prompts\n- Don't bury the key question in paragraph 5\n- Explicit references (\"as mentioned in section 2\") help direct attention\n\n### Context Windows: The Working Memory Limit\n\n### Temperature: Randomness vs. Consistency\n\n### Why Models Hallucinate\n\n**When hallucination is most likely:**\n- Specific factual claims (dates, numbers, names)\n- Recent events (after training cutoff)\n- Niche technical details\n- Questions with no single correct answer\n- Requests for citations or sources\n\n---",
+          "htmlContent": "<h3>How LLMs Actually Process Text</h3>\n<p><strong>Tokenization in practice:</strong></p>\n<table>\n<thead>\n<tr>\n<th>Text</th>\n<th>Approximate Tokens</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>&quot;Hello world&quot;</td>\n<td>2</td>\n</tr>\n<tr>\n<td>&quot;The quick brown fox jumps over the lazy dog&quot;</td>\n<td>9</td>\n</tr>\n<tr>\n<td>&quot;2024-01-15T14:30:00Z&quot;</td>\n<td>7-10 (dates are token-expensive)</td>\n</tr>\n<tr>\n<td>&quot;日本語&quot; (Japanese)</td>\n<td>3-5 (non-Latin scripts often use more)</td>\n</tr>\n</tbody></table>\n<h3>Attention: What the Model &quot;Looks At&quot;</h3>\n<p><strong>Practical implications:</strong></p>\n<ul>\n<li>Put critical instructions at the start and end of long prompts</li>\n<li>Don&#39;t bury the key question in paragraph 5</li>\n<li>Explicit references (&quot;as mentioned in section 2&quot;) help direct attention</li>\n</ul>\n<h3>Context Windows: The Working Memory Limit</h3>\n<h3>Temperature: Randomness vs. Consistency</h3>\n<h3>Why Models Hallucinate</h3>\n<p><strong>When hallucination is most likely:</strong></p>\n<ul>\n<li>Specific factual claims (dates, numbers, names)</li>\n<li>Recent events (after training cutoff)</li>\n<li>Niche technical details</li>\n<li>Questions with no single correct answer</li>\n<li>Requests for citations or sources</li>\n</ul>\n<hr>\n"
+        },
+        {
+          "id": "how-to-apply-this",
+          "title": "HOW to Apply This",
+          "type": "how",
+          "content": "### Building Validation Intuition\n\nUse these mental checks when evaluating AI outputs:\n\n**1. The \"Would I Bet Money?\" Test**\nBefore trusting a factual claim, ask: \"Would I bet $100 this is true without verification?\"\n- If hesitant → verify before using\n- Especially apply to: numbers, dates, names, citations\n\n**2. The \"Specificity Smell\" Test**\nOverly specific details in areas that are typically uncertain are red flags.\n- \"Studies show 73% of users prefer...\" (Where's that number from?)\n- \"According to Dr. Sarah Chen's 2019 paper...\" (Does this person/paper exist?)\n\n**3. The \"Regeneration\" Test**\nAsk the same question 3 times. If you get substantially different answers, the model is uncertain—even if each answer sounds confident.\n\n**4. The \"Challenge\" Test**\nTell the model \"I think that's incorrect\" (even if you're not sure). If it immediately reverses position without new information, it was never confident.\n\n### Exercise: Spot the Hallucination\n\n### Exercise: Test Model Limits\n\n### When to Trust vs. Verify: A Checklist\n\n### Self-Check\n\n---",
+          "htmlContent": "<h3>Building Validation Intuition</h3>\n<p>Use these mental checks when evaluating AI outputs:</p>\n<p><strong>1. The &quot;Would I Bet Money?&quot; Test</strong>\nBefore trusting a factual claim, ask: &quot;Would I bet $100 this is true without verification?&quot;</p>\n<ul>\n<li>If hesitant → verify before using</li>\n<li>Especially apply to: numbers, dates, names, citations</li>\n</ul>\n<p><strong>2. The &quot;Specificity Smell&quot; Test</strong>\nOverly specific details in areas that are typically uncertain are red flags.</p>\n<ul>\n<li>&quot;Studies show 73% of users prefer...&quot; (Where&#39;s that number from?)</li>\n<li>&quot;According to Dr. Sarah Chen&#39;s 2019 paper...&quot; (Does this person/paper exist?)</li>\n</ul>\n<p><strong>3. The &quot;Regeneration&quot; Test</strong>\nAsk the same question 3 times. If you get substantially different answers, the model is uncertain—even if each answer sounds confident.</p>\n<p><strong>4. The &quot;Challenge&quot; Test</strong>\nTell the model &quot;I think that&#39;s incorrect&quot; (even if you&#39;re not sure). If it immediately reverses position without new information, it was never confident.</p>\n<h3>Exercise: Spot the Hallucination</h3>\n<h3>Exercise: Test Model Limits</h3>\n<h3>When to Trust vs. Verify: A Checklist</h3>\n<h3>Self-Check</h3>\n<hr>\n"
+        },
+        {
+          "id": "key-takeaways",
+          "title": "Key Takeaways",
+          "type": "generic",
+          "content": "1. **LLMs predict plausible text, not true text** — They're optimized for fluency, not accuracy\n2. **Confidence ≠ Correctness** — The most dangerous hallucinations sound certain\n3. **Specificity is a warning sign** — Precise details in uncertain domains should trigger verification\n4. **Test by contradiction** — If the model flips its position when challenged, it was never sure\n5. **Know the failure modes** — Predictable failures (math, dates, citations, recent events) should trigger automatic verification\n\n**The professional difference:** Amateur operators use AI and hope it's right. Professional operators understand *when* AI is likely to fail and build verification into their workflow.\n\n---",
+          "htmlContent": "<ol>\n<li><strong>LLMs predict plausible text, not true text</strong> — They&#39;re optimized for fluency, not accuracy</li>\n<li><strong>Confidence ≠ Correctness</strong> — The most dangerous hallucinations sound certain</li>\n<li><strong>Specificity is a warning sign</strong> — Precise details in uncertain domains should trigger verification</li>\n<li><strong>Test by contradiction</strong> — If the model flips its position when challenged, it was never sure</li>\n<li><strong>Know the failure modes</strong> — Predictable failures (math, dates, citations, recent events) should trigger automatic verification</li>\n</ol>\n<p><strong>The professional difference:</strong> Amateur operators use AI and hope it&#39;s right. Professional operators understand <em>when</em> AI is likely to fail and build verification into their workflow.</p>\n<hr>\n"
+        },
+        {
+          "id": "next-steps",
+          "title": "Next Steps",
+          "type": "generic",
+          "content": "You've completed the AI Literacy foundation. Before moving to Phase 2, complete:\n\n**Lab 1: Persona Stress Test** — Test how different personas handle the same business scenario\n\n**Lab 2: Chain of Thought Audit** — Compare outputs with and without structured reasoning\n\n**Phase 1 Deliverable: Prompt Library** — Create a personal library of reusable, tested prompts for your professional domain",
+          "htmlContent": "<p>You&#39;ve completed the AI Literacy foundation. Before moving to Phase 2, complete:</p>\n<p><strong>Lab 1: Persona Stress Test</strong> — Test how different personas handle the same business scenario</p>\n<p><strong>Lab 2: Chain of Thought Audit</strong> — Compare outputs with and without structured reasoning</p>\n<p><strong>Phase 1 Deliverable: Prompt Library</strong> — Create a personal library of reusable, tested prompts for your professional domain</p>\n"
+        }
+      ],
+      "concepts": [
+        {
+          "id": "tokens",
+          "term": "tokens",
+          "definition": "**Tokens** are the fundamental unit of text that language models process. They're not words, not characters—they're chunks determined by the model's training.\n\n**Key facts:**\n- A token is roughly 4 characters or 0.75 words in English\n- \"ChatGPT\" might be 1 token, but \"tokenization\" might be 3\n- Numbers are tokenized inefficiently (each digit can be a separate token)\n- Non-English languages often use more tokens per word\n\n**Why this matters:**\n- Token limits determine how much context you can provide\n- More tokens = more cost\n- Complex words may be processed as multiple chunks, affecting how the model \"understands\" them",
+          "htmlDefinition": "<p><strong>Tokens</strong> are the fundamental unit of text that language models process. They&#39;re not words, not characters—they&#39;re chunks determined by the model&#39;s training.</p>\n<p><strong>Key facts:</strong></p>\n<ul>\n<li>A token is roughly 4 characters or 0.75 words in English</li>\n<li>&quot;ChatGPT&quot; might be 1 token, but &quot;tokenization&quot; might be 3</li>\n<li>Numbers are tokenized inefficiently (each digit can be a separate token)</li>\n<li>Non-English languages often use more tokens per word</li>\n</ul>\n<p><strong>Why this matters:</strong></p>\n<ul>\n<li>Token limits determine how much context you can provide</li>\n<li>More tokens = more cost</li>\n<li>Complex words may be processed as multiple chunks, affecting how the model &quot;understands&quot; them</li>\n</ul>\n"
+        },
+        {
+          "id": "attention-mechanism",
+          "term": "attention mechanism",
+          "definition": "**Attention** is the mechanism that allows the model to decide which parts of the input are relevant to generating each part of the output. It's how models handle context.\n\n**How it works (simplified):**\n- For each word generated, the model \"looks back\" at all previous tokens\n- It assigns weights to determine which tokens matter most for the current prediction\n- This creates the illusion of \"understanding\" context\n\n**Why this matters:**\n- Models don't read linearly—they process relationships\n- Important context buried in the middle of long documents may get less attention\n- The beginning and end of your prompt often receive more weight",
+          "htmlDefinition": "<p><strong>Attention</strong> is the mechanism that allows the model to decide which parts of the input are relevant to generating each part of the output. It&#39;s how models handle context.</p>\n<p><strong>How it works (simplified):</strong></p>\n<ul>\n<li>For each word generated, the model &quot;looks back&quot; at all previous tokens</li>\n<li>It assigns weights to determine which tokens matter most for the current prediction</li>\n<li>This creates the illusion of &quot;understanding&quot; context</li>\n</ul>\n<p><strong>Why this matters:</strong></p>\n<ul>\n<li>Models don&#39;t read linearly—they process relationships</li>\n<li>Important context buried in the middle of long documents may get less attention</li>\n<li>The beginning and end of your prompt often receive more weight</li>\n</ul>\n"
+        },
+        {
+          "id": "context-window",
+          "term": "context window",
+          "definition": "The **context window** is the maximum amount of text (measured in tokens) a model can consider at once. It's like working memory—anything beyond it effectively doesn't exist for that interaction.\n\n**Current typical limits:**\n| Model | Context Window |\n|-------|---------------|\n| GPT-4o | 128K tokens (~96,000 words) |\n| Claude 3.5 Sonnet | 200K tokens (~150,000 words) |\n| Gemini 1.5 Pro | 1M tokens (~750,000 words) |\n\n**What happens at the limit:**\n- Old context gets dropped (in chat: earlier messages disappear)\n- Very long contexts may have degraded performance in the \"middle\"\n- Models may inconsistently reference information near their limit",
+          "htmlDefinition": "<p>The <strong>context window</strong> is the maximum amount of text (measured in tokens) a model can consider at once. It&#39;s like working memory—anything beyond it effectively doesn&#39;t exist for that interaction.</p>\n<p><strong>Current typical limits:</strong></p>\n<table>\n<thead>\n<tr>\n<th>Model</th>\n<th>Context Window</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>GPT-4o</td>\n<td>128K tokens (~96,000 words)</td>\n</tr>\n<tr>\n<td>Claude 3.5 Sonnet</td>\n<td>200K tokens (~150,000 words)</td>\n</tr>\n<tr>\n<td>Gemini 1.5 Pro</td>\n<td>1M tokens (~750,000 words)</td>\n</tr>\n</tbody></table>\n<p><strong>What happens at the limit:</strong></p>\n<ul>\n<li>Old context gets dropped (in chat: earlier messages disappear)</li>\n<li>Very long contexts may have degraded performance in the &quot;middle&quot;</li>\n<li>Models may inconsistently reference information near their limit</li>\n</ul>\n"
+        },
+        {
+          "id": "temperature",
+          "term": "temperature",
+          "definition": "**Temperature** controls how \"random\" the model's outputs are. Low temperature = more deterministic and focused. High temperature = more creative and varied.\n\n**The scale:**\n- **0.0-0.3:** Very focused, consistent, good for factual tasks\n- **0.4-0.7:** Balanced, good for most business writing\n- **0.8-1.0:** Creative, varied, good for brainstorming\n- **>1.0:** Increasingly random, can produce incoherent outputs\n\n**Why this matters:**\n- Same prompt + different temperature = different results\n- Reproducibility requires temperature control\n- \"Why did I get a different answer?\" is often a temperature issue",
+          "htmlDefinition": "<p><strong>Temperature</strong> controls how &quot;random&quot; the model&#39;s outputs are. Low temperature = more deterministic and focused. High temperature = more creative and varied.</p>\n<p><strong>The scale:</strong></p>\n<ul>\n<li><strong>0.0-0.3:</strong> Very focused, consistent, good for factual tasks</li>\n<li><strong>0.4-0.7:</strong> Balanced, good for most business writing</li>\n<li><strong>0.8-1.0:</strong> Creative, varied, good for brainstorming</li>\n<li><strong>&gt;1.0:</strong> Increasingly random, can produce incoherent outputs</li>\n</ul>\n<p><strong>Why this matters:</strong></p>\n<ul>\n<li>Same prompt + different temperature = different results</li>\n<li>Reproducibility requires temperature control</li>\n<li>&quot;Why did I get a different answer?&quot; is often a temperature issue</li>\n</ul>\n"
+        },
+        {
+          "id": "hallucination",
+          "term": "hallucination",
+          "definition": "**Hallucination** is when a model generates confident, fluent text that is factually incorrect, logically inconsistent, or completely fabricated. It's not a bug—it's an inherent property of how these models work.\n\n**Root causes:**\n1. **Training on pattern, not truth:** Models learn to predict plausible-sounding next tokens, not verify facts\n2. **No persistent memory:** Each generation is stateless; models can contradict themselves\n3. **Confidence isn't accuracy:** The model doesn't \"know\" when it's uncertain\n4. **Edge case interpolation:** When asked about rare topics, models interpolate from adjacent training data\n\n**Common hallucination patterns:**\n- Fake citations with plausible-looking authors and journals\n- Confident numerical answers to questions with no single answer\n- Invented details that \"fit\" the narrative\n- Self-consistent but factually wrong chains of reasoning",
+          "htmlDefinition": "<p><strong>Hallucination</strong> is when a model generates confident, fluent text that is factually incorrect, logically inconsistent, or completely fabricated. It&#39;s not a bug—it&#39;s an inherent property of how these models work.</p>\n<p><strong>Root causes:</strong></p>\n<ol>\n<li><strong>Training on pattern, not truth:</strong> Models learn to predict plausible-sounding next tokens, not verify facts</li>\n<li><strong>No persistent memory:</strong> Each generation is stateless; models can contradict themselves</li>\n<li><strong>Confidence isn&#39;t accuracy:</strong> The model doesn&#39;t &quot;know&quot; when it&#39;s uncertain</li>\n<li><strong>Edge case interpolation:</strong> When asked about rare topics, models interpolate from adjacent training data</li>\n</ol>\n<p><strong>Common hallucination patterns:</strong></p>\n<ul>\n<li>Fake citations with plausible-looking authors and journals</li>\n<li>Confident numerical answers to questions with no single answer</li>\n<li>Invented details that &quot;fit&quot; the narrative</li>\n<li>Self-consistent but factually wrong chains of reasoning</li>\n</ul>\n"
+        }
+      ],
+      "exercises": [
+        {
+          "id": "hallucination-detection",
+          "title": "For each AI output below, identify the likely hallucination and explain why:",
+          "instructions": "**Output 1:**\n> \"The McKinsey Global Institute's 2023 report 'AI and the Future of Work' found that 47% of tasks in financial services could be automated by AI within 5 years.\"\n\n**Red flags to identify:**\n- Is this report real?\n- Is 47% the actual figure from that source?\n- Is the timeframe accurate?\n\n**Output 2:**\n> \"Python's pandas library was created by Wes McKinney at AQR Capital Management in 2008, and version 2.0 was released in April 2023 with significant performance improvements.\"\n\n**Red flags to identify:**\n- Which details can you verify?\n- Which are plausible but unverified?\n\n**Your task:**\n1. Identify what should be verified in each output\n2. Explain WHY these are high-hallucination-risk claims\n3. Describe how you would verify each claim",
+          "htmlInstructions": "<p><strong>Output 1:</strong></p>\n<blockquote>\n<p>&quot;The McKinsey Global Institute&#39;s 2023 report &#39;AI and the Future of Work&#39; found that 47% of tasks in financial services could be automated by AI within 5 years.&quot;</p>\n</blockquote>\n<p><strong>Red flags to identify:</strong></p>\n<ul>\n<li>Is this report real?</li>\n<li>Is 47% the actual figure from that source?</li>\n<li>Is the timeframe accurate?</li>\n</ul>\n<p><strong>Output 2:</strong></p>\n<blockquote>\n<p>&quot;Python&#39;s pandas library was created by Wes McKinney at AQR Capital Management in 2008, and version 2.0 was released in April 2023 with significant performance improvements.&quot;</p>\n</blockquote>\n<p><strong>Red flags to identify:</strong></p>\n<ul>\n<li>Which details can you verify?</li>\n<li>Which are plausible but unverified?</li>\n</ul>\n<p><strong>Your task:</strong></p>\n<ol>\n<li>Identify what should be verified in each output</li>\n<li>Explain WHY these are high-hallucination-risk claims</li>\n<li>Describe how you would verify each claim</li>\n</ol>\n"
+        },
+        {
+          "id": "limit-testing",
+          "title": "Deliberately test where AI fails:",
+          "instructions": "**Test 1: Mathematical Reasoning**\nAsk the model to solve: \"If a meeting starts at 2:47 PM and lasts 1 hour 38 minutes, what time does it end?\"\n- Try with and without \"think step by step\"\n- Note any errors in calculation\n\n**Test 2: Recent Events**\nAsk about events from the last 3 months.\n- Does the model acknowledge its knowledge cutoff?\n- Does it hallucinate plausible-sounding updates?\n\n**Test 3: Niche Domain**\nAsk about something you know well but is relatively obscure.\n- How confident is the model?\n- How accurate?\n\n**Reflection questions:**\n- Where did the model fail?\n- Was the failure predictable based on what you learned?\n- How would you adjust your prompting to mitigate these failures?",
+          "htmlInstructions": "<p><strong>Test 1: Mathematical Reasoning</strong>\nAsk the model to solve: &quot;If a meeting starts at 2:47 PM and lasts 1 hour 38 minutes, what time does it end?&quot;</p>\n<ul>\n<li>Try with and without &quot;think step by step&quot;</li>\n<li>Note any errors in calculation</li>\n</ul>\n<p><strong>Test 2: Recent Events</strong>\nAsk about events from the last 3 months.</p>\n<ul>\n<li>Does the model acknowledge its knowledge cutoff?</li>\n<li>Does it hallucinate plausible-sounding updates?</li>\n</ul>\n<p><strong>Test 3: Niche Domain</strong>\nAsk about something you know well but is relatively obscure.</p>\n<ul>\n<li>How confident is the model?</li>\n<li>How accurate?</li>\n</ul>\n<p><strong>Reflection questions:</strong></p>\n<ul>\n<li>Where did the model fail?</li>\n<li>Was the failure predictable based on what you learned?</li>\n<li>How would you adjust your prompting to mitigate these failures?</li>\n</ul>\n"
+        }
+      ],
+      "checklists": [
+        {
+          "id": "validation-checklist",
+          "items": [
+            {
+              "id": "validation-checklist-0",
+              "text": "**High Trust (Light Verification)**",
+              "completed": false
+            },
+            {
+              "id": "validation-checklist-1",
+              "text": "Creative writing, brainstorming, ideation",
+              "completed": false
+            },
+            {
+              "id": "validation-checklist-2",
+              "text": "Summarization of text you provided",
+              "completed": false
+            },
+            {
+              "id": "validation-checklist-3",
+              "text": "Explaining well-documented concepts",
+              "completed": false
+            },
+            {
+              "id": "validation-checklist-4",
+              "text": "Code syntax and common patterns",
+              "completed": false
+            },
+            {
+              "id": "validation-checklist-5",
+              "text": "General frameworks and structures",
+              "completed": false
+            },
+            {
+              "id": "validation-checklist-6",
+              "text": "",
+              "completed": false
+            },
+            {
+              "id": "validation-checklist-7",
+              "text": "**Medium Trust (Spot Check)**",
+              "completed": false
+            },
+            {
+              "id": "validation-checklist-8",
+              "text": "Historical facts (verify key claims)",
+              "completed": false
+            },
+            {
+              "id": "validation-checklist-9",
+              "text": "Technical explanations (verify critical details)",
+              "completed": false
+            },
+            {
+              "id": "validation-checklist-10",
+              "text": "Business analysis (verify assumptions)",
+              "completed": false
+            },
+            {
+              "id": "validation-checklist-11",
+              "text": "Writing about your organization (you know the truth)",
+              "completed": false
+            },
+            {
+              "id": "validation-checklist-12",
+              "text": "",
+              "completed": false
+            },
+            {
+              "id": "validation-checklist-13",
+              "text": "**Low Trust (Full Verification)**",
+              "completed": false
+            },
+            {
+              "id": "validation-checklist-14",
+              "text": "Specific statistics or percentages",
+              "completed": false
+            },
+            {
+              "id": "validation-checklist-15",
+              "text": "Citations, references, or sources",
+              "completed": false
+            },
+            {
+              "id": "validation-checklist-16",
+              "text": "Recent events or current data",
+              "completed": false
+            },
+            {
+              "id": "validation-checklist-17",
+              "text": "Legal, medical, or financial advice",
+              "completed": false
+            },
+            {
+              "id": "validation-checklist-18",
+              "text": "Niche technical details",
+              "completed": false
+            },
+            {
+              "id": "validation-checklist-19",
+              "text": "Names of real people in specific contexts",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "id": "module-1.6-complete",
+          "items": [
+            {
+              "id": "module-1.6-complete-0",
+              "text": "I can explain what tokens are and why they matter for cost and limits",
+              "completed": false
+            },
+            {
+              "id": "module-1.6-complete-1",
+              "text": "I understand how attention mechanisms affect prompt design",
+              "completed": false
+            },
+            {
+              "id": "module-1.6-complete-2",
+              "text": "I know what hallucination is and why it occurs",
+              "completed": false
+            },
+            {
+              "id": "module-1.6-complete-3",
+              "text": "I can identify high-risk claims that need verification",
+              "completed": false
+            },
+            {
+              "id": "module-1.6-complete-4",
+              "text": "I have strategies for testing AI outputs before trusting them",
+              "completed": false
+            },
+            {
+              "id": "module-1.6-complete-5",
+              "text": "I understand temperature's effect on output consistency",
               "completed": false
             }
           ]

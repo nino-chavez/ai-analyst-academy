@@ -1,12 +1,12 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-14T01:25:19.181Z",
+  "generatedAt": "2026-01-16T19:47:42.032Z",
   "phases": [
     {
       "id": "phase-1",
       "order": 1,
       "title": "AI Literacy",
-      "moduleCount": 5,
+      "moduleCount": 6,
       "labCount": 2
     },
     {
@@ -28,14 +28,14 @@
       "order": 4,
       "title": "Strategy & Economics",
       "moduleCount": 4,
-      "labCount": 3
+      "labCount": 4
     },
     {
       "id": "phase-5",
       "order": 5,
       "title": "AI Leadership & Influence",
       "moduleCount": 4,
-      "labCount": 2
+      "labCount": 3
     },
     {
       "id": "phase-6",
@@ -45,7 +45,7 @@
       "labCount": 2
     }
   ],
-  "totalModules": 26,
-  "totalLabs": 16,
+  "totalModules": 27,
+  "totalLabs": 18,
   "totalEstimatedHours": 34
 }

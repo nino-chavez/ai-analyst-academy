@@ -11,6 +11,7 @@ modules:
   - "5.3-project-scoping-estimation"
   - "5.4-stakeholder-communication"
 labs:
+  - "stakeholder-simulation"
   - "executive-pitch"
   - "team-capability-assessment"
 deliverable:

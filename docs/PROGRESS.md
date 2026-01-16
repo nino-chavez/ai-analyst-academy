@@ -1,6 +1,6 @@
 # AI Analyst Academy — Implementation Progress
 
-> **Last Updated:** 2026-01-12
+> **Last Updated:** 2026-01-16
 > **Purpose:** Single source of truth for implementation status. Reference this document before starting any development work.
 
 ---
@@ -70,8 +70,8 @@ The curriculum maps **100%** of the "Business Engineer/Operator" persona skills 
 | Markdown processing | Done | Uses marked + gray-matter |
 | Build-time generation | Done | `pnpm run build:content` |
 | 6 Phases | Done | All content files present |
-| 24 Modules | Done | WHY-WHAT-HOW structure |
-| 12 Labs + Capstone | Done | Full exercises |
+| 25 Modules | Done | WHY-WHAT-HOW structure (includes 1.6 AI Mental Models) |
+| 14 Labs + Capstone | Done | Full exercises (includes 7c, 8) |
 | Search index | Done | Infrastructure ready |
 
 ### Database Schema — Complete
@@ -103,7 +103,7 @@ The curriculum maps **100%** of the "Business Engineer/Operator" persona skills 
 
 ## Curriculum Coverage (Complete)
 
-The curriculum now covers **100%** of the "Business Operator" roadmap with 10 labs plus a capstone project.
+The curriculum now covers **100%** of the "Business Operator" roadmap with 14 labs plus a capstone project.
 
 ### Complete Lab Structure
 
@@ -119,7 +119,13 @@ The curriculum now covers **100%** of the "Business Operator" roadmap with 10 la
 | 6 | ROI Calculator | 4 | Evaluate | ✅ |
 | 7 | Governance Framework | 4 | Create | ✅ |
 | 7b | Agentic Research: Trust but Verify | 4 | Evaluate | ✅ |
-| — | Capstone Project | 4 | Create | ✅ |
+| **7c** | **Crisis Response Simulation** | **4** | **Evaluate** | ✅ **NEW** |
+| **8** | **Stakeholder Simulation** | **5** | **Apply** | ✅ **NEW** |
+| 9 | Executive Pitch | 5 | Create | ✅ |
+| 10 | Team Capability Assessment | 5 | Analyze | ✅ |
+| 11 | Vertical Deep Dive | 6 | Analyze | ✅ |
+| 12 | Portfolio Prioritization | 6 | Create | ✅ |
+| — | Capstone Project | All | Create | ✅ |
 
 ### Alignment Matrix (All Gaps Filled)
 
@@ -172,6 +178,38 @@ The curriculum now covers **100%** of the "Business Operator" roadmap with 10 la
 - Manually verifies AI-generated citations
 - Identifies hallucination patterns in agentic outputs
 - Designs verification protocols for organizational use
+
+### SWOT Response Additions (2026-01-16)
+
+Based on analysis of the curriculum against post-consulting research ("The Cognitive Foundry"), the following content was added to address identified gaps.
+
+**Module 1.6: AI Mental Models** (Phase 1, 15 min) — *NEW*
+- Addresses "Cockpit Child" risk: operators who use AI without understanding mechanics
+- How LLMs actually work: tokens, attention, context windows
+- Known failure modes: hallucination patterns, reasoning limits
+- Building validation intuition: when to trust vs. verify
+
+**Lab 7c: Crisis Response Simulation** (Phase 4, 60 min) — *NEW*
+- Compressed crisis experience: "5 years of rare events in one lab"
+- Four scenarios: Data Breach, Failed Pilot, Scope Creep, Ethics Alarm
+- Time-pressured decision making with incomplete information
+- Creates Crisis Response Playbook deliverable
+
+**Lab 8: Stakeholder Simulation** (Phase 5, 75 min) — *NEW*
+- AI-powered practice conversations with difficult stakeholders
+- Five persona types: Skeptical CFO, Burned IT Leader, Budget Guardian, Vague Executive, Hostile Stakeholder
+- Uses existing Sandbox infrastructure with structured prompts
+- Self-evaluation rubrics and reflection questions
+
+**Portfolio Certification Framework** — *NEW*
+- Competency-based certification across 4 levels: Foundation, Practitioner, Leader, Master
+- Rubric-based assessment for all phase deliverables
+- Documentation at: `docs/certification/`
+
+**Sandbox Stakeholder Personas** — *NEW*
+- 5 new personas added for stakeholder practice
+- Integrated into existing Sandbox with full system prompts
+- Designed to work with Lab 8 but available for general practice
 
 ---
 
@@ -396,6 +434,7 @@ pnpm run build:content
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-01-16 | **SWOT Response Implementation** — Added Module 1.6 (AI Mental Models), Lab 8 (Stakeholder Simulation), Lab 7c (Crisis Response), Portfolio Certification Framework, 5 new stakeholder personas in Sandbox. Full plan in `docs/plans/swot-response-plan.md` | Claude |
 | 2026-01-13 | **Prompt Library Complete** — `/portfolio/prompts` with full CRUD, search, category filtering, copy to clipboard; wired to `saved_prompts` table; added navigation link from portfolio page | Claude |
 | 2026-01-12 | **Deliverable Submission Complete** — Verified full CRUD in /portfolio; create, update, delete actions; phase selection; mark complete functionality; updated progress status to 85% | Claude |
 | 2026-01-12 | **Review Queue & Spaced Repetition** — Review queue UI with SM-2 algorithm; due/upcoming items; rating buttons (Forgot, Hard, Good, Easy); ease factor and interval tracking | Claude |

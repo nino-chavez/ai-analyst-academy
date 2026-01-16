@@ -93,11 +93,17 @@ export function generateMetaTags(input: MetaTagsInput): MetaTags {
 /**
  * Generate meta tags for the landing page
  */
-export function getLandingPageMeta(): MetaTags {
+export function getLandingPageMeta(stats?: {
+	totalModules: number;
+	totalLabs: number;
+}): MetaTags {
+	const modules = stats?.totalModules ?? 25;
+	const labs = stats?.totalLabs ?? 15;
+
 	return generateMetaTags({
 		title: 'AI Analyst Academy | Design Human-AI Systems for Business',
 		description:
-			'Learn to become an AI Analyst - Design human-AI systems and architect business automation through hands-on training with 24 modules, 12 labs, and a capstone project.',
+			`Learn to become an AI Analyst - Design human-AI systems and architect business automation through hands-on training with ${modules} modules, ${labs} labs, and a capstone project.`,
 		path: '/',
 		image: getOgImage('home'),
 		type: 'website',
