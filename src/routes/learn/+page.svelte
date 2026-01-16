@@ -1,5 +1,11 @@
 <script lang="ts">
 	import { ProgressRing, ProgressBar } from '$components';
+	import {
+		generateCourseSchema,
+		generateWebPageSchema,
+		serializeSchema,
+		getLearnPageMeta
+	} from '$lib/seo';
 
 	interface PhaseData {
 		id: string;
@@ -37,6 +43,16 @@
 
 	let { data }: Props = $props();
 
+	// Generate SEO data
+	const meta = getLearnPageMeta(data.stats);
+	const courseSchema = generateCourseSchema(data.stats);
+	const pageSchema = generateWebPageSchema(
+		'AI Analyst Curriculum',
+		meta.description,
+		'/learn',
+		'CollectionPage'
+	);
+
 	function getPhaseColor(order: number): string {
 		return `var(--color-phase-${order})`;
 	}
@@ -50,11 +66,34 @@
 </script>
 
 <svelte:head>
-	<title>Learn | AI Analyst Academy</title>
-	<meta
-		name="description"
-		content="Master AI tools and workflows through our structured curriculum"
-	/>
+	<!-- Primary Meta Tags -->
+	<title>{meta.title}</title>
+	<meta name="description" content={meta.description} />
+	<meta name="author" content={meta.author} />
+	{#if meta.keywords}
+		<meta name="keywords" content={meta.keywords.join(', ')} />
+	{/if}
+	<meta name="robots" content={meta.robots} />
+	<link rel="canonical" href={meta.canonical} />
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content={meta.ogType} />
+	<meta property="og:url" content={meta.canonical} />
+	<meta property="og:title" content={meta.ogTitle} />
+	<meta property="og:description" content={meta.ogDescription} />
+	<meta property="og:image" content={meta.ogImage} />
+	<meta property="og:site_name" content="AI Analyst Academy" />
+
+	<!-- Twitter -->
+	<meta name="twitter:card" content={meta.twitterCard} />
+	<meta name="twitter:url" content={meta.canonical} />
+	<meta name="twitter:title" content={meta.twitterTitle} />
+	<meta name="twitter:description" content={meta.twitterDescription} />
+	<meta name="twitter:image" content={meta.twitterImage} />
+
+	<!-- JSON-LD Structured Data -->
+	{@html `<script type="application/ld+json">${serializeSchema(courseSchema)}</script>`}
+	{@html `<script type="application/ld+json">${serializeSchema(pageSchema)}</script>`}
 </svelte:head>
 
 <div class="learn-page">

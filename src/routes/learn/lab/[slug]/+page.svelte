@@ -4,6 +4,12 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { untrack } from 'svelte';
+	import {
+		generateLabSchema,
+		generateBreadcrumbSchema,
+		serializeSchema,
+		getLabMeta
+	} from '$lib/seo';
 
 	interface SavedLabProgress {
 		status: string | null;
@@ -40,6 +46,33 @@
 	}
 
 	let { data }: Props = $props();
+
+	// Generate SEO data
+	const meta = $derived(getLabMeta({
+		title: data.lab.title,
+		slug: data.lab.slug,
+		description: data.lab.objectives[0] || `Complete the ${data.lab.title} lab`,
+		estimatedHours: data.lab.estimatedHours
+	}));
+
+	const labSchema = $derived(generateLabSchema({
+		id: data.lab.id,
+		title: data.lab.title,
+		slug: data.lab.slug,
+		description: data.lab.objectives[0] || `Complete the ${data.lab.title} lab`,
+		estimatedHours: data.lab.estimatedHours
+	}));
+
+	const breadcrumbs = $derived(() => {
+		const crumbs = [{ label: 'Learn', href: '/learn' }];
+		if (data.phase) {
+			crumbs.push({ label: data.phase.title, href: `/learn/phase/${data.phase.order}` });
+		}
+		crumbs.push({ label: data.lab.title, href: `/learn/lab/${data.lab.slug}` });
+		return crumbs;
+	});
+
+	const breadcrumbSchema = $derived(generateBreadcrumbSchema(breadcrumbs()));
 
 	// Initialize progress from saved data (intentionally captures initial value)
 	// svelte-ignore state_referenced_locally
@@ -223,8 +256,34 @@
 </script>
 
 <svelte:head>
-	<title>{data.lab.title} | {data.isCapstone ? 'Capstone' : `Lab ${data.lab.labNumber}`} | AI Analyst Academy</title>
-	<meta name="description" content={data.lab.objectives[0] || `Complete the ${data.lab.title} lab`} />
+	<!-- Primary Meta Tags -->
+	<title>{meta.title}</title>
+	<meta name="description" content={meta.description} />
+	<meta name="author" content={meta.author} />
+	{#if meta.keywords}
+		<meta name="keywords" content={meta.keywords.join(', ')} />
+	{/if}
+	<meta name="robots" content={meta.robots} />
+	<link rel="canonical" href={meta.canonical} />
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content={meta.ogType} />
+	<meta property="og:url" content={meta.canonical} />
+	<meta property="og:title" content={meta.ogTitle} />
+	<meta property="og:description" content={meta.ogDescription} />
+	<meta property="og:image" content={meta.ogImage} />
+	<meta property="og:site_name" content="AI Analyst Academy" />
+
+	<!-- Twitter -->
+	<meta name="twitter:card" content={meta.twitterCard} />
+	<meta name="twitter:url" content={meta.canonical} />
+	<meta name="twitter:title" content={meta.twitterTitle} />
+	<meta name="twitter:description" content={meta.twitterDescription} />
+	<meta name="twitter:image" content={meta.twitterImage} />
+
+	<!-- JSON-LD Structured Data -->
+	{@html `<script type="application/ld+json">${serializeSchema(labSchema)}</script>`}
+	{@html `<script type="application/ld+json">${serializeSchema(breadcrumbSchema)}</script>`}
 </svelte:head>
 
 <div class="lab-page">

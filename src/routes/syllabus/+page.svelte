@@ -1,4 +1,15 @@
 <script lang="ts">
+	import { getSyllabusMeta, generateWebPageSchema, serializeSchema } from '$lib/seo';
+
+	// SEO data
+	const meta = getSyllabusMeta();
+	const pageSchema = generateWebPageSchema(
+		'AI Analyst Academy Syllabus',
+		meta.description,
+		'/syllabus',
+		'WebPage'
+	);
+
 	// Course schedule data
 	const courseInfo = {
 		totalHours: 35,
@@ -129,8 +140,33 @@
 </script>
 
 <svelte:head>
-	<title>Syllabus | AI Analyst Academy</title>
-	<meta name="description" content="Complete course syllabus for the AI Analyst certification program" />
+	<!-- Primary Meta Tags -->
+	<title>{meta.title}</title>
+	<meta name="description" content={meta.description} />
+	<meta name="author" content={meta.author} />
+	{#if meta.keywords}
+		<meta name="keywords" content={meta.keywords.join(', ')} />
+	{/if}
+	<meta name="robots" content={meta.robots} />
+	<link rel="canonical" href={meta.canonical} />
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content={meta.ogType} />
+	<meta property="og:url" content={meta.canonical} />
+	<meta property="og:title" content={meta.ogTitle} />
+	<meta property="og:description" content={meta.ogDescription} />
+	<meta property="og:image" content={meta.ogImage} />
+	<meta property="og:site_name" content="AI Analyst Academy" />
+
+	<!-- Twitter -->
+	<meta name="twitter:card" content={meta.twitterCard} />
+	<meta name="twitter:url" content={meta.canonical} />
+	<meta name="twitter:title" content={meta.twitterTitle} />
+	<meta name="twitter:description" content={meta.twitterDescription} />
+	<meta name="twitter:image" content={meta.twitterImage} />
+
+	<!-- JSON-LD Structured Data -->
+	{@html `<script type="application/ld+json">${serializeSchema(pageSchema)}</script>`}
 </svelte:head>
 
 <div class="syllabus-page">

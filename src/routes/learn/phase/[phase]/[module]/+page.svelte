@@ -8,6 +8,12 @@
 		ChecklistBlock
 	} from '$components';
 	import type { ContentSection, ConceptDefinition, Exercise, Checklist, NavigationItem } from '$content/types';
+	import {
+		generateModuleSchema,
+		generateBreadcrumbSchema,
+		serializeSchema,
+		getModuleMeta
+	} from '$lib/seo';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { untrack } from 'svelte';
@@ -53,6 +59,38 @@
 	}
 
 	let { data }: Props = $props();
+
+	// Generate SEO data
+	const meta = $derived(getModuleMeta(
+		data.module,
+		data.phaseNumber,
+		data.phase.title
+	));
+
+	// Find module index for schema (approximate based on module id pattern like "1.1")
+	const moduleIndex = $derived(() => {
+		const parts = data.module.id.split('.');
+		if (parts.length >= 2) {
+			const phaseNum = parseInt(parts[0]);
+			const modNum = parseInt(parts[1]);
+			return ((phaseNum - 1) * 4) + modNum - 1; // Assuming ~4 modules per phase
+		}
+		return 0;
+	});
+
+	const moduleSchema = $derived(generateModuleSchema(
+		data.module,
+		data.phaseNumber,
+		moduleIndex()
+	));
+
+	const breadcrumbs = $derived([
+		{ label: 'Learn', href: '/learn' },
+		{ label: data.phase.title, href: `/learn/phase/${data.phaseNumber}` },
+		{ label: data.module.title, href: `/learn/phase/${data.phaseNumber}/${data.module.slug}` }
+	]);
+
+	const breadcrumbSchema = $derived(generateBreadcrumbSchema(breadcrumbs));
 
 	// Initialize progress from saved data (intentionally captures initial value)
 	// svelte-ignore state_referenced_locally
@@ -306,11 +344,34 @@
 </script>
 
 <svelte:head>
-	<title>{data.module.title} | Phase {data.phaseNumber} | AI Analyst Academy</title>
-	<meta
-		name="description"
-		content="Learn {data.module.title} in the {data.phase.title} phase of AI Analyst Academy"
-	/>
+	<!-- Primary Meta Tags -->
+	<title>{meta.title}</title>
+	<meta name="description" content={meta.description} />
+	<meta name="author" content={meta.author} />
+	{#if meta.keywords}
+		<meta name="keywords" content={meta.keywords.join(', ')} />
+	{/if}
+	<meta name="robots" content={meta.robots} />
+	<link rel="canonical" href={meta.canonical} />
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content={meta.ogType} />
+	<meta property="og:url" content={meta.canonical} />
+	<meta property="og:title" content={meta.ogTitle} />
+	<meta property="og:description" content={meta.ogDescription} />
+	<meta property="og:image" content={meta.ogImage} />
+	<meta property="og:site_name" content="AI Analyst Academy" />
+
+	<!-- Twitter -->
+	<meta name="twitter:card" content={meta.twitterCard} />
+	<meta name="twitter:url" content={meta.canonical} />
+	<meta name="twitter:title" content={meta.twitterTitle} />
+	<meta name="twitter:description" content={meta.twitterDescription} />
+	<meta name="twitter:image" content={meta.twitterImage} />
+
+	<!-- JSON-LD Structured Data -->
+	{@html `<script type="application/ld+json">${serializeSchema(moduleSchema)}</script>`}
+	{@html `<script type="application/ld+json">${serializeSchema(breadcrumbSchema)}</script>`}
 </svelte:head>
 
 <div class="module-page">

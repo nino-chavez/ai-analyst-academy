@@ -1,3 +1,30 @@
-# allow crawling everything by default
+# AI Analyst Academy robots.txt
+# Allow all crawlers to index all content
+
 User-agent: *
-Disallow:
+Allow: /
+
+# Sitemap location
+Sitemap: https://academy.ninochavez.co/sitemap.xml
+
+# Allow AI crawlers explicitly (for AEO)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /

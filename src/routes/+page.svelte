@@ -1,6 +1,27 @@
 <script lang="ts">
-	import { ProgressRing } from '$components';
 	import { trackCTAClick, trackPhaseStart } from '$lib/analytics';
+	import {
+		generateLandingPageSchemas,
+		serializeSchema,
+		getLandingPageMeta
+	} from '$lib/seo';
+
+	interface Props {
+		data: {
+			stats: {
+				totalPhases: number;
+				totalModules: number;
+				totalLabs: number;
+				totalEstimatedHours: number;
+			};
+		};
+	}
+
+	let { data }: Props = $props();
+
+	// Generate SEO data
+	const meta = getLandingPageMeta();
+	const schemas = generateLandingPageSchemas(data.stats);
 
 	function handleStartLearning() {
 		trackCTAClick('hero', 'Start Learning');
@@ -20,11 +41,35 @@
 </script>
 
 <svelte:head>
-	<title>AI Analyst Academy | Design Human-AI Systems for Business</title>
-	<meta
-		name="description"
-		content="Learn to become an AI Analyst - Design human-AI systems and architect business automation through hands-on training"
-	/>
+	<!-- Primary Meta Tags -->
+	<title>{meta.title}</title>
+	<meta name="description" content={meta.description} />
+	<meta name="author" content={meta.author} />
+	{#if meta.keywords}
+		<meta name="keywords" content={meta.keywords.join(', ')} />
+	{/if}
+	<meta name="robots" content={meta.robots} />
+	<link rel="canonical" href={meta.canonical} />
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content={meta.ogType} />
+	<meta property="og:url" content={meta.canonical} />
+	<meta property="og:title" content={meta.ogTitle} />
+	<meta property="og:description" content={meta.ogDescription} />
+	<meta property="og:image" content={meta.ogImage} />
+	<meta property="og:site_name" content="AI Analyst Academy" />
+
+	<!-- Twitter -->
+	<meta name="twitter:card" content={meta.twitterCard} />
+	<meta name="twitter:url" content={meta.canonical} />
+	<meta name="twitter:title" content={meta.twitterTitle} />
+	<meta name="twitter:description" content={meta.twitterDescription} />
+	<meta name="twitter:image" content={meta.twitterImage} />
+
+	<!-- JSON-LD Structured Data -->
+	{#each schemas as schema}
+		{@html `<script type="application/ld+json">${serializeSchema(schema)}</script>`}
+	{/each}
 </svelte:head>
 
 <div class="landing-page">

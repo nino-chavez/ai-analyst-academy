@@ -1,5 +1,11 @@
 <script lang="ts">
 	import { ProgressBar } from '$components';
+	import {
+		generateWebPageSchema,
+		generateBreadcrumbSchema,
+		serializeSchema,
+		getPhaseMeta
+	} from '$lib/seo';
 
 	interface ModuleData {
 		id: string;
@@ -43,6 +49,30 @@
 
 	let { data }: Props = $props();
 
+	// Generate SEO data
+	const meta = $derived(getPhaseMeta({
+		order: data.phase.order,
+		title: data.phase.title,
+		description: data.phase.description,
+		moduleCount: data.modules.length,
+		labCount: data.labs.length
+	}));
+
+	const breadcrumbs = $derived([
+		{ label: 'Learn', href: '/learn' },
+		{ label: data.phase.title, href: `/learn/phase/${data.phaseNumber}` }
+	]);
+
+	const pageSchema = $derived(generateWebPageSchema(
+		`Phase ${data.phase.order}: ${data.phase.title}`,
+		data.phase.description,
+		`/learn/phase/${data.phaseNumber}`,
+		'CollectionPage',
+		breadcrumbs
+	));
+
+	const breadcrumbSchema = $derived(generateBreadcrumbSchema(breadcrumbs));
+
 	function getPhaseGradient(order: number): string {
 		return `linear-gradient(135deg, var(--color-phase-${order}) 0%, var(--color-phase-${order}-dark) 100%)`;
 	}
@@ -61,8 +91,34 @@
 </script>
 
 <svelte:head>
-	<title>Phase {data.phaseNumber}: {data.phase.title} | AI Analyst Academy</title>
-	<meta name="description" content={data.phase.description} />
+	<!-- Primary Meta Tags -->
+	<title>{meta.title}</title>
+	<meta name="description" content={meta.description} />
+	<meta name="author" content={meta.author} />
+	{#if meta.keywords}
+		<meta name="keywords" content={meta.keywords.join(', ')} />
+	{/if}
+	<meta name="robots" content={meta.robots} />
+	<link rel="canonical" href={meta.canonical} />
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content={meta.ogType} />
+	<meta property="og:url" content={meta.canonical} />
+	<meta property="og:title" content={meta.ogTitle} />
+	<meta property="og:description" content={meta.ogDescription} />
+	<meta property="og:image" content={meta.ogImage} />
+	<meta property="og:site_name" content="AI Analyst Academy" />
+
+	<!-- Twitter -->
+	<meta name="twitter:card" content={meta.twitterCard} />
+	<meta name="twitter:url" content={meta.canonical} />
+	<meta name="twitter:title" content={meta.twitterTitle} />
+	<meta name="twitter:description" content={meta.twitterDescription} />
+	<meta name="twitter:image" content={meta.twitterImage} />
+
+	<!-- JSON-LD Structured Data -->
+	{@html `<script type="application/ld+json">${serializeSchema(pageSchema)}</script>`}
+	{@html `<script type="application/ld+json">${serializeSchema(breadcrumbSchema)}</script>`}
 </svelte:head>
 
 <div class="phase-page">
