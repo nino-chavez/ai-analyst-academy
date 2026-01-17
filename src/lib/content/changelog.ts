@@ -16,6 +16,20 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
 	{
+		version: '1.4.0',
+		date: '2026-01-16',
+		title: 'Tacit Knowledge & Data Betrayal',
+		summary: 'Addressing the gap between knowing frameworks and applying them under pressure with observation-based learning and AI error recovery training.',
+		highlights: [
+			'New Module 5.5: Stakeholder Conversations Observed — learn by watching expert conversations before practicing',
+			'New Crisis 5: Data Betrayal — recover from presenting AI-hallucinated information mid-meeting',
+			'Three detailed case studies with inline expert commentary',
+			'Pattern extraction exercises for tacit knowledge transfer',
+			'Lab 7c expanded to 75 minutes with 5 crisis scenarios'
+		],
+		category: 'content'
+	},
+	{
 		version: '1.3.0',
 		date: '2026-01-16',
 		title: 'Experiential Learning & Certification',

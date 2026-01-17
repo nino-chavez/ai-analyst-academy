@@ -3,12 +3,13 @@ id: "lab-7c-crisis-response"
 title: "Crisis Response Simulation"
 phase: 4
 labNumber: "7c"
-estimatedMinutes: 60
+estimatedMinutes: 75
 objectives:
   - Experience compressed, high-pressure AI-related crises
   - Practice decision-making under uncertainty and time pressure
   - Develop crisis communication skills
   - Build judgment for rare but critical scenarios
+  - Recover from AI-induced errors (data betrayal)
 prerequisites:
   - "4.3-risk-and-governance"
   - "lab-7-governance-framework"
@@ -20,7 +21,7 @@ prerequisites:
 
 The research on consulting talent development identifies a critical gap: professionals need "five years of rare crisis events compressed into focused training." You can study crisis management frameworks, but until you've made decisions under pressure with incomplete information, you're not prepared.
 
-This lab simulates four AI-related crises. Each scenario unfolds over a compressed timeline, requiring you to make decisions, communicate with stakeholders, and manage consequences—all while the clock is ticking.
+This lab simulates five AI-related crises. Each scenario unfolds over a compressed timeline, requiring you to make decisions, communicate with stakeholders, and manage consequences—all while the clock is ticking.
 
 **What you'll experience:**
 - Time-pressured decision-making
@@ -703,7 +704,183 @@ This lab doesn't have "right" answers—real crises don't either. Instead, asses
 | Took appropriate accountability | | |
 | Balanced speed with thoroughness | | |
 | Showed ethical reasoning | | |
+| Owned mistakes without deflecting (Crisis 5) | | |
 | Learned from each scenario | | |
+
+---
+
+## Crisis 5: The Data Betrayal (15 minutes)
+
+### Scenario
+
+This crisis is different. **You are the one who made the mistake.**
+
+**THE SITUATION**
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+REALIZATION: Mid-Presentation
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Context: You're 10 minutes into a presentation to the executive
+leadership team. You're presenting the business case for an AI
+initiative you've been championing for months.
+
+Your key slide shows competitor analysis:
+- "Company X has deployed AI in 47% of their customer touchpoints"
+- "Industry leaders average 23% cost reduction from AI automation"
+- "Analyst projections show $4.2B market opportunity by 2027"
+
+The Problem:
+The CFO just interrupted you: "I looked up that analyst report
+this morning. The $4.2B figure is for a different market segment.
+The actual number for our segment is $890M. Where did you get
+these stats?"
+
+You realize with horror: You used AI to help research this deck.
+You didn't verify every number. The AI hallucinated or
+misattributed that statistic, and you presented it as fact.
+
+The room is silent. Seven executives are watching you.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+### Your Task (5 minutes)
+
+**START YOUR TIMER.**
+
+**Decision 1: The Next 10 Seconds**
+What do you say immediately? You cannot pause to research.
+
+Choose one:
+- Acknowledge the error and continue
+- Minimize ("the overall point still stands")
+- Deflect ("I'll verify that and follow up")
+- Own it completely ("I made a mistake")
+- Something else?
+
+Your exact words: ________________________________
+
+**Decision 2: The Rest of the Presentation**
+You have 20 minutes left in your presentation. Do you:
+
+- [ ] Continue as planned, addressing the error at the end
+- [ ] Stop and acknowledge that other data may need verification
+- [ ] Skip data-heavy slides and focus on qualitative arguments
+- [ ] Offer to reschedule once you've re-verified everything
+- [ ] Ask the CFO to co-present remaining data for validation
+
+Your choice: ________________________________
+
+Rationale: ________________________________
+
+**Decision 3: Credibility Recovery**
+Write 3 sentences you would include in the follow-up email after the meeting:
+
+1. ________________________________
+2. ________________________________
+3. ________________________________
+
+**STOP when your 5-minute timer goes off.**
+
+---
+
+### The Aftermath
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+24 HOURS LATER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+What you discovered:
+- The $4.2B figure was real, but for "enterprise AI" broadly
+- Your segment (manufacturing AI) is $890M as the CFO said
+- The 47% competitor stat was also wrong—actual is 31%
+- The 23% cost reduction number was accurate
+- Three of your twelve data points were incorrect
+
+Your CTO emailed you privately:
+"I noticed the data issue in the meeting. This happens when we
+rush. What's your plan to rebuild confidence with the exec team?"
+
+The CEO's assistant has asked for the "corrected deck" by Friday.
+
+The VP of Strategy (who was skeptical of your initiative) has
+forwarded the original deck to their team with the comment:
+"Example of why we need better rigor on AI projects."
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+### Your Task (5 minutes)
+
+**START YOUR TIMER.**
+
+**Decision 4: Response to CTO**
+Draft your reply to the CTO's email:
+
+Key points:
+- ________________________________
+- ________________________________
+- ________________________________
+
+**Decision 5: The Corrected Deck**
+How do you handle the Friday deadline?
+
+Option A: Correct the errors, resubmit quietly
+Option B: Correct errors AND add methodology notes explaining verification
+Option C: Correct errors, request a brief follow-up meeting to present corrections
+Option D: Correct errors and proactively disclose every correction made
+
+Your choice: ________________________________
+
+What specific verification process will you implement going forward?
+________________________________
+
+**Decision 6: The Skeptical VP**
+The VP of Strategy has weaponized your mistake. How do you respond?
+
+- [ ] Ignore it—responding looks defensive
+- [ ] Address it privately with the VP
+- [ ] Address it publicly in the corrected deck
+- [ ] Ask your sponsor (CTO) to handle it
+- [ ] Something else: ________________________________
+
+**STOP when your 5-minute timer goes off.**
+
+---
+
+### Reflection (3 minutes)
+
+Answer these questions honestly:
+
+1. How did it feel to be the one who made the mistake, not the one managing someone else's crisis?
+
+2. When the CFO called out the error, what was your instinct—defend, deflect, or own?
+
+3. How would this experience change how you use AI for research going forward?
+
+4. What verification process would have caught this before the presentation?
+
+---
+
+### Why This Scenario Matters
+
+Research on AI-human collaboration identifies a critical risk: **"Data Betrayal"**—when AI provides confident-but-wrong information that you present as fact.
+
+**Key lessons:**
+
+1. **AI hallucination is YOUR responsibility** — You presented it; you own it
+2. **Recovery matters more than the error** — How you handle the aftermath defines your credibility
+3. **Verification is non-negotiable** — Every number, every citation, every fact
+4. **Transparency beats cover-up** — Proactive disclosure is always better than being caught
+
+**Add to your Crisis Playbook:**
+
+Pre-presentation verification checklist:
+- [ ] Every statistic traced to primary source
+- [ ] Every citation verified to exist
+- [ ] Key numbers cross-referenced with second source
+- [ ] AI-generated content flagged for manual verification
 
 ---
 

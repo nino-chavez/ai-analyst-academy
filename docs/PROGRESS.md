@@ -70,7 +70,7 @@ The curriculum maps **100%** of the "Business Engineer/Operator" persona skills 
 | Markdown processing | Done | Uses marked + gray-matter |
 | Build-time generation | Done | `pnpm run build:content` |
 | 6 Phases | Done | All content files present |
-| 25 Modules | Done | WHY-WHAT-HOW structure (includes 1.6 AI Mental Models) |
+| 26 Modules | Done | WHY-WHAT-HOW structure (includes 1.6, 5.5) |
 | 14 Labs + Capstone | Done | Full exercises (includes 7c, 8) |
 | Search index | Done | Infrastructure ready |
 
@@ -189,11 +189,19 @@ Based on analysis of the curriculum against post-consulting research ("The Cogni
 - Known failure modes: hallucination patterns, reasoning limits
 - Building validation intuition: when to trust vs. verify
 
-**Lab 7c: Crisis Response Simulation** (Phase 4, 60 min) — *NEW*
+**Lab 7c: Crisis Response Simulation** (Phase 4, 75 min) — *UPDATED*
 - Compressed crisis experience: "5 years of rare events in one lab"
-- Four scenarios: Data Breach, Failed Pilot, Scope Creep, Ethics Alarm
+- Five scenarios: Data Breach, Failed Pilot, Scope Creep, Ethics Alarm, **Data Betrayal**
 - Time-pressured decision making with incomplete information
 - Creates Crisis Response Playbook deliverable
+- **New:** Data Betrayal scenario — recovering from AI-induced errors mid-presentation
+
+**Module 5.5: Stakeholder Conversations: Observed** (Phase 5, 20 min) — *NEW*
+- Addresses tacit knowledge gap: "observation before action" pedagogy
+- Three expert conversation case studies with detailed analysis
+- Patterns extraction: timing, tone, recovery moves
+- Bridges theory (5.1-5.4) and practice (Lab 8)
+- Based on research showing professionals learn best by observing experts first
 
 **Lab 8: Stakeholder Simulation** (Phase 5, 75 min) — *NEW*
 - AI-powered practice conversations with difficult stakeholders
@@ -434,6 +442,7 @@ pnpm run build:content
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-01-16 | **Cognitive Foundry Deep Research Response** — Added Module 5.5 (Stakeholder Conversations: Observed) for tacit knowledge transfer via "observation before action" pedagogy; Added Crisis 5 "Data Betrayal" scenario to Lab 7c for recovering from AI-induced errors | Claude |
 | 2026-01-16 | **SWOT Response Implementation** — Added Module 1.6 (AI Mental Models), Lab 8 (Stakeholder Simulation), Lab 7c (Crisis Response), Portfolio Certification Framework, 5 new stakeholder personas in Sandbox. Full plan in `docs/plans/swot-response-plan.md` | Claude |
 | 2026-01-13 | **Prompt Library Complete** — `/portfolio/prompts` with full CRUD, search, category filtering, copy to clipboard; wired to `saved_prompts` table; added navigation link from portfolio page | Claude |
 | 2026-01-12 | **Deliverable Submission Complete** — Verified full CRUD in /portfolio; create, update, delete actions; phase selection; mark complete functionality; updated progress status to 85% | Claude |

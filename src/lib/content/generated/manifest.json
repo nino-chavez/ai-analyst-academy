@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-16T19:47:42.032Z",
+  "generatedAt": "2026-01-17T03:23:09.427Z",
   "phases": [
     {
       "id": "phase-1",
@@ -34,7 +34,7 @@
       "id": "phase-5",
       "order": 5,
       "title": "AI Leadership & Influence",
-      "moduleCount": 4,
+      "moduleCount": 5,
       "labCount": 3
     },
     {
@@ -45,7 +45,7 @@
       "labCount": 2
     }
   ],
-  "totalModules": 27,
+  "totalModules": 28,
   "totalLabs": 18,
   "totalEstimatedHours": 34
 }
